@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>String-toString-''-new String()</title>
+</head>
+<body>
+    <h2>转为字符串的速度:(“” +) > String() > .toString() > new String()</h2>
+ <h3>
+    .toString()可以将所有的的数据都转换为字符串，但是要排除null和 undefined<br>
+
+二进制：.toString(2);<br>
+
+八进制：.toString(8);<br>
+
+十进制：.toString(10);<br>
+
+十六进制：.toString(16);<br>
+ </h3>
+ <hr>
+ <h3>
+    String()可以将null和undefined转换为字符串，但是没法转进制字符串
+ </h3>
+ <hr>
+ <h3>
+        typeof new String() 返回值:object
+ </h3>
+</body>
+<script>
+    {
+        console.log(" ''+asd =》'asd'");
+        console.log("" + null); //"null"
+        console.log("" + undefined); //"undefined"
+    }{
+        console.log("*****String()*****");
+        console.log(String({})); //[object Object]
+        console.log(String(null)); //"null"
+        console.log(String(undefined)); //"undefined"
+        var num= 132456;
+        console.log(String(num),"String()")
+        console.log(typeof String(num)) //string
+    }{
+        console.log("*****.toString()*****");
+        console.log(1..toString());//1
+        console.log((1).toString());//1
+        console.log({}.toString()); //[object Object]
+        console.log(NaN.toString())  //"NaN"
+        //console.log(null.toString())  // 报错
+        // console.log(undefined.toString())  // 报错
+        var num= 132456;
+        console.log(num.toString(2),"2 进制")
+        console.log(num.toString(8),"8 进制")
+        console.log(num.toString(10),"10 进制")
+        console.log(num.toString(16),"16 进制")
+        console.log(typeof num.toString()) //string
+    }{
+        console.log("*****new String()*****");
+        console.log(typeof new String("123456"))//object
+    }{
+        console.log("*****区别*****")
+        let str = 'qweqwe',
+    str1 = new String(str),
+    str2 = String(str)
+    str3 = str.toString();
+    console.log("str1=>new String(),str2=>String(),str3=>.toString()")
+    console.log(str1===str,"str1===str")//值相同，类型不同 flase
+    console.log(str2===str,'str2===str')//true
+    console.log(str3===str,'str3===str')//true
+    console.log(typeof str1 === typeof str,'typeof str1 === typeof str')//类型不同 flase
+    console.log(typeof str2 === typeof str,'typeof str2 === typeof str')//true
+    console.log(typeof str3 === typeof str,'typeof str3 === typeof str')//true
+    console.log(typeof str3 === typeof str2 === typeof str1,'typeof str3 === typeof str2 === typeof str1')//flase
+    console.log( typeof str2 === typeof str3,'typeof str2 === typeof str3')//true
+    console.log( typeof str1 === typeof str3,'typeof str1 === typeof str3')//flase
+    console.log( typeof str1 === typeof str2,'typeof str1 === typeof str2')//flase
+    }
+</script>
+</html>

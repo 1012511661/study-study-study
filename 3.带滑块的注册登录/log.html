@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>登录</title>
+    <style>
+        #all{
+            width: 50%;
+            margin: 50px auto;
+        }
+
+        /** 账号密码 **/
+        table{
+            margin: 5px 0;
+            width: 10%;
+        }
+        .namePwd{
+            width: 90%;
+        }
+        /* 滑块验证 */
+    .slider {
+        width: 99%;
+        height: 40px;
+        border: 1px solid red;  
+        position: relative;
+    }
+    .slider_bg {
+        height: 40px;
+        background:#57ff65;
+        position: absolute;
+        z-index: -1;
+    }
+    .slider_btn {
+        width: 50px;
+        height: 40px;
+        background: blue;
+        position: absolute;
+        cursor: pointer;
+        z-index: 99;
+    }
+    .slider_text {
+        width: 99%;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        z-index: 1;
+    }
+    /** 验证码 **/
+    .valiCode{
+        width: 100%;
+    }
+    .valiCode_canvas{
+        width: 260px;
+        height: 50px;
+        margin: 5px 0;
+        vertical-align: middle;
+        display: inline-block;
+    }
+    .valiCode_input{
+        height: 26px;
+        line-height: 24px;
+        width: 180px;
+        vertical-align: middle;
+    }
+    #logBtn{
+        width: 50px;
+        margin:5px auto;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="all">
+        <!-- 账号密码 -->
+        <table>
+            账号：<input type="text" placeholder="6-12位数字、字母" class="namePwd name">
+        </table>
+        <table>
+            密码：<input type="password" placeholder="6-12位数字、字母" class="namePwd pwd">
+        </table>
+        <!-- 滑块验证 -->
+        <div class="slider">
+            <!-- 背景 -->
+            <div class="slider_bg"></div>
+            <!-- 滑块 -->
+            <div class="slider_btn"></div>
+            <!-- 文字 -->
+            <div class="slider_text">
+                正在验证。。。
+            </div>
+        </div>
+        <!-- 验证码验证 -->
+        <div class="valiCode">
+            <div id="v_container" class="valiCode_canvas" style=""></div>
+            <input type="text" class="valiCode_input" value="" placeholder="请输入验证码" />
+
+        </div>
+        <!-- btnGrounp-->
+        <button id="logBtn">登录</button>
+    </div>
+</body>
+<script src="valiCode.js"></script>
+<script>
+    //滑块验证
+    window.onload = () => {
+        // 查找dom对象
+        queSel = (name) => {
+            return document.querySelector(name)
+        }
+        let sli = queSel(".slider"), //整体
+            sliBg = queSel(".slider_bg"), //背景
+            sliBtn = queSel(".slider_btn"), //滑块
+            sliText = queSel(".slider_text"), //文字
+            isOk = false; //判断时候滑到最右边
+        sliBtn.onmousedown = (event) => {
+            let e = event || window.event;
+            let downX = e.clientX;
+            sliBtn.onmousemove = (event) => { //箭头函数这里的this 是window
+                let moveX = event.clientX - downX;
+                if (moveX > 0) { // 滑块位置改变<并只能要右滑动
+                    sliBtn.style.left = moveX + 'px';
+                    sliBg.style.width = moveX + 'px';
+                    if (moveX >= (Math.ceil(sli.offsetWidth - sliBtn.offsetWidth) - 2)) { //滑到最右边
+                        sliBtn.style.display = "none";
+                        sliBg.style.width = '100%';
+                        isOk = true;
+                        sliText.innerHTML = "验证通过";
+                        sliText.style.color = "#fff"
+                        sliBtn.onmousedown = null; //清除事件
+                        sliBtn.onmousemove = null;
+                    }
+                }
+            }
+        }
+        sliBtn.onmouseup = (event) => {
+            //根据 isOk 的值来判断让滑块是否复原
+            if (isOk) return;
+            sliBtn.style.left = 0;
+            sliBg.style.width = 0;
+        }
+        //验证码验证
+        var verifyCode = new GVerify("v_container"); //实例
+        //登录
+        queSel("#logBtn").onclick = () => {
+            let res = verifyCode.validate(queSel(".valiCode_input").value);
+            var reg = /^[a-zA-Z0-9]{6,12}$/;
+            if (reg.test(queSel(".name").value) != "" && reg.test(queSel(".pwd").value) != "" && isOk && res)
+                alert("登录成功");
+
+            else {
+                alert("登录失败");
+                queSel(".name").value = "";
+                queSel(".pwd").value = "";
+                sliBtn.style.left = 0;
+                sliBg.style.width = 0;
+                queSel(".valiCode_input").value = "";
+            }
+        }
+
+    }
+</script>
+
+</html>

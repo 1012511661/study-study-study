@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>插件分页</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .fl {
+            float: left;
+        }
+
+        .box {
+            height: 40px;
+            line-height: 40px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .box button {
+            padding: 0 10px;
+            margin: 0 10px;
+            height: 40px;
+            float: left;
+            cursor: pointer;
+            border: 1px solid #ebebeb;
+            background-color: #ffffff;
+        }
+
+        .box .first-page,
+        .box .last-page {
+            margin: 0;
+        }
+
+        .box .pageWrap {
+            height: 40px;
+            float: left;
+            overflow: hidden;
+        }
+
+        .box .pageWrap ul {
+            width: 100000px;
+            height: 40px;
+            float: left;
+        }
+
+        .box .pageWrap ul li {
+            width: 60px;
+            height: 40px;
+            border: 1px solid #ebebeb;
+            line-height: 40px;
+            box-sizing: border-box;
+            cursor: pointer;
+            float: left;
+        }
+
+        .box .pageWrap ul .sel-page {
+            background-color: yellow;
+        }
+
+        .box .jump-text {
+            width: 60px;
+            height: 40px;
+            box-sizing: border-box;
+            text-align: center;
+            margin: 0 5px;
+            float: left;
+        }
+
+        .box .jump-button {
+            margin: 0;
+            float: left;
+        }
+
+        .box .total-pages,
+        .box .total-count {
+            margin-left: 10px;
+            float: left;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box" id="box">
+
+    </div>
+    <script src="js/jquery-1.11.3.min.js"></script>
+    <script src="js/paging.min.js"></script>
+    <script>
+        var setTotalCount = 301;
+        $('#box').paging({
+            initPageNo: 3, // 初始页码
+            totalPages: 30, //总页数
+            totalCount: '合计' + setTotalCount + '条数据', // 条目总数
+            slideSpeed: 600, // 缓动速度。单位毫秒
+            jump: true, //是否支持跳转
+            callback: function (page) { // 回调函数
+                console.log(page);
+            }
+        })
+    </script>
+</body>
+
+</html>

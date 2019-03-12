@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <style>
+        div {
+            background-color: coral;
+            border: 1px solid;
+            padding: 50px;
+        }
+        div p{
+            background-color: blue;
+        }
+    </style>
+</head>
+<body>
+
+<p>该实例演示了在添加事件监听时阻止冒泡阶段情况。</p>
+<hr/>
+<div id="myDiv">
+    <p id="myP">点击该段落， 我是冒泡</p>
+</div>
+
+</body>
+<script>
+
+    //事件冒泡阶段，先弹框选中的子元素，在向上弹框父元素
+    document.getElementById("myP").addEventListener("click", function () {
+        alert("你点击了 P 元素!");
+    });
+//    document.getElementById("myP").addEventListener("click", function (e) {
+//        e.stopPropagation();
+//    });
+    document.getElementById("myDiv").addEventListener("click", function () {
+        alert("你点击了 DIV 元素!");
+    });
+//    document.getElementById("myDiv").addEventListener("click", function (e) {
+//        e.stopPropagation();
+//    });
+    document.querySelector("body").addEventListener("click", function () {
+        alert("你点击了 body 元素!");
+    });
+    document.querySelector("html").addEventListener("click", function () {
+        alert("你点击了HTML 元素!");
+    });
+
+        document.getElementById("myDiv").addEventListener("click", function (e) {
+            e.stopPropagation();
+        });
+</script>
+
+</html>

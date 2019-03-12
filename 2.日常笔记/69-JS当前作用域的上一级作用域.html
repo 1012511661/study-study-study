@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>JS当前作用域的上一级作用域</title>
+</head>
+<h5> "2018-09-19 10:00:00".replace(/(\d{4})-(\d{2})-(\d{2})\s\d{2}\:\d{2}\:\d{2}/g,'$1年$2月$3日')</h5>
+<h5>"2018年09月19日".replace(/(\d{4})[\u4e00-\u9fa5](\d{2})[\u4e00-\u9fa5](\d{2})[\u4e00-\u9fa5]/g,'$1-$2-$3')</h5>
+<hr>
+<h4>看当前作用域在那个作用域下定义的，那么它的上一级作用域就是谁，和函数在哪里执行的位置没有关系</h4>
+
+<body>
+
+</body>
+<script>
+    {
+        var num = 10;
+        function fn() {
+            var num = 100;
+            return function () {
+                console.log(num)
+            }
+        }
+        var f = fn();
+        f(); //100
+        (function () {
+            var num = 120
+            f() //100
+        })()
+    }
+</script>
+
+</html>

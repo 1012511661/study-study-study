@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>array</title>
+</head>
+<h2>filter</h2>
+<h2>find</h2>
+<h2>findIndex</h2>
+
+<body>
+
+</body>
+<script>
+    { // 1.filter
+        let arr1 = [10, 59, 88, 95, 70];
+        let arr2 = arr1.filter(item => {
+            return item >= 60
+        })
+        console.log(arr2, 'filter 方法')
+    } { // filter 原型
+        let arr1 = [10, 59, 88, 95, 70];
+        Array.prototype.filter = function (fn) {
+            // (fn)=>{} 报错
+            let newArr = [];
+            for (let i = 0; i < this.length; i++) {
+                let flag = fn(this[i]) //执行return item >= 60
+
+                if (flag) {
+                    newArr.push(this[i])
+                }
+                // flag && newArr.push(this[i])
+
+            }
+            return newArr
+        }
+        let arr2 = arr1.filter(item => {
+            return item >= 60 // 结果: flag
+        })
+        console.log(arr2, 'filter 原型')
+        /**
+         *  fn() => filter()  
+         **/
+    } { // 2.find
+        let arr = [1, 5, 9, 10, 6, 19];
+        let findArr = arr.find((value, index, arr) => {
+            return value % 3 == 2
+        })
+        console.log(findArr, 'find 方法')
+        console.log(arr, '原数组')
+    } { // find 原型
+        Array.prototype.find = function (fn) {
+            for (let i = 0; i < this.length; i++) {
+                let flag = fn(this[i])
+                if (flag) {
+                    return this[i]
+                }
+            }
+        }
+        let arr = [1, 5, 9, 10, 6, 19];
+        let findArr = arr.find((value, index, arr) => {
+            return value % 3 == 2
+        })
+        console.log(findArr, 'find 原型')
+    } { // 3.findIndex
+        let arr = [1, 5, 9, 10, 6, 19];
+        let findIndex = arr.findIndex((value, index, arr) => {
+            return value % 3 == 2
+        })
+        console.log(findIndex, 'findIndex 方法')
+    } { // findIndex 原型
+        Array.prototype.findIndex = function (fn) {
+            for (let i = 0; i < this.length; i++) {
+                let flag = fn(this[i])
+                if (flag) {
+                    return i
+                }
+            }
+        }
+        let arr = [1, 5, 9, 10, 6, 19];
+        let findIndex = arr.findIndex((value, index, arr) => {
+            return value % 3 == 2
+        })
+        console.log(findIndex, 'findIndexArr 原型')
+    } { // 4.some
+        let arr = [1, 5, 9, 10, 6, 19];
+        let someArr = arr.some((value, index, arr) => {
+            return value % 3 == 2
+        })
+        console.log(someArr, 'some 方法')
+    } 
+     { // some
+        Array.prototype.some = function (fn) {
+            for (let i = 0; i < this.length; i++) {
+                let flag = fn(this[i])
+                if (flag) {
+                    return flag
+                }
+            }
+            return false
+        }
+        let arr = [1, 5, 9, 10, 6, 19];
+        let someArr = arr.some((value, index, arr) => {
+            return value % 3 == 2
+        })
+        console.log(someArr, 'some 原型')
+    }  { // 5.every
+        let arr = [1, 5, 9, 10, 6, 19];
+        let everyArr = arr.every((value, index, arr) => {
+            return value % 3 == 2
+        })
+        console.log(everyArr, 'every 方法')
+    } { // every
+        Array.prototype.every = function (fn) {
+            let flag = true;
+            for (let i = 0; i < this.length; i++) {
+                let flag = fn(this[i])
+                if (!flag) {
+                    return false
+                }
+            }
+            return flag
+        }
+        let arr = [1, 5, 9, 10, 6, 19];
+        let everyArr = arr.every((value, index, arr) => {
+            return value % 3 == 2
+        })
+        console.log(everyArr, 'every 原型')
+    }
+</script>
+
+</html>

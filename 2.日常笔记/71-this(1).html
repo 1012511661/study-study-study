@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>this(1)</title>
+</head>
+
+<body>
+    <h1> this是谁和函数在哪定义，在哪执行没有任何关系</h1>
+    <h2>区分this：</h2>
+    <h3>1.函数执行，首先看函数名前面是否有‘.’，如果有‘.’前面是谁，this就是谁；没有this就指的是window</h3>
+    <h3>2.自执行函数中的this永远是window</h3>
+    <h3>3.给元素的某一事件绑定方法，当事件触发时，执行对应的方法，方法中的this是当前的元素</h3>
+    <h3>4.在构造函数模式中，类中(函数体中)出现的this.xxx = xxx中的this是当前类的一个实例，而某一个属性值是方法时，方法中的this需要看方法执行的时候，前面时候有“.”，才知道this是谁</h3>
+    <h3>5.使用call/apply/bind，改变this指向(优先级最高)</h3>
+    <hr>
+    <p id="p31">点击我1，看this</p>
+    <p id="p32">点击我2，看this</p>
+</body>
+<script>
+    {
+        console.log("情况 1")
+        function fn1() {
+            console.log(this)
+        }
+        var obj = {
+            ofn: fn1
+        }
+        fn1() //this ->window
+        obj.ofn() // this ->obj
+        function fn2() {
+            fn1(); //this ->window
+        }
+        fn2(); //this ->window
+        var thfn = {
+            Fn: function () {
+                fn1(); //this ->window
+            }
+        }
+        thfn.Fn() // this ->thfn
+    } {
+        console.log("情况 2")
+
+        function fn() {
+            console.log(this)
+        }
+        fn()
+
+    } {
+        console.log("情况 3")
+        document.getElementById("p31").onclick = fn3;//this -> p31
+        document.getElementById("p32").onclick = function () {
+            console.log(this)////this -> p32
+            fn3();//this -> window
+        };
+        function fn3() {
+            console.log(this)
+        }
+    }
+</script>
+
+</html>

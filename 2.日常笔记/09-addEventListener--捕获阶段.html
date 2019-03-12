@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<style>
+    div {
+        background-color: coral;
+        border: 1px solid;
+        padding: 50px;
+    }
+
+    div p {
+        background-color: blue;
+    }
+</style>
+<body>
+<p>该实例演示了在添加事件监听时的捕获阶段情况。</p>
+<hr/>
+<div id="myDiv2">
+    <p id="myP2">点击该段落， 我是捕获</p>
+</div>
+</body>
+<script>
+    /**
+     * 语法结构：addEventListener(event,function(){},useCapture)
+     * event:必须存在，指定的事件名，为字符串形式；
+     * function(){}：必须存在，指定事件执行的函数；
+     * useCapture：可选，为布尔值，当为true:事句柄件在捕获阶段执行；当为false：事件句柄在冒泡阶段执行
+     * 事件冒泡：即事件开始时，由最具体的元素接收（也就是事件发生所在的节点），然后逐级传播到较为不具体的节点。
+     * 捕获事件：与事件冒泡正好相反。它认为当某个事件发生时，父元素应该更早接收到事件，具体元素则最后接收到事件；
+     * */
+    //事件捕获阶段，先弹框选中元素的父元素元素，在向下弹框子元素
+    document.getElementById("myP2").addEventListener("click", function () {
+        alert("你点击了 P 元素!");
+    }, true);
+    document.getElementById("myDiv2").addEventListener("click", function () {
+        alert("你点击了 DIV 元素!");
+    }, true);
+    document.querySelector("body").addEventListener("click", function () {
+        alert("你点击了 body 元素!");
+    }, true);
+    document.querySelector("html").addEventListener("click", function () {
+        alert("你点击了HTML 元素!");
+    }, true);
+
+</script>
+</html>

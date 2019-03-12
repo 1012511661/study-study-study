@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<style>
+    #container {
+        width: 500px;
+        height: 500px;
+        background-color: blue;
+        position: relative;
+    }
+
+    body {
+        margin: 0;
+        /*必填 body会有8px的margin*/
+    }
+
+    div.point {
+        width: 1px;
+        height: 1px;
+        top: 0;
+        left: 0;
+        position: absolute;
+        background-color: red;
+    }
+
+    div.point-move {
+        width: 10px;
+        /*10px是为了方便观察，1px看不清*/
+        height: 10px;
+        background-color: yellow;
+        position: absolute;
+    }
+</style>
+
+<body>
+    <div id="main">
+        <div id="container">
+            <div class="point-move"></div>
+            <div class="point" v-for="n in 50"></div>
+        </div>
+        <button @click="randomPosition">随机位置</button>
+        <button @click="pointMove">点的移动追踪</button>
+    </div>
+    <script src="./js/jquery-1.11.3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
+    <script>
+        new Vue({
+            el: "#main",
+            data() {
+                return {
+                    savedpoint: []
+                }
+            },
+            mounted() {
+                this.randomPosition()
+            },
+            methods: {
+                randomPosition() {
+                    let x, y, savedpoint, num, dom, distance
+                    dom = $(".point").get()
+                    savedpoint = []
+                    num = 0
+                    x = 0
+                    y = 0
+                    distance = 0
+                    while (savedpoint.length < 50) {
+                        let flag = 0
+                        x = Math.ceil(Math.random() * 500)
+                        y = Math.ceil(Math.random() * 500)
+                        for (let j = 0; j < savedpoint.length; j++) {
+                            distance = Math.sqrt(Math.pow((x - savedpoint[j][0]), 2) + Math.pow((y - savedpoint[
+                                j][1]), 2))
+                            if (distance < 16) {
+                                flag = 1
+                                console.log("第" + (++num) + "个不合格的点", "距离最近的点间隔为" + distance)
+                                break
+                            }
+                        }
+                        if (flag === 0) {
+                            savedpoint.push([x, y])
+                        }
+                    }
+                    console.log(savedpoint)
+                    dom.map((item2, index2) => {
+                        $(item2).offset({
+                            left: savedpoint[index2][1],
+                            top: savedpoint[index2][0]
+                        })
+                    })
+                    this.savedpoint = savedpoint
+                },
+                pointMove() {
+                    let num = Math.ceil(Math.random() * 50)
+                    let dom = $(".point").get()
+                    console.log(num) //先随机移动到一个点的位置
+                    $(".point-move").animate({
+                        top: this.savedpoint[num][0],
+                        left: this.savedpoint[num][1]
+                    }, "slow")
+                    this.savedpoint.map((item, index) => {
+                        if (index !== num) {
+                            $(".point-move").animate({
+                                top: item[0],
+                                left: item[1]
+                            }, 30)
+                        }
+                    })
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>横向无缝滚动</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<style>
+    *{margin:0;padding:0;}
+    ul,li{list-style:none;}
+    .banner{border:1px solid red;margin:200px auto;position:relative;overflow: hidden;}
+    .banner .imgBox{position:absolute;width:2500px;}
+    .banner .imgBox li{float:left;}
+    .banner .imgBox li img{width:500px;}
+    .banner .btn{position:absolute;width:100%;text-align: center;bottom:20px;}
+    .banner .btn li{width:16px;height:16px;border-radius:50%;background: green;display: inline-block;*display:inline;*zoom:1;cursor:pointer;}
+    .banner span{width:20px;height:40px;background:#aaa;position:absolute;line-height: 40px;text-align: center;top:50%;margin-top:-20px;cursor:pointer;}
+    .banner .btn .curBg{background: red;}
+</style>
+</head>
+<body>
+    <div id="banner" class="banner">
+            <ul class="imgBox">
+                <li><img src="imgs/baiducang.gif" alt=""></li>
+                <li><img src="imgs/delicious.gif" alt=""></li>
+                <li><img src="imgs/gmail.gif" alt=""></li>
+                <li><img src="imgs/kaixin001.gif" alt=""></li>
+                <li><img src="imgs/qq.gif" alt=""></li>
+            </ul>
+        <ul class="btn">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+        <span>&lt;</span>
+        <span>&gt;</span>
+    </div>
+<script>
+    window.onload = function(){
+        var banner = document.getElementById("banner");
+        var ulO = banner.getElementsByTagName("ul");//ul数组
+        var imgO = banner.getElementsByTagName("img");//图片数组
+        var btnLi = ulO[1].getElementsByTagName("li");//按钮数组
+        var spanO = banner.getElementsByTagName("span");//span按钮数组
+        var t;//每张图片运动的定时器
+        var timer; //切换图片的定时器
+        var cur = 0;
+        var prev;
+        var step =10;
+        var speed = step;
+        var W = imgO[0].offsetWidth;
+        console.log("W------------"+W)
+        function init(){
+            banner.style.height = imgO[0].offsetHeight +"px";
+            banner.style.width = imgO[0].offsetWidth +"px";
+            spanO[1].style.right =0;
+            btnLi[0].className +=" curBg"  
+        }
+        init();
+        function btnBg(){
+            for(var i = 0 ; i < btnLi.length ;i++){
+                btnLi[i].className  = btnLi[i].className.replace(/curBg/,"");    
+            }
+            if(cur ==btnLi.length){
+                    btnLi[0].className += " curBg";
+            }else{
+                    btnLi[cur].className +=" curBg" ;
+                }
+        }
+        
+        console.log(imgO[0].offsetHeight);
+        //向左运动
+        function toLeft(){        
+            console.log(cur);     
+            var stop = -cur*W ;  
+            if(parseInt(ulO[0].style.left) == stop){
+                clearInterval(t);
+                speed = step;
+                if(cur == imgO.length-1){
+                ulO[0].style.left = 0;
+                cur = 0;
+                }
+            }else{
+                ulO[0].style.left = ulO[0].offsetLeft - speed +"px";
+            } 
+            console.log(cur);     
+        }
+
+        //隔一段时间展示一张图片的函数
+        function show(){
+            cur++;
+            btnBg();
+            t = setInterval(toLeft,10);
+
+        }
+
+        timer = setInterval(show,3000);
+        //给banner绑定事件鼠标进入停止、鼠标移出继续。
+        banner.onmouseenter = function(){
+            clearInterval(timer);
+        }
+        banner.onmouseleave = function(){
+            timer = setInterval(show,3000);
+
+        }
+        //分页按钮事件
+        for(var i = 0 ;i < btnLi.length;i++){
+            btnLi[i].index = i;
+            btnLi[i].onclick = function(){
+                prev = cur;
+                cur =this.index;           
+                speed = cur > prev?step : -step;
+                    t = setInterval(toLeft,10);
+                    btnBg();           
+            }
+        }
+        //翻页按钮事件
+        spanO[0].onclick = function(){
+            if(cur !=0){
+                speed = -step;
+                cur--;
+                t = setInterval(toLeft,10);
+                btnBg();
+            }
+            else{
+                cur = 4;
+
+                ulO[0].style.left = -cur*W +"px"
+            }
+        }
+        spanO[1].onclick =function(){
+            if(cur != btnLi.length){
+                speed = step;
+                cur++;
+                t = setInterval(toLeft,10);
+                btnBg();
+            }else{
+                ulO[0].style.left = 0;
+                cur = 0;
+            }
+        }
+  }
+</script>
+</body>
+</html>

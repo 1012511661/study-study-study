@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>工厂模式</title>
+</head>
+<body>
+    <h1>把视线同一事件相同的代码放在一个函数中，以后如果要实现这个功能，不用从新书写这些代码，只需要根据需求赋值</h1>
+    <h3>函数的封装->‘低耦合，高内聚’：减少页面中的冗余代码代码，提高代码的重复利用率</h3>
+</body>
+<script>
+
+    function createJs(name,age){
+        var obj = {};
+        obj.name = name;
+        obj.age = age;
+        obj.writeJs = function(){
+            console.log(`我叫${obj.name},还不到${obj.age},我会写JS`)
+        }
+        return obj
+    }
+    var p1 = createJs("小明",18)
+    p1.writeJs();
+    var p2 = createJs("小强",20)
+    p2.writeJs();
+</script>
+</html>

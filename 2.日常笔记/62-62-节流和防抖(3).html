@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>节流和防抖(3)</title>
+</head>
+
+<body>
+    <h4>https://yuchengkai.cn/docs/frontend/#%E9%98%B2%E6%8A%96</h4>
+    <h2> 1. **防抖**</h2>
+    > 触发高频事件后n秒内函数只会执行一次，如果n秒内高频事件再次被触发，则重新计算时间
+    <h3>* 思路：</h3>
+    > 每次触发事件时都取消之前的延时调用方法 <br>
+    <input type="text" id="inp1" placeholder="防抖测试-- 最后一次执行">
+    <input type="text" id="inp2" placeholder="防抖测试-- 立即执行选项的防抖函数">
+    <h2>2. **节流**</h2>
+    > 高频事件触发，但在n秒内只会执行一次，所以节流会稀释函数的执行频率
+    <h3>* 思路：</h3>
+    > 每次触发事件时都判断当前是否有等待执行的延时函数
+</body>
+<script>
+    { // 1. 防抖
+        // 这是一个简单版的防抖，但是有缺陷，这个防抖只能在最后调用
+        function debounce(fn) {
+            let timeout = null; // 创建一个标记用来存放定时器的返回值
+            return function () {
+                clearTimeout(timeout); // 每当用户输入的时候把前一个 setTimeout clear 掉
+                timeout = setTimeout(() => { // 然后又创建一个新的 setTimeout, 这样就能保证输入字符后的 interval 间隔内如果还有字符输入的话，就不会执行 fn 函数
+                    fn.apply(this, arguments);
+                }, 5000);
+            };
+        }
+
+        function sayHi() {
+            console.log('防抖成功 1');
+        }
+        var inp = document.getElementById('inp1');
+        inp.addEventListener('input', debounce(sayHi)); // 防抖
+    } { // 前后两次执行时间必须大于等于指定时间
+        // 这个是用来获取当前时间戳的
+        function now() {
+            // return +new Date()
+            console.log(+new Date())
+        }
+        /**
+         * 防抖函数，返回函数连续调用时，空闲时间必须大于或等于 wait，func 才会执行
+         *
+         * @param  {function} func        回调函数
+         * @param  {number}   wait        表示时间窗口的间隔
+         * @param  {boolean}  immediate   设置为ture时，是否立即调用函数
+         * @return {function}             返回客户调用函数
+         */
+        function debounce(func, wait = 3000, immediate = true) {
+            let timer, context, args
+
+            // 延迟执行函数
+            const later = () => setTimeout(() => {
+                // 延迟函数执行完毕，清空缓存的定时器序号
+                timer = null
+                // 延迟执行的情况下，函数会在延迟函数中执行
+                // 使用到之前缓存的参数和上下文
+                if (!immediate) {
+                    func.apply(context, args)
+                    context = args = null
+                }
+            }, wait)
+
+            // 这里返回的函数是每次实际调用的函数
+            return function (...params) {
+                // 如果没有创建延迟执行函数（later），就创建一个
+                if (!timer) {
+                    timer = later()
+                    // 如果是立即执行，调用函数
+                    // 否则缓存参数和调用上下文
+                    if (immediate) {
+                        func.apply(this, params)
+                    } else {
+                        context = this
+                        args = params
+                    }
+                    // 如果已有延迟执行函数（later），调用的时候清除原来的并重新设定一个
+                    // 这样做延迟函数会重新计时
+                } else {
+                    clearTimeout(timer)
+                    timer = later()
+                }
+            }
+        }
+        function sayHi() {
+            console.log('防抖成功 2 ');
+            // now()
+        }
+        var inp = document.getElementById('inp2');
+        inp.addEventListener('input', debounce(sayHi)); // 防抖
+    } { // 2. 节流
+        function throttle(fn) {
+            let canRun = true; // 通过闭包保存一个标记
+            return function () {
+                if (!canRun) return; // 在函数开头判断标记是否为true，不为true则return
+                canRun = false; // 立即设置为false
+                setTimeout(() => { // 将外部传入的函数的执行放在setTimeout中
+                    fn.apply(this, arguments);
+                    // 最后在setTimeout执行完毕后再把标记设置为true(关键)表示可以执行下一次循环了。当定时器没有执行的时候标记永远是false，在开头被return掉
+                    canRun = true;
+                }, 5000);
+            };
+        }
+
+        function sayHi(e) {
+            console.log(e.target.innerWidth, e.target.innerHeight);
+        }
+        window.addEventListener('resize', throttle(sayHi));
+    }
+</script>
+
+</html>

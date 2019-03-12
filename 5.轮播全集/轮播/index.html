@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title></title>
+
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="css/zzsc.css">
+<link rel="stylesheet" type="text/css" href="dist/jquery.vm-carousel.css">
+<script src="js/modernizr.js"></script>
+<style type="text/css">
+	h2 {
+		 margin-bottom: 40px;
+		 margin-top: 40px;
+	  }
+	  .vmc-centered{ padding: 10px 0; }
+	  .vmc-centered img { transition: all 0.3s ease; }
+	  .vmc-centered .vmc_active img { transform: scale(1.2); }
+</style>
+
+</head>
+<body>
+<div class="container">
+   <h2>VM Carousel</h2>
+
+   <h3>Centered mode, initial slide index: 2</h3>
+
+   <ul class="vmcarousel-centered vmc-centered">
+	  <li><img src="images/1.jpg" alt="" width="200"></li>
+	  <li><img src="images/2.jpg" alt="" width="200"></li>
+	  <li><img src="images/3.jpg" alt="" width="200"></li>
+	  <li><img src="images/4.jpg" alt="" width="200"></li>
+	  <li><img src="images/5.jpg" alt="" width="200"></li>
+	  <li><img src="images/6.jpg" alt="" width="200"></li>
+   </ul>
+
+
+   <h3>Centered infinite mode, initial slide index: 1</h3>
+
+   <ul class="vmcarousel-centered-infitine vmc-centered">
+	  <li><img src="images/1.jpg" alt="" width="200"></li>
+	  <li><img src="images/2.jpg" alt="" width="200"></li>
+	  <li><img src="images/3.jpg" alt="" width="200"></li>
+	  <li><img src="images/4.jpg" alt="" width="200"></li>
+	  <li><img src="images/5.jpg" alt="" width="200"></li>
+	  <li><img src="images/6.jpg" alt="" width="200"></li>
+   </ul>
+
+
+   <h3>Normal mode</h3>
+
+   <ul class="vmcarousel-normal">
+	  <li><img src="images/1.jpg" alt="" width="200"></li>
+	  <li><img src="images/2.jpg" alt="" width="200"></li>
+	  <li><img src="images/3.jpg" alt="" width="200"></li>
+	  <li><img src="images/4.jpg" alt="" width="200"></li>
+	  <li><img src="images/5.jpg" alt="" width="200"></li>
+	  <li><img src="images/6.jpg" alt="" width="200"></li>
+   </ul>
+
+</div>
+
+<script src="js/jquery-1.11.0.min.js" type="text/javascript"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="dist/jquery.vm-carousel.js"></script>
+<script type="text/javascript">
+	jQuery(function($){
+		  $('.vmcarousel-centered').vmcarousel({
+			 centered: true,
+			 start_item: 2,
+			 autoplay: false,
+			 infinite: false
+		  });
+
+		  $('.vmcarousel-centered-infitine').vmcarousel({
+			 centered: true,
+			 start_item: 1,
+			 autoplay: false,
+			 infinite: true
+		  });
+
+		  $('.vmcarousel-normal').vmcarousel({
+			 centered: false,
+			 start_item: 0,
+			 autoplay: false,
+			 infinite: false
+		  });
+	   });
+</script>
+
+
+</body>
+</html>

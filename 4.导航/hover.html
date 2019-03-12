@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+
+<style>
+    #ul{
+        list-style: none;
+    }
+    #ul li{
+        display: inline-block;
+        width: 100px;
+        height: 50px;
+        outline: 1px solid red;
+    }
+    .active{
+        background-color: black;
+
+    }
+
+
+</style>
+<body>
+<ul class="" id="ul">
+    <li class=""><a href="">1</a></li>
+    <li class=""><a href="">1</a></li>
+    <li class=""><a href="">1</a></li>
+    <li class=""><a href="">1</a></li>
+</ul>
+
+
+</body>
+<script src="js/jquery-1.11.3.min.js"></script>
+<script>
+    /*ul_nav*/
+    var $li = $("#ul li");
+    $li.click(function(){
+        $(this).addClass("active");
+        $(this).siblings().removeClass("active");
+    })
+
+</script>
+</html>

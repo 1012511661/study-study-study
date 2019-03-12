@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Promise</title>
+</head>
+
+<body>
+</body>
+<script>
+    { //1.Promise
+        let p = new Promise(function (resolve, reject) {
+            setTimeout(function () {
+                let num = Math.random();
+                if (num > .5) resolve('大 Ok')
+                else reject('小 No')
+            }, 2000)
+        })
+        p.then((value) => {
+            console.log('成功', value)
+        }, (reason) => {
+            console.log('失败', reason)
+        })
+    } { //2.简单自己实现Promise
+        let Promise = function Promise(task) { //构造函数的参数是一个异步任务
+            let that = this; //缓存this
+            //默认状态为pending 状态
+            that.status = 'pending';
+            //此变量里放着此promise的结果值
+            that.value = undefined;
+            //存放的着所有成功的回调函数
+            that.onResolvedCallbacks = [];
+            //存放着所有的失败的回调函数
+            that.onRejectedCallbacks = [];
+            //调用此方法可以把promise变成成功态
+            function resolve(value) {
+                //resolve的时候你把挣到的钱传进来
+                if (that.status == 'pending') {
+                    that.status = 'fulfilled';
+                    that.value = value;
+                    that.onResolvedCallbacks.forEach(item => item(that.value));
+                }
+            }
+            //调用此方法可以把当前的promise变成失败态
+            function reject(reason) {
+                //如果当前状态是初始态，则转成失败态
+                if (that.status == 'pending') {
+                    that.status = 'rejected';
+                    that.value = reason;
+                    that.onRejectedCallbacks.forEach(item => item(that.value));
+                }
+            }
+            //立即执行传入的任务
+            try {
+                task(resolve, reject);
+            } catch (e) {
+                reject(e);
+            }
+        }
+        //onFulfilled成功的回调，onReject失败的回调
+        Promise.prototype.then = function (onFulfilled, onReject) {
+            let that = this;
+            if (that.status == 'pending') {
+                that.onResolvedCallbacks.push(onFulfilled)
+                that.onRejectedCallbacks.push(onReject)
+            }
+            if (that.status == 'fulfilled') {
+                onFulfilled(that.value);
+            }
+            if (that.status == 'rejected') {
+                onReject(that.value);
+            }
+        }
+        // 执行
+        let p1 = new Promise(function (resolve, reject) {
+            //pending
+            setTimeout(function () {
+                let num = Math.random(); //生成一个随机数
+                // console.log(num);
+                if (num > .5)
+                    //如果这个 promise 成功了，会调用成功的回调 fulfilled
+                    resolve('大成功');
+                else
+                    //如果这个 promise 失败了，会调用失败的回调 rejected
+                    reject('小失败');
+            }, 2000);
+        });
+        p1.then(function (value) {
+            console.log('成功1=', value);
+        }, function (reason) {
+            console.log('失败1=', reason);
+        });
+        p1.then(function (value) {
+            console.log('成功2=', value);
+        }, function (reason) {
+            console.log('失败2=', reason);
+        });
+    } { //3. https://yq.aliyun.com/articles/613412
+        class Promise {
+            //构造器
+            constructor(executor) {
+                //默认状态为pending 状态
+                this.status = 'pending';
+                // 成功的值
+                this.value = undefined;
+                // 失败的原因
+                this.reason = undefined;
+                //存放的着所有成功的回调函数
+                // this.onResolvedCallbacks = [];
+                //存放着所有的失败的回调函数
+                // this.onRejectedCallbacks = [];
+                // 成功
+                let resolve = value => {
+                    // state改变,resolve调用就会失败
+                    if (this.state === 'pending') {
+                        // resolve调用后，state转化为成功态
+                        this.state = 'fulfilled';
+                        // 储存成功的值
+                        this.value = value;
+                        // this.onResolvedCallbacks.forEach(item => item(this.value));
+                    }
+                }
+                // 失败
+                let reject = reason => {
+                    // state改变,reject调用就会失败
+                    if (this.state === 'pending') {
+                        // reject调用后，state转化为失败态
+                        this.state = 'rejected';
+                        // 储存失败的原因
+                        this.reason = reason;
+                        // this.onResolvedCallbacks.forEach(item => item(this.value));
+                    }
+                }
+            }
+            // 方法 onFulfilled 成功, onReject 失败
+            then(onFulfilled, onReject){
+                if(this.state === 'fulfilled'){
+                    onFulfilled(this.value)
+                }
+                if(this.state === 'rejected'){
+                    onReject(this.reason)
+                }
+            }
+        }
+    }
+</script>
+
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<style type="text/css">
+    *{
+       margin: 0;
+        padding: 0;
+    }
+    #d{
+        margin-top: 50px;
+        margin-left: 100px;
+    }
+    #d1 {
+        width: 0;
+        height: 0;
+        border-bottom: 30px solid red;
+        border-left: 30px solid transparent;
+        display: inline-block;
+
+    }
+    #d2{
+        width: 30px;
+        height: 30px;
+       background-color: blue;
+        display: inline-block;
+    }
+    #d3 {
+        width: 0;
+        height: 0;
+        border-top: 30px solid #000;
+        border-right: 30px solid transparent;
+        display: inline-block;
+     }
+    .d4{
+        margin-left: 60px;
+        margin-top: 40px;
+        width: 100px;
+        height: 50px;
+        background-color: blue;
+        transform: skew(-20deg);
+        display: inline-block;
+    }
+    .d4 p{
+        transform: skew(20deg);
+        text-align: center;
+        line-height: 50px;
+    }
+    .dd1:hover{
+        transform: skew(0deg);
+        border: 1px solid red;
+        border-radius: 20px;
+        background-color: wheat;
+
+    }
+    .dd1:hover p{
+        transform: skew(-20deg);
+    }
+</style>
+<!-- <div id="d">
+     <div id="d1"></div>
+     <div id="d2"></div>
+     <div id="d3"></div>
+</div>-->
+<div class="d4 dd1"><p>导航1</p></div>
+<div class="d4 dd2"><p>导航2</p></div>
+<div class="d4 dd3"><p>导航3</p></div>
+<body>
+
+</body>
+
+</html>

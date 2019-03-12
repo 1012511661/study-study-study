@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>JavaScript 执行机制 (宏任务、微任务) </title>
+</head>
+
+<body>
+    序号 名称 内容<br>
+    1 macro-task(宏任务) 整体代码script,setTimeout,setInterval <br>
+    2 micro-task(微任务) Promise，process.nextTick <br>
+    宏任务和微任务执行顺序 <br>
+    第一次执行宏任务,如果没有微任务，则执行下一个宏任务；如果有微任务，微任务加入到当前微任务队列，宏任务执行完毕;<br>
+    接着从微任务队列开始，先看微任务队列里面有没有待执行任务，如果有依次执行，执行到微任务队列为空之后再轮询宏任务队列；<br>
+    宏任务队列有任务则依次执行第一个，在执行宏任务时可能会有新的微任务加入到当前微任务队列，当本次宏任务执行结束后依然要先去看微任<br>务队列，如果有就依次执行，如果没有再执行下一个宏任务....<br>
+    然后循环一直到宏任务和微任务都执行结束。<br>
+</body>
+<script>
+    {
+        //https://mp.weixin.qq.com/s/TzoQ2vtghrQYeGgx-6P2yA
+        async function async1() {
+            console.log('async1 start'); // 2
+            await async2()
+            console.log('async1 end'); // 7 
+        }
+        async function async2() {
+            console.log('async2');// 3
+        }
+        console.log('script start'); // 1
+        setTimeout(
+            function () {
+                console.log('setTimeout'); // 8
+            }, 0)
+        async1();
+        new Promise(function (resolve) {
+                console.log('promise1'); // 4
+                resolve();
+            })
+            .then(function () {
+                console.log('promise2'); // 6 
+            });
+        console.log('script end'); // 5
+    } {
+        new Promise(function (resolve, reject) {
+                console.log('promise1');
+                if (Math.random() > .5) {
+                    resolve(); // 成功调用 then
+                } else {
+                    reject(); // 失败调用 catch
+                }
+            })
+            .then(function () {
+                console.log('promise2');
+            })
+            .catch(function () {
+                console.log('promise3');
+            })
+        console.log('script end');
+    } {
+        const process = require('process'); // 需要安装 node  
+        // node 实例及分析过程
+        console.log('1'); // ->a1
+        setTimeout( // ->a2
+            // setTimeout宏任务，所以它的回调进入宏任务的事件队列中 记为h1
+            function () {
+                console.log('2');
+                process.nextTick(
+                    // process.nextTick是微任务，它的回调进入微任务的事件队列  记为w21
+                    function () {
+                        console.log('3');
+                    }
+                )
+                // Promise是微任务，它的回调进入微任务的事件队列  记为w22
+                new Promise(function (resolve) {
+                    console.log('4');
+                    resolve();
+                }).then(function () {
+                    console.log('5')
+                })
+            }
+        )
+        // ->a3  
+        process.nextTick(
+            // process.nextTick是微任务，它的回调进入微任务的事件队列  记为w1
+            function () {
+                console.log('6');
+            }
+        )
+        // ->a4  
+        new Promise(
+            // new Promise立即执行，这里输出7
+            function (resolve) {
+                console.log('7');
+                resolve();
+            }
+            // Promise是一个微任务
+        ).then(
+            // 回调进入微任务事件列表 记为 w2
+            function () {
+                console.log('8')
+            }
+        )
+        // -> a5
+        setTimeout(
+            // setTimeout是一个宏任务，它的回调进入宏任务事件列表，记为h2
+            function () {
+                console.log('9');
+                // process.nextTick是微任务，它的回调进入微任务的事件队列  记为w31
+                process.nextTick(function () {
+                    console.log('10');
+                })
+                new Promise(function (resolve) {
+                    console.log('11');
+                    resolve();
+                }).then(function () { //Promise是微任务，它的回调进入微任务的事件队列  记为w32
+                    console.log('12')
+                })
+            }
+        )
+        /**
+        首先a1->...-> a5 输出了1、7
+        然后看宏任务队列和微任务队列，可以看到微任务列表里有两个在排队，分别为w1、w2,
+        队列先进先出所以先执行w1:
+        然后w1 执行输出了6
+        再w2:w2输出8
+        然后当前微任务队列为空再看宏任务队列：
+        队列先进先出所以先执行h1:执行console,输出2
+        然后遇到process.nextTick，它是一个微任务所以它的回调进入微任务列表，记为w21
+        再遇到new Promise 然后输出4，它是一个微任务所以它的回调进入微任务列表，记为w22
+        到目前输出了：1、7、6、8、2、4、
+        这时宏任务执行完了，并且此时微任务列表中又有事件了
+        接着执行微任务队列里的事件
+        按顺序先w21,输出3
+        w22 ,输出5
+        到目前是：1、7、6、8、2、4、3、5
+        然后微任务列表中没有了继续看宏任务列表，有h2
+        开始执行h2：console语句输出9
+        然后遇到process.nextTick
+        process.nextTick是微任务，它的回调进入微任务列表，记为 w31
+        然后遇到new Promise 立即执行输出 11
+        Promise是微任务，它的回调进入微任务的事件队列 记为w32
+        到目前宏任务执行完了，再看微任务列表
+        先w31 ,输出 10
+        再w32,输出12
+        最终输出1、7、6、8、2、4、3、5、9、11、10、12
+        如果实测时以下代码不识别，可以将其去掉
+        process.nextTick(function() {
+            console.log('6');
+        })
+        去掉后输出结果为： 1、7、8、2、4、5、9、11、12，刚好是上面的完整输出顺序中去掉该语句的输出
+        **/
+    }
+</script>
+
+</html>

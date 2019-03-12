@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>04-函数的作用域</title>
+</head>
+<body>
+
+</body>
+<script>
+    /**
+     * 全局的和局部
+     * 全局: 在全局部分 var 变量名 = xx;
+     *       在函数里直接 变量名=xx;
+     */
+    var i = 10;
+    function show(){
+        var i = 20;
+        console.log(i,"局部");
+    }
+    show();
+    console.log(i,"全局");
+    console.log("-----------")
+    function dog(name,age){
+        var name =name;
+        var age =age;
+        function setAge(){
+            age+=1;
+            console.log("1",age)
+        }
+        console.log(name,age);
+        return setAge;
+    }
+    /**
+     * 闭包:将局部变量改造成可以在全局访问
+     */
+    var fncDog = dog("旺财",15);
+    console.log(fncDog());
+</script>
+</html>

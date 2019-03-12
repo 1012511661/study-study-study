@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+
+<body>
+    <h2>判断字符串数组中出现次数最多的值</h2>
+    <button onclick="chang_a()">字符串</button>
+    <span id="s_1"></span>
+    <span id="s_2"></span>
+    <hr />
+    <button onclick="chang_b()">数组</button>
+    <span id="s_3"></span>
+    <span id="s_4"></span>
+</body>
+<script type="text/javascript">
+    {
+        //字符串
+        var aa = "原字符串是："
+        var strs = "我爱学习，我是个好学生";
+        document.getElementById("s_1").innerHTML = aa + strs;
+
+        function chang_a() {
+            /*var strs = "asdasdadd";*/
+            function dome(str) {
+                if (str.length == 1) {
+                    return str;
+                }
+                var newarr = [];
+                for (var i = 0; ss = str.length, i < ss; i++) {
+                    if (!newarr[str.charAt(i)]) {
+                        newarr[str.charAt(i)] = 1;
+                    } else {
+                        newarr[str.charAt(i)] += 1;
+                    }
+                }
+                console.log(newarr);
+                var maxvalue = '';
+                var maxkey = 1; //设定一个值
+                for (var k in newarr) {
+                    if (newarr[k] > maxkey) { //根据这个值做判读 将数组中的每个元素 与这个值做比较！ 如果大于他，那么将住宿
+                        maxkey = newarr[k]; //出现的次数
+                        maxvalue = k; //次数最多的 字母
+                    }
+                }
+                document.getElementById("s_2").style.color = "red";
+                document.getElementById("s_2").innerHTML = "出现次数最多的是:  " + maxvalue + "  次数:" + maxkey
+                return maxvalue;
+            }
+            dome(strs);
+        }
+    } {
+        let str = 'aaaaaabbccccccbbbbssssssddddddddeeeee';
+        let arr = str.split('');
+        let obj = {}
+        for (let i = 0, length = arr.length; i < length; i++) {
+            if (!obj.hasOwnProperty(arr[i])) {
+                obj[arr[i]] = 1
+            } else {
+                obj[arr[i]]++;
+            }
+        }
+        // let arrN = [];
+        // for (let key in obj) {
+        //     let arrSet = [...new Set(arrN.push(obj[key]))]
+        //     let maxMath = Math.max(arrSet);
+        //     return maxMath
+        // }
+        // console.log(maxMath)
+        console.log(obj);
+    } {
+        //数组
+        var arr = ["a", "b", "c", "c", "c", "d"];
+        document.getElementById("s_3").innerHTML = "原本的数组是：" + arr;
+        function chang_b() {
+            /*var arr =["a","b","c","c","c","d"];*/
+            Array.prototype.key = function (arr) {
+                var newarr = [];
+                for (var i = 0; i < this.length; i++) {
+                    if (!newarr[this[i]]) {
+                        newarr[this[i]] = 1;
+                    } else {
+                        newarr[this[i]] += 1;
+                    }
+                }
+                console.log(newarr);
+                var maxvalue = "";
+                var maxkey = 1; //设置一个初始值
+                for (var k in newarr) {
+                    if (newarr[k] > 1) {
+                        maxvalue = newarr[k];
+                        maxkey = k;
+                    }
+                }
+                document.getElementById("s_4").style.color = "red"
+                return maxvalue;
+            }
+            document.getElementById("s_4").innerHTML = "出现的次数:" + arr.key()
+            /*alert("出现的次数:"+arr.diaohuan());*/
+        }
+    } {
+
+        var str = "Hello world!"
+        /*stringObject.indexOf(searchvalue,fromindex)
+        searchvalue	必需。规定需检索的字符串值。
+        fromindex	可选的整数参数。规定在字符串中开始检索的位置。它的合法取值是 0 到 stringObject.length - 1。如省略该参数，则将从字符串的首字符开始检索。
+        提示和注释
+        注释：indexOf() 方法对大小写敏感！
+        注释：如果要检索的字符串值没有出现，则该方法返回 -1。*/
+        console.log(str.indexOf("Hello"));
+        console.log(str.indexOf("World")); /*大写*/
+        console.log(str.indexOf("world")); /*小写,空格算一位*/
+
+        var arr1 = [1, 2, 2, 2, 3, 3, 3, 4, 5, 6],
+            arr2 = [];
+        for (var i = 0, len = arr1.length; i < len; i++) {
+            if (arr2.indexOf(arr1[i]) < 0) {
+                /*<0 因为不存在返回的结果就是-1*/
+                arr2.push(arr1[i]);
+            }
+        }
+        document.write(arr2); // 1,2,3,4,5,6
+    }
+</script>
+
+</html>

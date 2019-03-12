@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>	
+    html, body {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        overflow:hidden;
+    }
+    .circle {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 500px;
+        height: 500px;
+        border-radius: 50%;
+        margin-left: -250px;
+        margin-top: -250px;
+        background-color: #999;
+    }
+</style>
+<body>
+    <div id="wrapper" class="wrapper">
+		<div id="circle" class="circle">
+			<p id="content"></p>
+		</div>
+	</div>
+
+</body>
+<script>
+    let circleE, textE, centerX, centerY, radius;
+    window.onload = () => {
+        circleE = document.getElementById('circle');
+        textE = document.getElementById('content');
+        radius = circleE.offsetWidth / 2; // 半径
+        centerX = circleE.offsetLeft + radius; // 圆心x坐标
+        centerY = circleE.offsetTop + radius; // 圆心y坐标
+        document.body.addEventListener('click', isPointInCircle)
+    }
+
+    function isPointInCircle () {
+        let e = window.event;
+        let scrollX = document.documentElement.scrollLeft || document.body.scrollLeft;
+        let scrollY = document.documentElement.scrollTop || document.body.scrollTop;
+        let x = e.pageX || e.clientX + scrollX;
+        let y = e.pageY || e.clientY + scrollY;
+        let diffX = centerX - x;
+        let diffY = centerY - y;
+        let inCircle = radius * radius >= diffX * diffX + diffY * diffY;
+        textE.innerHTML = inCircle ? '鼠标在在圆内' : '鼠标不在圆内';
+    }
+</script>
+
+</html>

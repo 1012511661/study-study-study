@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>es5-es6之数组扩展</title>
+</head>
+
+<body>
+    <h2>数组</h2>
+    <hr />
+    1. ... 扩展运算符:
+    <br>&nbsp&nbsp&nbsp&nbsp1.数组的拼接
+    <br>&nbsp&nbsp&nbsp&nbsp2.扩展运算符结合函数参数
+    <br>&nbsp&nbsp&nbsp&nbsp3.扩展运算符结合表达式
+    <br>&nbsp&nbsp&nbsp&nbsp4.空数组用... 不起作用
+    <hr>
+    2. ...和apply:
+    <br>&nbsp&nbsp&nbsp&nbsp1.由于扩展运算符可以展开数组，所以不再需要apply方法，将数组转为函数的参数了
+    <br>&nbsp&nbsp&nbsp&nbsp2.求数组的最大元素
+    <br>&nbsp&nbsp&nbsp&nbsp3.调用时间
+    <hr>
+    3.扩展运算符的应用:
+    <br>&nbsp&nbsp&nbsp&nbsp 1.复制数组:
+    <br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp a.用 = 复制 新的变 == 原本的
+    <br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp b.用 es5 concat() 复制 新的变 != 原本的
+    <br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp c.用 ...复制 新的变 != 原本的
+    <br>&nbsp&nbsp&nbsp&nbsp 2.
+
+
+</body>
+<script>
+    {
+        // 1. ... 扩展运算符
+        //A
+        console.log(...[1, 2, 3]);
+        console.log(0, ...[1, 2, 3]);
+        //B
+        add = (x, y) => {
+            //return x+y
+            console.log(x + y)
+        };
+        let arr = [5, 10];
+        add(...arr);
+        //C 数组拼接
+        //push方法的参数不能是数组，所以只好通过apply方法变通使用push方法。有了扩展运算符，就可以直接将数组传入push方法。
+        // ES5的 写法
+        let arr1 = [0, 1, 2];
+        let arr2 = [3, 4, 5];
+        Array.prototype.push.apply(arr1, arr2);
+        console.log(arr1);
+        // ES6 的写法
+        let arr3 = [0, 1, 2];
+        let arr4 = [3, 4, 5];
+        arr3.push(...arr4);
+        console.log(arr3);
+        //ES6 函数拼接数组
+        push = (array, ...items) => {
+            array.push(...items);
+            console.log(array)
+        };
+        let array = [1, 2, 3, 4, 5];
+        let items = ['a', 's', 'd'];
+        push(array, ...items);
+        //D 扩展运算符结合函数参数
+        fn = (v, w, x, y, z) => {
+            let args1 = [v, w, x, y, z];
+            console.log(args1)
+        };
+        let args = [0, 1];
+        fn(-1, ...args, 2, ...[3]);
+        //E 扩展运算符结合表达式
+        //表达式 根据 X 数组里面的指定值判断后赋给 arr5 数组
+        let x = [3, 5];
+        let arr5 = [...(x[1] > 3 ? ['a'] : []), 'b'];
+        console.log(arr5);
+        //F
+        //空数组用... 不起作用
+        console.log([...[], 1])
+    } {
+        // ...和apply 对比
+        // A
+        // 由于扩展运算符可以展开数组，所以不再需要apply方法，将数组转为函数的参数了
+        // es5
+        function fn1(x, y, z) {
+            console.log(x + y + z, 'apply')
+            //console.log(this)
+        };
+        var arr1 = [0, 1, 2];
+        fn1.apply(null, arr1);
+        // es6
+        fn2 = (x, y, z) => {
+            console.log(x + y + z, '...')
+            //console.log(this)
+        };
+        let arr2 = [10, 11, 12];
+        fn2(...arr2)
+
+        // B 求数组的最大元素
+        //由于 JavaScript 不提供求数组最大元素的函数，所以只能套用Math.max函数，将数组转为一个参数序列，然后求最大值。有了扩展运算符以后，就可以直接用Math.max了。
+        //es5
+        console.log(Math.max.apply(null, [1, 6, 9]));
+        //es6
+        console.log(Math.max(...[2, 3, 7]))
+
+        //C 调用时间
+        // ES5
+        console.log(new(Date.bind.apply(Date, [null, 2018, 7, 1])));
+        // ES6
+        console.log(new Date(...[2018, 7, 2]))
+    } {
+        // ...的应用
+        // 复制数组
+        // 直接复制改变复制后的原数组也会被改变
+        // 数组是复合的数据类型，直接复制的话，只是复制了指向底层数据结构的指针，而不是克隆一个全新的数组。
+        console.log('复制数组');
+        let arr1 = [1, 2, 3];
+        let arr2 = arr1;
+        arr2[1] = 10;
+        console.log(arr1, '原 改变新的原本的也会被改变');
+        console.log(arr2, '新');
+        // es5
+        // 通过 concat() 拼接的方式,不改变原数组
+        let arr3 = [1, 2, 3];
+        let arr4 = arr3.concat();
+        arr4[1] = 5;
+        console.log(arr3, 'es5 原');
+        console.log(arr4, 'es6 新');
+        // es6 不改变原数组
+        let arr5 = [1, 2, 3];
+        let arr6 = [...arr5];
+        arr6[2] = 10;
+        console.log(arr5, 'es6 原');
+        console.log(arr6, 'es6 新');
+
+        // 合并数组
+        console.log('合并纯数组');
+        let arr7 = ['q', 'w', 'e'];
+        let arr8 = ['r', 't', 0];
+        //es5
+        let arr9 = arr7.concat(arr8);
+        console.log(arr9, 'es5');
+        //es6
+        let arr10 = [...arr7, ...arr8];
+        console.log(arr10, 'es6');
+
+        console.log('合并数组对象');
+        let arr11 = [{
+            foo: 1
+        }];
+        let arr12 = [{
+            bar: 2
+        }];
+        //es5
+        let arr13 = arr11.concat(arr12);
+        console.log(arr13, 'es5');
+        //es6
+        let arr14 = [...arr11, ...arr12];
+        console.log(arr14, 'es6');
+
+        console.log(arr13[0] === arr11[0] || arr13[1] === arr12[0]); // true
+        console.log(arr14[0] === arr11[0] || arr14[1] === arr12[0]); // true
+        //arr13和arr14是用两种不同方法合并而成的新数组，但是它们的成员都是对原数组成员的引用，这就是浅拷贝。如果修改了原数组的成员，会同步反映到新数组。
+    }
+</script>
+
+</html>

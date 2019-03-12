@@ -1,0 +1,58 @@
+body { margin: 0; }
+
+
+/*sliding navigation between the slides*/
+ul {
+    /*-webkit-perspective: 1000;
+    -webkit-backface-visibility: hidden;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;*/
+
+   /* margin: 0;
+    padding: 0;
+    position: fixed;
+    left:0;
+    height:100vh;*/
+    width: 100px;
+    height:500px;
+    margin: 100px;
+    padding: 0;
+    position: fixed;
+    left:100px;
+
+
+
+
+    list-style-type: none;
+    overflow: hidden;
+
+    /*-webkit-perspective: 1000;
+    -webkit-backface-visibility: hidden;*/
+
+}
+
+li {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+
+    float: left;
+    width: 100vw;
+    height: 100%;
+    width: 100vw;
+    height: 100%;
+    color: #000;
+    text-align: center;
+
+}
+
+#blackcover{ height: 100vh; width: 100vw; position: absolute; background-color: #2B2B2B; z-index: 1; color: #FFF; display: block; }
+.b2{ background-color: #69428B; }
+.b3{ background-color: #46537A; }
+h1{ font-family: "微软雅黑"; padding-top: 30px; color:#fff }
+/*end of sliding navigation between the slides*/
+

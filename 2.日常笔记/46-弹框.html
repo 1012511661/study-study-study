@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>弹出信息框</title>
+</head>
+<style type="text/css">
+#winpop { width:250px; height:0px; position:absolute; right:0; bottom:0; border:1px solid #666; margin:0; padding:1px; overflow:hidden; display:none;}
+#winpop .winpop_title { width:100%; height:22px; line-height:20px; background:#FFCC00; font-weight:bold; text-align:center; font-size:12px;}
+#winpop .winpop_con { width:100%; height:40px; line-height:40px; font-weight:bold; font-size:12px; color:#FF0000; text-decoration:underline; text-align:center}
+
+.winpop_close { position:absolute; right:4px; top:-1px; color:red; cursor:pointer}
+</style>
+<script type="text/javascript">
+  window.onload=function(){
+    /****/
+    setTimeout("text()",30);
+  /**接受 =》消息弹框**/
+  setTimeout("setStyle()",100);
+     
+        setTimeout("tips_pop()",3000);
+  /**消失=》消息弹框**/
+        setTimeout("removeAction()",10000);//
+}
+/**********************/
+function text(){
+  var textCont = "<div id='winpop' onclick='tips_pop()'><div class='winpop_title'>您有新的短消息！<span class='winpop_close' >×</span></div><div id='winpop_img'><img src='https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1526358019915&di=8f91c698eada1fb918768d32dcc58aaf&imgtype=0&src=http%3A%2F%2Fpic35.nipic.com%2F20131113%2F3822951_101306969000_2.jpg'  style='width: 100%;height:120px;background-position: center;' /></div><div id='winpop_con'>1条未读信息(</div></div>"
+  var divDiv = document.createElement("div");
+  divDiv.innerHTML = textCont;
+    document.body.appendChild(divDiv);
+}
+      /***************接受 =》消息弹框**********************/
+      function setStyle(){ var winpopA =document.getElementById('winpop')
+      winpopA.style.height='0px';}
+      function tips_pop(){
+        var MsgPop=document.getElementById("winpop");
+    
+        var popH=parseInt(MsgPop.style.height);//将对象的高度转化为数字
+            if (popH==0){
+                       MsgPop.style.display="block";//显示隐藏的窗口
+                       show = setInterval("changeH('up')",5);
+                                }
+               else { 
+                          hide = setInterval("changeH('down')",5);
+                         }
+      }
+     function changeH(str) {
+                var MsgPop=document.getElementById("winpop");
+                var popH=parseInt(MsgPop.style.height);
+               if(str=="up"){
+                          if (popH<=100){ 
+                            MsgPop.style.height=(popH+100).toString()+"px";
+                           }
+                else{  
+                          clearInterval(show);
+                        }
+               }
+               if(str=="down"){ 
+                          if (popH>=3){  
+                          MsgPop.style.height=(popH-100).toString()+"px";
+                         }
+              else{ 
+                     clearInterval(hide);   
+                      MsgPop.style.display="none";  //隐藏DIV
+                       }
+               }
+}
+/**消息框消失**/
+function removeAction(){
+       var MsgPop=document.getElementById("winpop");
+       MsgPop.style.display = "none";
+}
+</script>
+<body>
+
+</body>
+</html>

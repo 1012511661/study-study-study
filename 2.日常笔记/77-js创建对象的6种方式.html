@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>8.js创建对象的6种方式</title>
+</head>
+<body>
+
+</body>
+<script>
+
+    /* 第一种方式:
+       使用对象字面量的方式{}   创建一个对象（最简单，好理解，推荐使用)
+     */
+    var Cat={};//JSON
+    Cat.name="黑猫警长";//添加属性并赋值
+    Cat.age=22;
+    Cat.sayHello=function(){
+        alert("hello"+Cat.name+",今年"+Cat["age"]+"岁了");//可以使用"."的方式访问属性，也可以使用HashMap的方式访问
+    }
+    Cat.sayHello();//调用对象的方法(函数)
+
+
+    /* 第二种方式:
+       用function(函数)来模拟class(无参构造函数)
+     */
+    function Person(){}
+    var personOne=new Person();//定义一个function,如果有new关键字去"实例化",那么该function可以看做是一个类
+    personOne.name="程序员";
+    personOne.hobby="正在敲代码";
+    personOne.work=function(){
+        alert(personOne.name+"is"+personOne.hobby);
+    }
+    personOne.work();
+
+
+    /* 第三种方式:
+       用有参数构造函数来实现，这样定义更方便，扩展性更强(推荐使用)
+     */
+    function Pet(name,age,hobby){
+        this.name=name;//this作用域:当前对象
+        this.age=age;
+        this.hobby=hobby;
+        this.eat=function(){
+            alert("我叫"+this.name+"，我今年"+this.age+"岁了，我喜欢"+this.hobby);
+        }
+    }
+
+    var hehe=new Pet("王鹏程",22,"打篮球");//实例化创建对象
+    hehe.eat();
+
+
+    /* 第四种方式:
+     使用工厂方式来创建对象(Object关键字)
+     */
+    var wcDog = new Object();
+    wcDog.name="旺财";
+    wcDog.age=3;
+    wcDog.work=function(){
+        alert("我是"+wcDog.name+"汪汪汪......"+"我今年"+wcDog.age+"岁了");
+    }
+    wcDog.work();
+
+
+    /* 第五种方式:
+       使用原型对象的方式 prototype关键字
+    */
+    function Dog(){}
+    Dog.prototype.name="旺财";
+    Dog.prototype.eat=function(){
+        alert(this.name+"是个吃货");
+    }
+    var wangcai = new Dog();
+    wangcai.eat();
+
+
+    /* 第六种方式:
+     混合模式(原型和构造函数)
+    */
+    function Car(name,price){
+        this.name=name;
+        this.price=price;
+    }
+    Car.prototype.sell=function(){
+        alert("我是"+this.name+",我现在卖"+this.price+"万元");
+    }
+    var camry = new Car("小明",22);
+    camry.sell();
+
+
+    /* 第七种方式:
+       动态原型的方式(可以看做是混合模式的一种特例)
+    */
+    function Car(name,price){
+        this.name=name;
+        this.price=price;
+        if(typeof Car.sell=="undefined"){
+            Car.prototype.sell=function(){
+                alert("我是"+this.name+",我现在卖"+this.price+"万元");
+            }
+            Car.sell = true;
+        }
+    }
+
+    var camry = new Car("小明",33);
+    camry.sell();
+
+</script>
+</body>
+</html>
+
+</script>
+</html>

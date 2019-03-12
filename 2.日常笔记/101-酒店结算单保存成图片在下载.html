@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>酒店结算单</title>
+</head>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+
+    }
+
+    #roomTxt {
+        margin-left: 200px;
+        width: 980px;
+        border: 1px solid #000000;
+        overflow: hidden;
+    }
+
+    #roomTxt .roomTxt-title {
+        font-size: 26px;
+        margin: 0 auto;
+        padding: 30px;
+        width: 180px;
+    }
+
+    #roomTxt .roomTxt-con ul {
+        width: 96%;
+        margin: 0 auto;
+    }
+
+    #roomTxt .roomTxt-con ul li {
+        padding: 2px 3% 2px 1%;
+        display: inline-block;
+    }
+
+    #roomTxt .roomTxt-con ul li:nth-child(3n) {
+        width: 28%;
+        padding-left: 7%;
+    }
+
+    #roomTxt .roomTxt-con ul li:nth-child(3n-1) {
+        width: 23%;
+        padding-left: 5%;
+    }
+
+    #roomTxt .roomTxt-con ul li:nth-child(3n-2) {
+        width: 26%;
+    }
+
+    #roomTxt .roomTxt-from {
+        width: 100%;
+        border-top: 1px solid;
+        margin-top: 30px;
+    }
+
+    #roomTxt .roomTxt-from table {
+        width: 100%;
+        margin: -20px auto 0;
+
+    }
+
+
+    #roomTxt .roomTxt-from table caption {
+        padding: 5px 0 3px 25px;
+        font-size: 20px;
+        border-bottom: 1px solid;
+        text-align: left;
+    }
+
+    #roomTxt .roomTxt-from table tbody {
+        padding-top: 10px;
+        display: block;
+        width: 101%;
+        display: inline-block;
+        margin-left: -3px;
+    }
+
+    #roomTxt .roomTxt-from table tbody tr {
+        display: inline-block;
+        border-bottom: 1px solid;
+        width: 100%;
+    }
+
+    #roomTxt .roomTxt-from table tbody tr:last-child {
+        margin-bottom: 50px;
+    }
+
+    #roomTxt .roomTxt-from table tbody tr th {
+        width: 160px;
+        display: inline-block;
+        text-align: center;
+    }
+
+    #roomTxt .roomTxt-from table tbody tr th:nth-child(3) {
+        text-align: right;
+    }
+
+    #roomTxt .roomTxt-from table tbody tr th:nth-child(4) {
+        width: 80px;
+        margin-left: 64px;
+    }
+
+    #roomTxt .roomTxt-from table tbody tr th:nth-child(5),
+    #roomTxt .roomTxt-from table tbody tr th:nth-child(6) {
+        width: 80px;
+        margin-left: 80px;
+    }
+
+    #roomTxt .roomTxt-from table tbody tr td {
+        width: 250px;
+        text-align: center;
+    }
+</style>
+<script src="./js/jquery-1.11.3.min.js"></script>
+<script src="https://cdn.bootcss.com/html2canvas/0.5.0-beta4/html2canvas.js"></script>
+
+<body>
+
+    <div id="roomTxt">
+        <!-- title -->
+        <p class="roomTxt-title">XX酒店结算单</p>
+        <!-- 明细 -->
+        <div class="roomTxt-con">
+            <ul>
+                <li>结算账号：<span>111111111</span></li>
+                <li>结算周期：<span>1月</span></li>
+                <li>结算日期段：<span>20180101-20181212</span></li>
+                <li>分账比例：<span>6:4</span></li>
+                <li>点播金额：<span>11010.11</span>元</li>
+                <li>结算金额：<span>1132122.11</span>元</li>
+                <li>结算笔数：<span>115</span>笔</li>
+                <li></li> <!-- 空白间隙 -->
+                <li>结算单生成日期：<span>20180214</span>笔</li>
+            </ul>
+        </div>
+        <!-- 数据表格 -->
+        <div class="roomTxt-from">
+            <table>
+                　<caption><strong>结算明细如下</strong></caption>
+                <!---表头--->
+                <tbody>
+                    <tr>
+                        <th>点播编号</th>
+                        <th>点播时间</th>　
+                        <th>点播金额(元)</th>　
+                        <th>客房编号</th>　
+                        <th>客户姓名</th>　　
+                        <th>支付方式</th>　　
+                    </tr>
+                    <tr>
+                        <td>20180901D00001</td>　　
+                        <td>2018-12-12 00:00:00</td>　　
+                        <td>30</td>　　
+                        <td>111</td>　　
+                        <td>小小小</td>　　
+                        <td>微信</td>　　
+                    </tr>
+                    <tr>
+                        <td>20180901D00001</td>　　
+                        <td>2018-12-12 00:00:00</td>　　
+                        <td>30</td>　　
+                        <td>111</td>　　
+                        <td>小小小</td>　　
+                        <td>支付宝</td>　　
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <button class="btn">点击截图</button>
+    <p id="roomImg" style="width:1px;height: 1px;overflow: hidden;">
+        <!--startprint1-->
+        <img id="screenShotImg" alt="我是显示截图的" style="visibility: hidden;">
+        <!--endprint1-->
+    </p>
+</body>
+<script>
+    // 截图功能  targetDom 要克隆的目标dom元素 cb 回调函数
+    function screenShot(targetDom, cb) {
+        var copyDom = targetDom.clone(); //克隆dom节点
+        copyDom.css('display', 'block');
+        $('#roomImg').append(copyDom); //把copy的截图对象追加到 载体 后面
+        var width = copyDom.width(); //dom宽
+        var height = copyDom.height(); //dom高
+        var scale = 1; //放大倍数
+        var canvas = document.createElement('canvas');
+        canvas.width = width * scale; //canvas宽度
+        canvas.height = height * scale; //canvas高度
+        var content = canvas.getContext("2d");
+        content.scale(scale, scale);
+        var rect = copyDom.get(0).getBoundingClientRect(); //获取元素相对于视察的偏移量
+        content.translate(-rect.left, -rect.top); //设置context位置，值为相对于视窗的偏移量负值，让图片复位
+        html2canvas(copyDom, {
+            allowTaint: true,
+            tainTest: true,
+            scale: scale,
+            canvas: canvas,
+            width: width,
+            heigth: height,
+            onrendered: function (canvas) {
+                if (cb) {
+                    copyDom.css('display', 'none');
+                    cb(canvas.toDataURL("image/png"), width, height);
+                }
+            }
+        });
+    }
+    // 下载 参数一： 选择器，代表img标签  参数二： 图片名称，可选
+    function downloadIamge(name) {
+        var Img = DomQuerySel('#screenShotImg')
+        var url = Img.src
+        var a = document.createElement('a')
+        var event = new MouseEvent('click')
+        a.download = name || '下载图片名称'
+        a.href = url
+        a.dispatchEvent(event)
+    }
+    // 获取元素
+    function DomQuerySel(selector) {
+        return document.querySelector(selector)
+    }
+    document.querySelector('.btn').onclick = function () {
+        var Img = DomQuerySel('#screenShotImg')
+        screenShot($('#roomTxt'), function (canvas, width, height) {
+            Img.src = canvas;
+            Img.style.width = width + "px";
+            Img.style.height = height + "px";
+            downloadIamge('图片名称')
+        });
+    }
+</script>
+
+</html>

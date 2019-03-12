@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>对象的数据双向绑定Proxy(3)</title>
+</head>
+
+<body>
+  <script>
+    let dog = {
+      name: "小小",
+      firends: [{
+        name: "大大"
+      }]
+    }
+    // 1.首先new一个Proxy对象
+    let proxy = new Proxy(dog, { // 2.参数一为需要代理的数据，参数二配置对象
+      get(target, property) { // 3.参数1为上面dog对象，参数2为dog的属性
+        console.log('!!! get被监控到了')
+        return target[property]
+      },
+      set(target, property, value) { // 4.参数1为上面dog对象，参数2为dog的属性，参数3为设置的新值
+        // 有点类似Object.defineProperty
+        console.log('!!! set被监控到了')
+        target[property] = value;
+      }
+    })
+    // 那么接下来我们设置一下这个属性
+    dog.name = '新小小' // set值时，发现不会打印 'set被监控到了'
+    console.log(dog.name, 'dog.name'); // get值时，发现不会打印 'get被监控到了'
+    // 思考：为什么在set/get值的时候不会打印出来我们需要的东西呢？
+    // 上面说得很明白了，proxy相当于是一个壳，代理我们需要监控的数据，也就是我们要通过proxy来访问内部数据才会被监控到
+    proxy.name = '新新小小' // 打印输出 'set被监控到了'
+    console.log(proxy.name,'proxy.name') // 打印输出 'get被监控到了'
+    proxy.firends.name = '新大大' // 打印输出 'set被监控到了'
+    console.log(proxy.firends.name,'proxy.firends.name') // 打印输出 'get被监控到了'
+  </script>
+</body>
+
+</html>

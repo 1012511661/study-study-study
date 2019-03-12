@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>刮刮乐</title>
+</head>
+<style>
+    .prize {
+        position: absolute;
+        width: 300px;
+        height: 150px;
+        text-align: center;
+        line-height: 150px;
+        font-size: 30px;
+        color: red
+    }
+
+    #canvas {
+        border: 1px solid red;
+        position: absolute;
+        z-index: 2
+    }
+</style>
+
+<body>
+    <canvas id="canvas" wwidth="300" height="150"></canvas>
+    <div class="prize"></div>
+</body>
+<script>
+    window.onload = () => {
+        let canvas = document.getElementById('canvas');
+        let ctx = canvas.getContext("2d");
+        ctx.beginPath(); // 开始路径
+        ctx.rect(0, 0, 300, 150); // 绘制矩形
+        ctx.fillStyle = '#c0c0c0'; // 填充颜色
+        ctx.fill(); // 填充
+        ctx.closePath(); // 关闭路径
+        // 按下事件
+        canvas.onmousedown = (event) => {
+            // 移动事件
+            canvas.onmousemove = (event) => {
+                let x = event.clientX-15;
+                let y = event.clientY-15; // 让鼠标在矩形的中间
+                // 清除绘制，显示底部文字
+                ctx.clearRect(x, y, 20, 20);
+            }
+        }
+        // 松开事件
+        canvas.onmouseup =(event)=>{
+            canvas.onmousemove = null; 
+        }
+        let arr,userName;
+        if(userName){
+            arr = ['一等奖'];
+        }else{
+            arr = ['1等奖','2等奖','3等奖','4等奖','5等奖','6等奖','安慰奖','谢谢回顾'];
+        }
+        document.querySelector('.prize').innerText = arr[Math.floor(Math.random()*arr.length)]
+    }
+</script>
+
+</html>

@@ -1,0 +1,178 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>jQuery点击按钮图片模向滑动 - 站长素材</title>
+
+<style type="text/css">
+*{margin:0;padding:0;}
+a{text-decoration:none;color:#282828;}
+a img{border:none;}
+.clear{clear:both;}
+body{font-size:12px;font-family:宋体,arial, helvetica, sans-serif;color:#282828;}
+
+/* apply */
+.apply{width:890px;margin:20px auto 0 auto;}
+.apply_array{border:#cdcdcd 1px solid;padding:16px;width:100px;float:left;height:196px;margin-right:32px;}
+.apply_array .vote{position:absolute;line-height:26px;margin-top:10px;padding-left:29px;width:83px;display:block;background:url(imgs/vote.gif) no-repeat 0px 0px;height:26px;color:#282828;margin-left:-6px;text-decoration:none;}
+.apply_last{margin-right:0px}
+.apply_img{text-align:center;width:100px;display:table-cell;background:#e2e2e2;height:100px;font-size:95px;vertical-align:middle}
+.apply_array a{text-decoration:underline}
+.apply_array a:hover{color:#e01111}
+.apply_info{text-align:center;padding:15px;}
+.apply_comment{text-align:center}
+.apply_info a{line-height:17px;font-weight:700}
+.apply_nav{position:relative;width:798px;float:left;height:252px;overflow:hidden}
+.apply_w{position:absolute;margin-top:22px;width:1000px;float:left;left:0px}
+.apply .img_l{padding:122px 12px 0 12px;float:left;cursor:pointer;}
+.apply .img_r{padding:122px 12px 0 12px;float:left;cursor:pointer;}
+</style>
+
+<script type="text/javascript" src="js/jquery-1.3.1.js"></script>
+<script type="text/javascript">
+$(function(){
+
+	$li1 = $(".apply_nav .apply_array");
+	$window1 = $(".apply .apply_w");
+	$left1 = $(".apply .img_l");
+	$right1 = $(".apply .img_r");
+	
+	$window1.css("width", $li1.length*166);
+
+	var lc1 = 0;
+	var rc1 = $li1.length-5;
+	
+	$left1.click(function(){
+		if (lc1 < 1) {
+			alert("已经是第一张图片");
+			return;
+		}
+		lc1--;
+		rc1++;
+		$window1.animate({left:'+=166px'}, 1000);
+	});
+
+	$right1.click(function(){
+		if (rc1 < 1){
+			alert("已经是最后一张图片");
+			return;
+		}
+		lc1++;
+		rc1--;
+		$window1.animate({left:'-=166px'}, 1000);
+	});
+
+})
+</script>
+
+</head>
+
+<body>
+
+<div class="apply">
+
+	<div class="img_l"><img src="imgs/left.gif" /></div>
+	
+	<div class="apply_nav">
+		<div class="apply_w">
+		
+			<div class="apply_array">
+				<div class="apply_img"><img src="imgs/sinaminiblog.gif" /></div>
+				<div class="apply_info"><a href="http://sc.chinaz.com/jiaoben/" target="_blank">新浪微博</a></div>
+				<div class="apply_comment"><a href="http://sc.chinaz.com/jiaoben/" target="_blank" title="我要评论">评论</a> <a href="http://sc.chinaz.com/jiaoben/" target="_blank" title="查看评论">查看评论</a></div>
+				<a href="javascript:void(0)" onclick="diggUP(1);" class="vote">投票(<span id="count_1">0</span>)</a>
+			</div>
+			
+			<div class="apply_array">
+				<div class="apply_img"><img src="imgs/kaixin001.gif" /></div>
+				<div class="apply_info"><a href="http://sc.chinaz.com/jiaoben/" target="_blank">开心001</a></div>
+				<div class="apply_comment"><a href="http://sc.chinaz.com/jiaoben/" target="_blank" title="我要评论">评论</a> <a href="http://sc.chinaz.com/jiaoben/" target="_blank" title="查看评论">查看评论</a></div>
+				<a href="javascript:void(0)" onclick="diggUP(2);" class="vote">投票(<span id="count_2">0</span>)</a>
+			</div>
+		
+			<div class="apply_array">
+				<div class="apply_img"><img src="imgs/renren.gif" /></div>
+				<div class="apply_info"><a href="http://sc.chinaz.com/jiaoben/" target="_blank">人人网</a></div>
+				<div class="apply_comment"><a href="http://sc.chinaz.com/jiaoben/" target="_blank" title="我要评论">评论</a> <a href="http://sc.chinaz.com/jiaoben/" target="_blank" title="查看评论">查看评论</a></div>
+				<a href="javascript:void(0)" onclick="diggUP(3);" class="vote">投票(<span id="count_3">0</span>)</a>
+			</div>
+		
+			<div class="apply_array">
+				<div class="apply_img"><img src="imgs/baiducang.gif" /></div>
+				<div class="apply_info"><a href="http://sc.chinaz.com/jiaoben/" target="_blank">百度收藏</a></div>
+				<div class="apply_comment"><a href="http://sc.chinaz.com/jiaoben/" target="_blank" title="我要评论">评论</a> <a href="http://sc.chinaz.com/jiaoben/" target="_blank" title="查看评论">查看评论</a></div>
+				<a href="javascript:void(0)" onclick="diggUP(4);" class="vote">投票(<span id="count_4">0</span>)</a>
+			</div>
+		
+			<div class="apply_array">
+				<div class="apply_img"><img src="imgs/qq.gif" /></div>
+				<div class="apply_info"><a href="http://sc.chinaz.com/jiaoben/" target="_blank">QQ</a></div>
+				<div class="apply_comment"><a href="http://sc.chinaz.com/jiaoben/" target="_blank" title="我要评论">评论</a> <a href="http://sc.chinaz.com/jiaoben/" target="_blank" title="查看评论">查看评论</a></div>
+				<a href="javascript:void(0)" onclick="diggUP(5);" class="vote">投票(<span id="count_5">0</span>)</a>
+			</div>
+			
+			<div class="apply_array">
+				<div class="apply_img"><img src="imgs/qqshuqian.gif" /></div>
+				<div class="apply_info"><a href="http://sc.chinaz.com/jiaoben/" target="_blank">QQ书签</a></div>
+				<div class="apply_comment"><a href="http://sc.chinaz.com/jiaoben/" target="_blank" title="我要评论">评论</a> <a href="http://sc.chinaz.com/jiaoben/" target="_blank" title="查看评论">查看评论</a></div>
+				<a href="javascript:void(0)" onclick="diggUP(6);" class="vote">投票(<span id="count_6">0</span>)</a>
+			</div>
+			
+			<div class="apply_array">
+				<div class="apply_img"><img src="imgs/qqzone.gif" /></div>
+				<div class="apply_info"><a href="http://sc.chinaz.com/jiaoben/" target="_blank">js 特效</a></div>
+				<div class="apply_comment"><a href="http://sc.chinaz.com/jiaoben/" target="_blank" title="我要评论">评论</a> <a href="http://sc.chinaz.com/jiaoben/" target="_blank" title="查看评论">查看评论</a></div>
+				<a href="javascript:void(0)" onclick="diggUP(7);" class="vote">投票(<span id="count_7">0</span>)</a>
+			</div>
+			
+			<div class="apply_array">
+				<div class="apply_img"><img src="imgs/sinavivi.gif" /></div>
+				<div class="apply_info"><a href="http://sc.chinaz.com/jiaoben/" target="_blank">js 特效</a></div>
+				<div class="apply_comment"><a href="http://sc.chinaz.com/jiaoben/" target="_blank" title="我要评论">评论</a> <a href="http://sc.chinaz.com/jiaoben/" target="_blank" title="查看评论">查看评论</a></div>
+				<a href="javascript:void(0)" onclick="diggUP(8);" class="vote">投票(<span id="count_8">0</span>)</a>
+			</div>
+			
+			<div class="apply_array">
+				<div class="apply_img"><img src="imgs/sohubai.gif" /></div>
+				<div class="apply_info"><a href="http://sc.chinaz.com/jiaoben/" target="_blank">jquery</a></div>
+				<div class="apply_comment"><a href="http://sc.chinaz.com/jiaoben/" target="_blank" title="我要评论">评论</a> <a href="http://sc.chinaz.com/jiaoben/" target="_blank" title="查看评论">查看评论</a></div>
+				<a href="javascript:void(0)" onclick="diggUP(9);" class="vote">投票(<span id="count_9">0</span>)</a>
+			</div>
+			
+			<div class="apply_array">
+				<div class="apply_img"><img src="imgs/douban.gif" /></div>
+				<div class="apply_info"><a href="http://sc.chinaz.com/jiaoben/" target="_blank">jquery</a></div>
+				<div class="apply_comment"><a href="http://sc.chinaz.com/jiaoben/" target="_blank" title="我要评论">评论</a> <a href="http://sc.chinaz.com/jiaoben/" target="_blank" title="查看评论">查看评论</a></div>
+				<a href="javascript:void(0)" onclick="diggUP(10);" class="vote">投票(<span id="count_10">0</span>)</a>
+			</div>
+			
+			<div class="apply_array">
+				<div class="apply_img"><img src="imgs/zhuaxia.gif" /></div>
+				<div class="apply_info"><a href="http://sc.chinaz.com/jiaoben/" target="_blank">抓虾</a></div>
+				<div class="apply_comment"><a href="http://sc.chinaz.com/jiaoben/" target="_blank" title="我要评论">评论</a> <a href="http://sc.chinaz.com/jiaoben/" target="_blank" title="查看评论">查看评论</a></div>
+				<a href="javascript:void(0)" onclick="diggUP(11);" class="vote">投票(<span id="count_11">0</span>)</a>
+			</div>
+			
+			<div class="apply_array">
+				<div class="apply_img"><img src="imgs/gmail.gif" /></div>
+				<div class="apply_info"><a href="http://sc.chinaz.com/jiaoben/" target="_blank">javascript</a></div>
+				<div class="apply_comment"><a href="http://sc.chinaz.com/jiaoben/" target="_blank" title="我要评论">评论</a> <a href="http://sc.chinaz.com/jiaoben/" target="_blank" title="查看评论">查看评论</a></div>
+				<a href="javascript:void(0)" onclick="diggUP(12);" class="vote">投票(<span id="count_12">0</span>)</a>
+			</div>
+			
+			<div class="apply_array">
+				<div class="apply_img"><img src="imgs/delicious.gif" /></div>
+				<div class="apply_info"><a href="http://sc.chinaz.com/jiaoben/" target="_blank">javascript</a></div>
+				<div class="apply_comment"><a href="http://sc.chinaz.com/jiaoben/" target="_blank" title="我要评论">评论</a> <a href="http://sc.chinaz.com/jiaoben/" target="_blank" title="查看评论">查看评论</a></div>
+				<a href="javascript:void(0)" onclick="diggUP(13);" class="vote">投票(<span id="count_13">0</span>)</a>
+			</div>
+			
+		</div>
+	</div>
+	
+	<div class="img_r"><img src="imgs/right.gif" /></div>
+	
+</div>
+
+</body>
+</html>

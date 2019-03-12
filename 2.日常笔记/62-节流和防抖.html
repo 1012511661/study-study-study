@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>防抖和节流</title>
+</head>
+
+<body>
+    <h1>函数节流（throttle）与函数去抖（debounce）</h1>
+    <hr>
+    <h3>
+        https://www.cnblogs.com/fsjohnhuang/p/4147810.html <br>
+        https://blog.csdn.net/zhouziyu2011/article/details/70197750 <br>
+    </h3>
+    <hr>
+    函数防抖（debounce）是指在一定时间内，在动作被连续频繁触发的情况下，动作只会被执行一次，也就是说当调用动作过n毫秒后，才会执行该动作，若在这n毫秒内又调用此动作则将重新计算执行时间，所以短时间内的连续动作永远只会触发一次，比如游戏中的释放技能前摇,如果在前摇时候终止,
+    <hr>
+    函数节流是指一定时间内执行的操作只执行一次，也就是说即预先设定一个执行周期，当调用动作的时刻大于等于执行周期则执行该动作，然后进入下一个新周期，就是fps游戏的射速，就算一直按着鼠标射击，也只会在规定射速内射出子弹
+    <hr>
+    <h3>节流是减少执行频率，防抖是最后一次执行</h3>
+    <hr>
+    结合应用场景<br>
+    debounce(函数防抖)<br>
+    search搜索联想，用户在不断输入值时，用防抖来节约请求资源。<br>
+    window触发resize的时候，不断的调整浏览器窗口大小会不断的触发这个事件，用防抖来让其只触发一次<br>
+    throttle(函数节流)<br>
+    鼠标不断点击触发，mousedown(单位时间内只触发一次)<br>
+    监听滚动事件，比如是否滑到底部自动加载更多，用throttle来判断<br>
+    <hr>
+
+    节流实例:
+    <span>未使用节流,鼠标移动就会改变 示例1</span>
+    <div>X:<span id="x"></span></div>
+    <div>Y:<span id="y"></span></div>
+    <span>使用防抖,一段时间内鼠标移动只会获取最后一个就会改变 示例2</span>
+    <div>XX:<span id="xx"></span></div>
+    <div>YY:<span id="yy"></span></div>
+    <span>防抖：改变屏幕的大小 示例3<br><span id="fd0"></span>
+        <----><span id="fd1"></span>
+    </span><br>
+    <span>节流：改变屏幕的大小 示例4<br><span id="jl0"></span>
+        <----><span id="jl1"></span>
+    </span>
+
+
+</body>
+<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript">
+    {
+        //未使用节流 示例1
+        (function ($) {
+            var $x = $('#x');
+            var $y = $('#y');
+            var canRun = true;
+            $(document).on('mousemove', function (event) {
+                var e = event || window.event;
+                if (!canRun) {
+                    return;
+                }
+                canRun = false;
+                setTimeout(function () {
+                    $x.text(e.pageX);
+                    $y.text(e.pageY);
+                    canRun = true;
+                }, 100);
+            });
+        })(jQuery);
+    } {
+        //使用防抖 示例2
+        (function ($) {
+            var $x = $('#xx');
+            var $y = $('#yy');
+            var timer = null;
+            $(document).on('mousemove', function (event) {
+                timer && clearTimeout(timer);
+                timer = setTimeout(function () {
+                    var e = event || window.event;
+                    $x.text(e.pageX);
+                    $y.text(e.pageY);
+                }, 100);
+            });
+        })(jQuery);
+    }
+    {
+        // 防抖
+        function debounce(fn, delay) {
+            // fn 执行的函数 delay 时间
+            let handle;
+            return function (e) {
+                // 取消之前的延时调用
+                clearTimeout(handle);
+                handle = setTimeout(() => {
+                    fn(e);
+                }, delay);
+            }
+        }
+        function sayHi(e) {
+            $("#fd0").text(e.target.innerWidth)
+            $("#fd1").text(e.target.innerHeight)
+        }
+        window.addEventListener('resize', debounce(sayHi, 500));
+    } {
+        // 节流
+        function throttle(fn, delay) {
+            // fn 执行的函数 delay 时间
+            let runFlag = false;
+            return function (e) {
+                // 判断之前的调用是否完成
+                if (runFlag) {
+                    return false;
+                }
+                runFlag = true;
+                setTimeout(() => {
+                    fn(e);
+                    runFlag = false;
+                }, delay)
+            }
+        }
+        function sayHi(e) {
+            $("#jl0").text(e.target.innerWidth)
+            $("#jl1").text(e.target.innerHeight)
+        }
+        window.addEventListener('resize', throttle(sayHi, 500));
+    }
+</script>
+</html>

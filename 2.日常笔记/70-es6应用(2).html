@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>es6应用(2)</title>
+</head>
+
+<body>
+    <h3>1.编写一个 JavaScript 函数 uniqueNums，该函数有一个参数 n（一个不大 31 的整数），其返回值是一个数组，该数组内是 n 个随机且不重复的整数，且整数取值范围是 [2, 32]</h3>
+    <span id="q"></span>
+    <h3>2.转换驼峰命名</h3>
+    aaa__bbb_ccc -> <span id="w"></span>
+    <h3>3.最少代码量生成length = range自然数数组的代码,range(n)->array.length= n/array = [0,1,...,n]</h3>
+    range(5) -><span id="e0"></span><br>
+    range(7)-><span id="e1"></span><br>
+    range(10)-><span id="e2"></span>
+    <h3>4.编写一个函数,输入是一个array,一个index,要求把index前面按原顺序放在后面，比如array = [0,1,2,3,4,5] index = 2
+        array = [3,4,5,0,1,2]</h3>
+    <span id="r"></span>
+    <h3>5.编写一个函数 unique(arr)，返回一个去除数组内重复的元素的数组</h3>
+    unique([0, 1, '1', '1', 2])->使用 ...=><span id="t1"></span>---未使用 ...=><span id="t2"></span>---es5写法 =><span id="t3"></span>
+    <h3>6.请你完成一个函数 fillEmpty，它接受一个数组作为参数，可以把数组里面的所有空位都设置为 'Hello',const a = [, , null, undefined, 'OK', ,]->a =
+        ['Hello', 'Hello', null, undefined, 'OK', 'Hello']</h3>
+    const a = [, , null, undefined, 'OK', ,] ->需要在控制台看，页面显示不完全-><span id="y"></span>
+</body>
+<script>
+    { // 1.
+        const uniqueNums = n => {
+            if (n > 31) return false;
+            let arr = Array.from(new Array(31), (_, i) => i + 2);
+            // _代表一个变量名，无实际意义，可以替换
+            // _是数组该成员的值,因为才初始化,所以为undefined, 返回值为i + 2就是初始化为索引 +2
+            // new Array是允许map初始化的
+            arr.sort(() => {
+                return Math.random() > 0.5 ? 1 : -1;
+            })
+            return arr.slice(0, n)
+        }
+        //  console.log(uniqueNums(31))
+        document.getElementById("q").innerText = uniqueNums(31)
+    } { //  2.
+        const toCamelCaseVar = (variable) => variable.replace(/(?:[^_])(?:\_+)([^_])/g, (a, b) => a[0] + b.toLocaleUpperCase());
+        varName = 'aaa__bbb_ccc';
+        // varName = '__aaa__bbb_ccc__';
+        //console.log(toCamelCaseVar(varName))
+        document.getElementById("w").innerText = toCamelCaseVar(varName)
+    } { //3
+        function range1(n) {
+            return Array.from(new Array(n), (v, i) => i)
+        }
+        //console.log(range1(10))
+        document.getElementById("e0").innerText = range1(5)
+
+        function range2(n) {
+            return [...new Array(n).keys()]
+        }
+        //console.log(range2(10))
+        document.getElementById("e1").innerText = range2(7)
+
+        function range3(n) {
+            return Object.keys(new Array(n).fill())
+        }
+        //console.log(range3(10))
+        document.getElementById("e2").innerText = range3(10)
+    } { //4
+        let arr = [0, 1, 2, 3, 4, 5]
+        arrSet = (n) => {
+            return [...arr.slice(n), ...arr.slice(0, n)]
+        }
+        //console.log(arrSet(2))
+        document.getElementById("r").innerText = arrSet(2)
+    } { //5
+        //(1).
+        let unique1 = (arr) => [...new Set(arr)]
+        document.getElementById("t1").innerText = unique1([0, 1, 2, 2, 3, 3, 4])
+        //(2).
+        let unique2 = (arr) => Array.from(new Set(arr))
+        document.getElementById("t2").innerText = unique1([0, 1, 2, 2, 3, 3, 4])
+        //(3).
+        const unique = (arr) => {
+            var item = typeof arr[0] === 'undefined' ? [] : [arr[0]];
+            for (var i = 1; i < arr.length; i++) {
+                item.indexOf(arr[i]) === -1 && item.push(arr[i])
+            }
+            return item;
+        }
+        document.getElementById("t3").innerText = unique1([0, 1, 2, 2, 3, 3, 4])
+    } { //6
+        const fillEmpty = arr => Array.from(arr).map((x, i) => i in arr ? x : 'Hello')
+        console.log(fillEmpty([, null, undefined, 'OK', , ]))
+        document.getElementById("y").innerText = fillEmpty([, null, undefined, 'OK', , ])
+    } {
+        setTimeout(function () {
+            console.log(4)
+        }, 0);
+        new Promise(function (resolve) {
+            console.log(1) 
+            for (var i = 0; i < 10000; i++) {
+                i == 9999 && resolve()
+            }
+            console.log(2)
+        }).then(function () {
+            console.log(5)
+        });
+        console.log(3);
+
+    }
+</script>
+
+</html>

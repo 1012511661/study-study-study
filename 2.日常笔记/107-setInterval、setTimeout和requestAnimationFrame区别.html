@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>setInterval、setTimeout和requestAnimationFrame</title>
+</head>
+
+<body>
+    <h2>setInterval</h2>
+    <div id="SetInterval" style="background-color: lightblue;width: 0;height: 20px;line-height: 20px;">0%</div>
+    <button id="btn1">run --- setInterval</button>
+    <hr>
+    <h2>setTimeout</h2>
+    <div id="SetTimeout" style="background-color: lightblue;width: 0;height: 20px;line-height: 20px;">0%</div>
+    <button id="btn2">run --- setTimeout</button>
+    <hr>
+    <h2>requestAnimationFrame</h2>
+    <div id="AnimationFrame" style="background-color: lightblue;width: 0;height: 20px;line-height: 20px;">0%</div>
+    <button id="btn3">run --- requestAnimationFrame</button>
+    <hr>
+    大多数电脑显示器的刷新频率是60Hz，大概相当于每秒钟重绘60次。大多数浏览器都会对重绘操作加以限制，不超过显示器的重绘频率，因为即使超过那个频率用户体验也不会有提升。因此，最平滑动画的最佳循环间隔是1000ms/60，约等于16.6ms
+    <hr>
+    https://www.cnblogs.com/xiaohuochai/p/5777186.html
+</body>
+<script>
+    {
+        // setInterval
+        var timer;
+        let btn = document.getElementById('btn1')
+        btn.onclick = function () {
+            clearInterval(timer);
+            SetInterval.style.width = '0';
+            timer = setInterval(function () {
+                if (parseInt(SetInterval.style.width) < 500) {
+                    SetInterval.style.width = parseInt(SetInterval.style.width) + 5 + 'px';
+                    SetInterval.innerHTML = parseInt(SetInterval.style.width) / 5 + '%';
+                } else {
+                    clearInterval(timer);
+                }
+            }, 16);
+        }
+    } {
+        // setTimeout
+        var timer;
+        let btn = document.getElementById('btn2')
+        btn.onclick = function () {
+            clearTimeout(timer);
+            SetTimeout.style.width = '0';
+            timer = setTimeout(function fn() {
+                if (parseInt(SetTimeout.style.width) < 500) {
+                    SetTimeout.style.width = parseInt(SetTimeout.style.width) + 5 + 'px';
+                    SetTimeout.innerHTML = parseInt(SetTimeout.style.width) / 5 + '%';
+                    timer = setTimeout(fn, 16); // 连续调用直到进度条加载完毕
+                } else {
+                    clearTimeout(timer);
+                }
+            }, 16);
+        }
+    } {
+        // requestAnimationFrame
+        var timer;
+        let btn = document.getElementById('btn3')
+        btn.onclick = function () {
+            AnimationFrame.style.width = '0';
+            cancelAnimationFrame(timer);
+            timer = requestAnimationFrame(function fn() {
+                if (parseInt(AnimationFrame.style.width) < 500) {
+                    AnimationFrame.style.width = parseInt(AnimationFrame.style.width) + 5 + 'px';
+                    AnimationFrame.innerHTML = parseInt(AnimationFrame.style.width) / 5 + '%';
+                    timer = requestAnimationFrame(fn); // 连续调用直到进度条加载完毕
+                } else {
+                    cancelAnimationFrame(timer);
+                }
+            });
+        }
+    }
+</script>
+
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>多选</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <style>
+        sub, sup {
+	line-height: 0;
+}
+
+</style>
+</head>
+
+<body>
+    <div id="app">
+        <input type="checkbox" v-for="item in arr" v-model="item.checked">
+        <p>以下为数据:</p>
+        <textarea style="width: 100%;height: 300px;" v-model="json"></textarea>
+        <p>一下为我选中的数据的name</p>
+        <textarea style="width: 100%;height: 300px;" v-model="json2"></textarea>
+    </div>
+    <script src="https://cdn.bootcss.com/vue/2.2.2/vue.min.js"></script>
+    <SCRIPT>
+        var arr = [];
+
+        for (var i = 0; i < 20; i++) {
+            arr.push({
+                checked: i % 3 == 1,
+                name: i
+            });
+        }
+
+        new Vue({
+            el: '#app',
+            data: {
+                arr: arr
+            },
+
+            computed: {
+                json: function () {
+                    return JSON.stringify(this.arr, null, 4)
+                },
+                json2: function () {
+
+                    return JSON.stringify(this.arr.filter(function (item) {
+                        return item.checked == true;
+                    }).map(function (item) {
+                        return item.name;
+                    }), null, 4)
+                },
+            }
+        });
+    </SCRIPT>
+</body>
+
+</html>

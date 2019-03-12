@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>内容超出显示省略号</title>
+		<style>
+			.cont {
+				width: 100px;
+				border: 1px solid red;
+				overflow: hidden;/*内容超出后隐藏*/
+				text-overflow: ellipsis;/* 超出内容显示为省略号*/
+				white-space: nowrap;/*文本不进行换行*/
+			}
+			.cont:hover{
+                overflow:visible;
+			}
+		</style>
+	</head>
+
+	<body>
+		<p class="cont">
+			啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊
+		</p>
+	</body>
+
+</html>

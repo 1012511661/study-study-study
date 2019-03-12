@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html onclick="chtml()">
+<head >
+    <meta charset="utf-8">
+    <title></title>
+    <style>
+        div {
+            background-color: coral;
+            border: 1px solid;
+            padding: 50px;
+        }
+        div p{
+            background-color: blue;
+        }
+    </style>
+</head>
+<body onclick="cbody()">
+
+<p>该实例演示了冒泡阶段情况。</p>
+<hr/>
+<div id="myDiv" onclick="cdiv()">
+    <p  onclick="cp1()">点击该段落111111， 我是冒泡</p>
+    <p  onclick="cp2()">点击该段落222222， 我是冒泡</p>
+</div>
+
+</body>
+<script>
+    function chtml(){
+        alert("点击了html元素");
+    }
+    function cbody(){
+        alert("点击了body元素");
+    }
+    function cdiv(){
+        alert("点击了div元素");
+    }
+    function cp1(){
+        alert("点击了p1111元素");
+    }
+    function cp2(){
+        alert("点击了p222元素");
+    }
+</script>
+</html>

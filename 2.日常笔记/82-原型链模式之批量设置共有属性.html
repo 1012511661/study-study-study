@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>原型链模式之批量设置共有属性</title>
+</head>
+<body>
+    只有浏览器天生给 Fn.prototype 开辟的堆内存里面才会有constructor，而自己开辟的的堆内存没有这个属性，这样constructor指向就不在Fn而是Object，因此需要手动的添加
+</body>
+<script>
+{
+    function Fn(){
+        this.x = 100;
+    }
+    Fn.prototype ={
+        a:function(){console.log("a")},
+        b:function(){console.log("b")}
+    }
+    var f = new Fn;
+    f.a(); // "a"
+    f.b(); // "b"
+    console.log(f.constructor,'手动添加的prototype属性的constructor不是指向其本身需要,执行Object')
+}{
+    function Fn(){
+        this.x = 100;
+    }
+    Fn.prototype ={
+        constructor:Fn,
+        a:function(){console.log("a")},
+        b:function(){console.log("b")}
+    }
+    var f = new Fn;
+    f.a(); // "a"
+    f.b(); // "b"
+    console.log(f.constructor,'手动添加的prototype属性的constructor 更改后让其指向其本身')
+}
+
+</script>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>单例模式</title>
+</head>
+<body>
+    <h1>对象数据类型的作用：</h1>
+    <h3>1.把描述同一个事物(同一个对象)的属性和方法放在一个内存空间下，起到了分组的作用，这样不同事物之间的属性即使属性名相同，相互之间也不会发生冲突</h3>
+    <h3>2.单例模式通常在项目中使用，并常用用于“模块化开发”</h3>
+    <hr>
+    <h2>单例模式虽然解决了分组的作用，但不能实现批量生产，属于手工作业模式，所以出现了“工厂模式”</h2>
+</body>
+<script>
+{//1.
+    var person1 = {
+        name :"asd",
+        age : 10
+    }
+    var person2 = {
+        name :"qwe",
+        age : 15
+    }
+    console.log(person1.name === person2.name)
+}
+{
+    //2.
+    var aRender = {
+        change:function(){
+            Brender.change();//在自己的命名空间执行其他命名空间的方法
+        }
+    }
+    var Brender = {
+        change:function(){
+            this.get();//在自己的命名空间执行自己命名空间其他的方法
+            // this 指的是 Brender 调用change-> Brender.change();
+        },
+        get:function(){}
+    }
+    Brender.change();
+    console.log('同一个change事件，在不同的对象里面，不会覆盖')
+}
+
+</script>
+</html>

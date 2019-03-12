@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>for里面双循环</title>
+	</head>
+	<body>
+	<div>
+		/*循环继续的判断依据以分号前的最后一项为准*/<br/>
+		for(i=0,j=0;i<10,j<6;i++,j++) {<br/>
+		k = i+j;<br/>
+		console.log(k+"--")<br/>
+		}循环6次<br/>
+		for(i=0,j=0;i<6,j<10;i++,j++) {<br/>
+		k=i+j;<br/>
+		console.log(k+"///")<br/>
+		}循环10次<br/>
+	</div>
+	</body>
+	<script type="text/javascript">
+		/*循环继续的判断依据以分号前的最后一项为准*/
+		for(i=0,j=0;i<10,j<6;i++,j++) {
+			k = i+j;
+			console.log(k+"--")
+		}
+		console.log(k+"a")
+		for(i=0,j=0;i<6,j<10;i++,j++) {
+			k=i+j; 
+			console.log(k+"///")
+		}
+	</script>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" Content="text/html; charset=utf-8;">
+    <title>移动端触摸滑动</title>
+    <meta name="author" content="rainna" />
+    <meta name="keywords" content="rainna's js lib" />
+    <meta name="description" content="移动端触摸滑动" />
+    <meta name="viewport" content="target-densitydpi=320,width=640,user-scalable=no">
+</head>
+
+<style>
+    .all {
+        width: 300px;
+        height: 40px;
+        border: 1px solid red;
+        margin: 100px 200px;
+        position: relative;
+        overflow-x: hidden;
+    }
+
+    .all_bg {
+       
+        height: 40px;
+        background:#57ff65;
+        position: absolute;
+        z-index: -1;
+    }
+
+    .all_btn {
+        width: 50px;
+        height: 40px;
+        background: blue;
+        position: absolute;
+        cursor: pointer;
+        z-index: 3;
+    }
+
+    .all_text {
+        width: 300px;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        z-index: 2;
+    }
+</style>
+
+<body>
+    <div class="all">
+        <!-- 背景 -->
+        <div class="all_bg"></div>
+        <!-- 滑块 -->
+        <div class="all_btn" ontouch></div>
+        <!-- 文字 -->
+        <div class="all_text">
+            正在验证。。。
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript">
+    window.onload = () => {
+        // 查找dom对象
+        queSel = (name) => {
+            return document.querySelector(name)
+        }
+        let all = queSel(".all"), //整体
+            allBg = queSel(".all_bg"), //背景
+            allBtn = queSel(".all_btn"), //滑块
+            allText = queSel(".all_text"), //文字
+            isOk = false; //判断时候滑到最右边
+
+        allBtn.addEventListener('touchstart', (event) => {
+            let e = event.touches || window.event.touches;
+            let downX = e[0].clientX;
+            allBtn.addEventListener('touchmove', (event) => {
+                let moveX = event.touches[0].clientX - downX;
+                if (moveX > 0) {
+                    allBtn.style.left = moveX + 'px';
+                    allBg.style.width = moveX + 'px';
+                    if (moveX >= Math.ceil(all.offsetWidth - allBtn.offsetWidth)) { //滑到最右边
+                        console.log(all.offsetWidth, "all.offsetWidth")
+                        console.log(allBtn.offsetWidth, "allBtn.offsetWidth")
+                        console.log(all.offsetWidth - allBtn.offsetWidth, "all.offsetWidth - allBtn.offsetWidth")
+                        console.log(moveX, "moveX")
+                        isOk = true;
+                        allText.innerHTML = "验证通过";
+                        allText.style.color = "#fff"
+                        allBtn.touchstart = null; //清除事件
+                        allBtn.touchmove = null;
+                    }
+                }
+            })
+        })
+        allBtn.addEventListener('touchend', (event) => {
+            //根据 isOk 的值来判断让滑块是否复原
+            if (isOk) return; //滑到最右边直接返回，不执行下面代码
+            allBtn.style.left = 0;
+            allBg.style.width = 0;
+        })
+    }
+</script>
+
+</html>

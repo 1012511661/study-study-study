@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>call()和apply()的区别</title>
+</head>
+<body>
+call, apply都属于Function.prototype的一个方法,它是JavaScript引擎内在实现的,因为属于Function.prototype,所以每个Function对象实例,也就是每个方法都有call, apply属性.<hr/>
+  相同点:两个方法产生的作用是完全一样的<br/>
+   不同点:方法传递的参数不同
+   对于第一个参数意义都一样，但对第二个参数：<hr/>
+   apply传入的是一个参数数组，也就是将多个参数组合成为一个数组传入<br/>
+       func.apply(func1,[var1,var2,var3])<hr/>
+   call则作为call的参数传入（从第二个参数开始）<br/>
+    func.call(func1,var1,var2,var3)
+</body>
+<script>
+    
+    {
+        //1、call()方法
+        /* 说明
+         call 方法可以用来代替另一个对象调用一个方法。call 方法可将一个函数的对象上下文从初始的上下文改变为由 thisObj 指定的新对象。
+         如果没有提供 thisObj 参数，那么 Global 对象被用作 thisObj。*/
+
+        function add(a,b) {console.log(a+b);}
+        function sub(a,b) {console.log(a-b);}
+        add.call(sub,3,1);
+        console.log('--------------')
+        ///这个例子中的意思就是用 add 来替换 sub，add.call(sub,3,1) == add(3,1) ，所以运行结果为：alert(4);
+
+        function Class1() {
+            this.name = "class1";
+            this.showNam = function() {
+                console.log(this.name);
+            }
+        }
+        function Class2() {
+            this.name = "class2";
+        }
+        var c1 = new Class1();
+        var c2 = new Class2();
+        c1.showNam.call(c2);
+        console.log('--------------')
+        //注意，call 的意思是把 c1 的方法放到c2上执行，原来c2是没有showNam() 方法，现在是把c1 的showNam()方法放到 c2 上来执行，所以this.name 应该是 class2，执行的结果就是：alert（"class2"）;
+
+        // 实现继承
+
+        function Class3() {
+            this.showTxt = function(txt) {
+                console.log(txt);
+            }
+        }
+        function Class4() {
+            Class3.call(this);
+        }
+        var c4 = new Class4();
+        c4.showTxt("cc");
+        console.log('--------------');
+        //这样 Class4 就继承Class3了，Class3.call(this) 的 意思就是使用 Class3 对象代替this对象，那么 Class4 中不就有Class3 的所有属性和方法了吗，c4 对象就能够直接调用Class3 的方法以及属性了，执行结果就是：alert（“cc”）;
+        //这就是 javaScript 如何来模拟面向对象中的继承的，还可以实现多重继承。
+
+        //多重继承
+        function Class5() {
+            this.showSub = function(a,b) {
+                console.log(a-b);
+            }
+        }
+        function Class6() {
+            this.showAdd = function(a,b) {
+                console.log(a+b);
+            }
+        }
+        function Class12() {
+            Class5.call(this);
+            Class6.call(this);
+        }
+        var c5 = new Class12();
+        c5.showSub(5,5);
+        c5.showAdd(5,5);
+        console.log('--------------')
+    }
+
+    {
+        //2、apply
+        /* 对于apply和call两者在作用上是相同的，但两者在参数上有区别的。
+         对于第一个参数意义都一样，但对第二个参数：
+         apply传入的是一个参数数组，也就是将多个参数组合成为一个数组传入，而call则作为call的参数传入（从第二个参数开始）。
+         如 func.call(func1,var1,var2,var3)对应的apply写法为：func.apply(func1,[var1,var2,var3])*/
+
+        //技巧（代码优雅而其执行效率高）
+
+        console.log(Math.max(5,8)); //8
+        console.log(Math.max(5,7,9,3,1,6));//9
+
+        var arr=[5,7,9,1,100];
+        console.log(Math.max.apply(null,arr));
+        //这块在调用的时候第一个参数给了一个null,这个是因为没有对象去调用这个方法,我只需要用这个方法帮我运算,得到返回的结果就行,.所以直接传递了一个null过去
+
+        function Person(name,age) {
+            this.name=name;
+            this.age=age;
+        }
+
+        function Student(name,age,grade) {
+            Person.apply(this,arguments);
+            this.grade=grade;
+        }
+        // arguments 就是new 里面的参数会默认为数组
+
+        var student1=new Student("张三",21,"一年级");
+        var student2=new Student(["李四",22,"二年级"]);
+        //数组和字符串都可以被apply当成数组来解析
+        //这个就是apply的一个巧妙的用处,可以将一个数组默认的转换为一个参数列表([param1,param2,param3] 转换为 param1,param2,param3)
+        //测试
+        console.log("name:"+student1.name+"\n"+"age:"+student1.age+"\n"+"grade:"+student1.grade);
+        console.log("name:"+student2.name+"\n"+"age:"+student2.age+"\n"+"grade:"+student2.grade);
+    }
+    /********2.call()和apple()***********/
+    {
+        console.log("2.call()和apple():");
+        window.firstName = "firstName";
+        window.lastName = "_lastName";
+        let arr_on = ["男", 20];
+        let arr_tw = ["女", 18];
+        let arr_th = ["AA", 22, "BB", 33]
+        var myObject = {
+            firstName: 'my',
+            lastName: '_Object'
+        };
+
+        function getName() {
+            console.log(this.firstName + this.lastName);
+        }
+
+        function getMessage(sex, age) {
+            console.log(this.firstName + this.lastName + " 性别: " + sex + " age: " + age);
+        }
+
+        getName.call(window); // firstName_lastName
+        getName.call(myObject); // my_Object
+
+        getName.apply(window); // firstName_lastName
+        getName.apply(myObject); // my_Object
+
+        getMessage.call(window, "男", 20); //firstName_lastName 性别: 男 age: 20
+        getMessage.apply(window, arr_on); // firstName_lastName 性别: 男 age: 20
+
+        getMessage.call(myObject, "女", 18); //myObject 性别: 女 age: 18
+        getMessage.apply(myObject, arr_tw); // myObject 性别: 女 age: 18
+
+        getMessage.call(myObject, "AA", 22, "BB", 33); //my_Object 性别: AA age: 22
+        getMessage.apply(myObject, arr_th); //my_Object 性别: AA age: 22
+    }
+</script>
+</html>

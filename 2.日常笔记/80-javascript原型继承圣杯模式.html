@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    https://juejin.im/post/5c64d15d6fb9a049d37f9c20 <br>
+    https://www.cnblogs.com/y-y-y-y/p/10357697.html <br>
+    https://www.cnblogs.com/hmd180324/p/9232045.html
+
+</body>
+<script>
+    {
+        //父类
+        function Teacher() {}
+        Teacher.prototype.name = "teacher";
+        //子类
+        function Student() {}
+        Student.prototype.age = 18;
+        //原型继承调用
+        inherit(Student, Teacher);
+
+        let s = new Student();
+        let t = new Teacher();
+
+        /*
+        *
+        圣杯模式原型继承封装
+        @param Target 需要继承的子类
+        @param Origin 被继承的父类 
+        */
+        function inherit(Target, Origin) {
+            //创建中间层构造函数
+            function Buffer() {}
+            //把被继承父类的原型付给中间层构造函数
+            Buffer.prototype = Origin.prototype;
+            //把实例化的中间层构造函数生成的对象付给需要继承的目标类
+            Target.prototype = new Buffer();
+            //目标类构造函数指向欢原
+            Target.prototype.constructor = Target;
+            //定义目标类从哪继承
+            Target.prototype.super_class = Origin;
+        }
+        console.log(s, t);
+    } {
+        var inherit = (function (c, p) {
+            var F = function () {};
+            return function (c, p) {
+                F.prototype = p.prototype;
+                c.prototype = new F();
+                c.uber = p.prototype;
+                c.prototype.constructor = c;
+            }
+        })();
+    }
+</script>
+
+</html>

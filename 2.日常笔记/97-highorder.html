@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>highorder</title>
+</head>
+
+<body>
+    1.在JS中，函数是一等公民，可以作为函数的返回值，也可以作为函数的参数
+</body>
+<script>
+    {
+        // 1. 判断一个参数是否是字符串
+        function isString(param) {
+            return Object.prototype.toString.call(param) == '[object String]'
+        }
+        console.log(isString('123465'), '参数是否是字符串')
+        // 2. 判断一个参数是否是数组
+        function isArray(param) {
+            return Object.prototype.toString.call(param) == '[object Array]'
+        }
+        console.log(isArray([1, 2, 3]), '参数是否是数组')
+        //函数可以作为返回值
+        function isType(type) {
+            return function (param) {
+                return Object.prototype.toString.call(param) == `[object ${type}]`
+            }
+        }
+        let isObj = isType('Object');// type = Object 返回 return 里面的函数
+        let isArr = isType('Array');// type = Array 返回 return 里面的函数
+        console.log(isObj({}), '封装后判断类型  1')
+        console.log(isArr([]), '封装后判断类型  2')
+    } {
+        //lodash after 指定一个函数被调用多少次后执行
+        //函数可以作为参数可以传递到另一个函数里面
+        function numFn() {
+            console.log(`指定次数到达了`)
+        }
+
+        function after(time, fn) {
+            let num = 0;
+            return function () {
+                if (++num == time) {
+                    fn()
+                } else {
+                    console.log('函数执行指定次数才会触发')
+                }
+            }
+        }
+        let newEat = after(2, numFn);
+        newEat();
+        newEat();
+        newEat()
+    }
+</script>
+
+</html>

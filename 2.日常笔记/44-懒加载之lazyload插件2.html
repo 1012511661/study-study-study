@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>利用插件懒加载</title>
+    <script src="js/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/jquery.lazyload.min.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+<!--http://blog.csdn.net/xiao714041/article/details/52711628?foxhandler=RssReadRenderProcessHandler-->
+<img class="lazy" src="img/loading.gif" data-original="images/1.jpg" width="640" heigh="480">
+<img class="lazy" src="img/loading.gif" data-original="images/1.jpg" width="640" heigh="480">
+<img class="lazy" src="img/loading.gif" data-original="images/1.jpg" width="640" heigh="480">
+<img class="lazy" src="img/loading.gif" data-original="images/1.jpg" width="640" heigh="480">
+<img class="lazy" src="img/loading.gif" data-original="images/1.jpg" width="640" heigh="480">
+<img class="lazy" src="img/loading.gif" data-original="images/1.jpg" width="640" heigh="480"><img class="lazy" src="img/loading.gif" data-original="images/1.jpg" width="640" heigh="480">
+<img class="lazy" src="img/loading.gif" data-original="images/1.jpg" width="640" heigh="480">
+<img class="lazy" src="img/loading.gif" data-original="images/1.jpg" width="640" heigh="480">
+<img class="lazy" src="img/loading.gif" data-original="images/1.jpg" width="640" heigh="480">
+<img class="lazy" src="img/loading.gif" data-original="images/1.jpg" width="640" heigh="480">
+<img class="lazy" src="img/loading.gif" data-original="images/1.jpg" width="640" heigh="480">
+<img class="lazy" src="img/loading.gif" data-original="images/1.jpg" width="640" heigh="480">
+<img class="lazy" src="img/loading.gif" data-original="images/1.jpg" width="640" heigh="480">
+<img class="lazy" src="img/loading.gif" data-original="images/1.jpg" width="640" heigh="480">
+<img class="lazy" src="img/loading.gif" data-original="images/1.jpg" width="640" heigh="480">
+</body>
+<script>
+    $(function() {
+       /* $("img.lazy").lazyload();*/
+       $("img.lazy").lazyload({
+            effect : "fadeIn"
+        });
+     /*   $("img.lazy").lazyload({
+            event : "click"
+        });*/
+        /*$("img.lazy").lazyload({
+            threshold : 200
+        });*/
+    });
+</script>
+</html>

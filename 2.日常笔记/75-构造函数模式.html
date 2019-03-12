@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>构造函数模式</title>
+</head>
+
+<body>
+    <h2 style="color:red">
+        var newObj = new obj()->obj()：类 **** newObj->实例
+        <hr>
+        1) JS中所有的类都是函数数据烈性的，它通过new执行变成一个类，但它本身也是一个普通的函数
+        <hr>
+        JS当中所有的实例都是对象数据类型的 <br>
+        2) var p1 = new obj() *** var p2 = new obj() p1和p2都是obj()的实例，实例和实例之间是单独的个体，其私有属性不相等
+    </h2>
+    <hr>
+    <h2>构造函数模式和工厂函数模式的区别：</h2>
+    <h3>1.执行的时候：</h3>
+    普通函数执行：var Obj = obj()<br>
+    构造函数模式：var newObj = new obj()，通过new执行后，我们的obj()就是一个类了,而函数执行的返回值(newObj)就是obj这个类的实例
+    <h3>2.在函数代码执行的时候：</h3>
+    相同点：<br>
+    都是形成一个私有的作用域，然后进行，形参复制->预解析->代码从上到下执行(类和普通函数一样，它也有普通的一面) <br>
+    不同点：<br>
+    1)在代码执行之前，不用自己手动的创建对象了，浏览器会默认的创建一个对象数据类型的值(这个对象其实就是我们当前类的一个示例) <br>
+    2)接下来代码从上到下执行，以当前实例为执行的主题(this代表的就是当前的实例)，然后分别把属性名和属性值赋值给当前的实例<br>
+    3)浏览器会默认的把创建的实例返回，返回的是一个对象数据类型的值，如果手动写了return返回分为:(1)返回一个基本数据类型的值，当前实例是不变的，例 return 100，newObj还是obj()的实例了，返回的不变；(2)返回一个引用数据类型的值，当前实例会把自己的返回值替换掉，例return {name:"123456"}，newObj就不是obj()的实例了，而是对象{name:"123456"} 
+    <hr>
+    <h3>检测某一个实例是否属于这个类用->instanceof：不管是共有的还是私有的，只要存在就返回true</h3>
+    <h3>hasOwnProperty() 方法会返回一个布尔值，用于检测某一个属性是否为这个对象的‘私有属性’，这个方法只能检测私有属性</h3>
+    <h3>利用instanceof和hasOwnProperty，自己写函数，来判断共有属性</h3>
+    <h3>isPrototypeOf() 方法用于测试一个对象是否存在于另一个对象的原型链上。</h3>
+</body>
+<script>
+    { //1.
+        function createJs(name, age) {
+            var obj = {};
+            obj.name = name;
+            obj.age = age;
+            obj.writeJs = function () {
+                console.log(`我叫${obj.name},还不到${obj.age},我会写JS`)
+            }
+            return obj;
+        }
+        var p1 = createJs("小明", 18)
+        p1.writeJs(); //工厂函数
+        var p2 = new createJs("小一", 20)
+        p2.writeJs();
+    } { //2.
+        function createJs(name, age) {
+            // var obj = {};//浏览器会自动创建，就是我们的实例p2 ->this
+            this.name = name; // p2.name = name;
+            this.age = age; //
+            this.writeJs = function () { //
+                console.log(`我叫${this.name},还不到${this.age},我会写JS`)
+            }
+            // return obj; //浏览器会默认的把创建的实例返回
+        }
+        var p2 = new createJs("小二", 22) //createJs的this ->p2
+        p2.writeJs(); //writeJs的this -> p2
+        var p3 = new createJs("小三", 33)
+        p3.writeJs(); //writeJs的this -> p3
+        var p4 = createJs("小三", 33) //这样写不是构造函数执行，是普通的函数执行，由于函数没有return所以p4=undefined,并且createJs这个方法的this是window
+    } { //3
+        function Fn() {
+            this.x = "aaa";//this->f1
+            this.getX = function (){
+                console.log(this.x)//this->需要看getX执行时候‘.’前面是谁
+            }
+        }
+        var f1 = new Fn;//new Fn()当定义的函数没有形参时,()可以省略
+        f1.getX();//this -> f1 答应出来的是Fn里的x = aaa
+        var f2 =  f1.getX;
+        //var f2 =  f1.getX(); //报错
+        f2();// this -> window 打印出来的X是undefined，因为window没有定义 x  
+    }{ //4
+        function Fn() {
+            var num = 100;
+            this.x = "aaa";
+            this.getX = function (){
+                console.log(this.x)
+            }
+        }
+        var f1 = new Fn;
+        console.log(f1.num)//undefined
+        // 这就是类页游普通函数的一面，当函数执行的时候，var num 其实只是当前形成的私有作用域的私有变量而已，它和f1这个没有任何关系，只有this.xxx = xxx，才和f1有关系
+        console.log(f1.hasOwnProperty('getX'),'私有属性->hasOwnProperty()只能检测私有属性')
+        console.log(f1.hasOwnProperty('num'),'私有变量->hasOwnProperty()只能检测私有属性')
+        function inHasOwn(obj,attr){
+             return (attr in obj) && (!obj.hasOwnProperty(attr));
+         }
+         console.log(inHasOwn(f1,'num'),'来判断共有属性')
+         console.log(inHasOwn(f1,'getX'),'来判断共有属性')
+    }{ //5
+        function Fn() {
+            this.x = "aaa";
+            this.getX = function (){
+                console.log(this.x)
+            }
+            return "返回基本数据类型"
+        }
+        var f1 = new Fn;
+        console.log(f1)//浏览器默认返回的是一个对象数据类型的,所以return 的没有效果
+        console.log(f1 instanceof Fn,'因为手动定义return返回的是基础数据类型，所以f1还是Fn的实例')
+        console.log(f1 instanceof Object,'因为所有的实例都是对象数据类型的，而每一个对象数据类型的都是Object这个内置类的一个实例，所有f1也是它的一个实例')
+        function Fn1() {
+            this.x = "aaa";
+            this.getX = function (){
+                console.log(this.x)
+            }
+            return {name:"123456"}//去掉，f2就是Fn1的实例
+        }
+        var f2 = new Fn1;
+        console.log(f2)//返回的是return里面定义值
+        console.log(f2 instanceof Fn1,'因为手动定义return返回的是引用数据类型，所以f2不再是Fn1的实例')
+    }
+</script>
+
+</html>

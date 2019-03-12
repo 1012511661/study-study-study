@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+</body>
+<script>
+   /* null与undefined的区别
+    null  表示一个对象是“没有值”的值，也就是值为“空”
+    undefined  表示一个变量声明了没有给（赋值）也就是缺少一个值，但是还没有定义
+    */
+   //验证null与undefined
+   console.log(null===undefined)
+   /******************************/
+    console.log(typeof (null))          //null的typeof类型是 object
+    console.log(typeof (undefined))    //undefined的typeof类型是undefined
+    //undefined常见用法
+    var i                                 //（1）变量被声明了，但没有赋值时，就等于undefined
+    console.log(i)
+    /*****************************/
+    function f(x){                       //（2) 调用函数时，应该提供的参数没有提供，该参数等于undefined
+        console.log(x)
+    }
+    /*****************************/
+    var o=new Date()                    //（3）对象没有赋值的属性，该属性的值为undefined
+    console.log(o.p)
+
+</script>
+</html>

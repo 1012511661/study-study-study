@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>对象的数据双向绑定Object.defineProperty(1)</title>
+</head>
+
+<body>
+    Object.defineProperty() <br>
+    方法会直接在一个对象上定义一个新属性，或者修改一个已经存在的属性， 并返回这个对象。
+    语法<br>
+    Object.defineProperty(obj,prop,descriptor)<br>
+    参数:<br>
+    obj 需要定义属性的对象。<br>    
+    prop需定义或修改的属性的名字。<br>    
+    descriptor将被定义或修改的属性的描述符。<br>   
+    返回值:<br>返回传入函数的对象，即第一个参数obj<br>   
+    对象里目前存在的属性描述符有两种主要形式：数据描述符和存取描述符。数据描述符是一个拥有可写或不可写值的属性。存取描述符是由一对 getter-setter 函数功能来描述的属性。描述符必须是两种形式之一；不能同时是两者。<br>
+    <hr>
+  <h2>测试双向数据绑定:</h2>
+  <hr>
+  <input id='input' type="text" placeholder="输入值，更改下面P标签的值">
+  <hr>
+  获取到的值:<p id='p'></p>
+  <hr>
+  在控制台使用: obj.name="XXXXX"，可以赋值给input
+  <script>
+    let el = document.getElementById('input') // 1. 获取输入框的dom节点
+    let obj = { // 2. 创建一个对象
+      name: ""
+    };
+    function oberseve(obj) { // 4. 对对象进行观察
+      if (typeof obj !== 'object') return //4.1 判断参数是否为对象
+      for (let key in obj) { // 4.2 对对象进行遍历，目的是为了把每个属性都设置get/set
+        defineReactive(obj, key, obj[key]) // 触发 5
+        oberseve(obj[key]) // 4.3 obj[key] 有可能还是一个函数，需要递归，给obj[key]里的属性进行设置get/set
+      }
+    };
+    function defineReactive(target, property, value) { // 5. 使用Object.defineProperty 参数1为上面dog对象，参数2为dog的属性，参数3为设置的新值
+      Object.defineProperty(target, property, {
+        get() {
+          el.value = value // 5.1 当读取时，把值赋值给input框
+          return value
+        },
+        set(newVal) {
+          el.value = newVal; // 5.1 当设置时，把赋值给input框
+          value = newVal;
+          // document.getElementById('p').innerHTML = value
+          setTimeout(function(){
+            document.getElementById('p').innerHTML = value
+          },1000)
+        }
+      })
+    };
+    oberseve(obj) // 3.执行该函数，对obj对象里的属性进行设置get/set
+    el.addEventListener('input', function () { // 6.给输入框绑定input事件
+      obj.name = this.value // 7.当输入框输入内容时，我们会把输入框的 内容赋值给obj.name，触发obj.name的set方法
+    })
+  </script>
+</body>
+
+</html>

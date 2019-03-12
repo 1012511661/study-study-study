@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LocalStorage</title>
+    <meta charset="utf-8">
+</head>
+<body>
+    <script type="text/javascript">
+        if (window.localStorage) {
+            alert("浏览器支持localStorage");
+        }else {
+            alert("浏览器不支持localStorage");
+        }
+        if (localStorage.requestcout) {
+            localStorage.requestcout = Number(localStorage.requestcout)+1;
+        }else {
+            localStorage.requestcout = 1;
+        }
+        document.write("刷新累加一次："+localStorage.requestcout+"次");
+    </script>
+</body>
+</html>

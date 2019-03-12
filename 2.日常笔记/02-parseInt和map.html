@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>parseInt和map</title>
+</head>
+<body></body>
+<script>
+
+  /*回调函数：
+  回调函数就是一个通过函数指针调用的函数.如果你把函数的指针(地址)作为参数传递给另一个函数，当这个指针被用来调用其所指向的函数时，我们就说这是回调函数。这里parseInt为map的回调函数*/
+
+ /* map()函数
+  array.map(callbackfn[thisArg]);
+  对数组的每个元素调用定义的回调函数并返回包含结果的数组。
+  array：必需。一个数组对象。
+  callbackfn：必需。一个接受最多三个参数的函数。对于数组中的每个元素，map 方法都会调用 callbackfn 函数一次。
+  thisArg:可选。 可在 callbackfn 函数中为其引用this 关键字的对象。 如果省略thisArg，则 undefined 将用作this 值。*/
+  /* callbackfn(value, index, array)//回调函数语法
+  可使用最多三个参数来声明回调函数。
+  value:数组元素的值。index:数组元素的下标。array：包含该元素的数组对象。*/
+  console.log(["1","2","3"].map(parseInt));//[1,NaN,NaN]
+  //数组里面的值对应自己本身下标的进制
+
+  //parseInt函数
+  /* parseInt() 函数
+* parseInt() 函数可解析一个字符串，并返回一个整数。如parseInt("10")//10
+*parseInt(string, radix)
+*string:	必需。要被解析的字符串。
+*radix:可选。表示要解析的数字的基数（意思就是要解析的字符串是一个几进制数形式的字符串）。该值介于 2到36 之间。
+* */
+console.log(parseInt("10"));//将一个十进制形式的字符串"10"转化为一个十进制数
+console.log(parseInt("10",0));//将一个十进制形式的字符串"10"转化为一个十进制数
+console.log(parseInt("10",10));//将一个十进制形式的字符串"10"转化为一个十进制数
+console.log(parseInt("10",2));//将一个二进制形式的字符串"10"转化为一个十进制数
+console.log(parseInt("10",8));//将一个二进制形式的字符串"10"转化为一个十进制数
+console.log(parseInt("21",16));//将一个十六进制形式的字符串"21"转化为一个十进制数
+ //参数string字符串中的每一个字符必须小于参数radix
+console.log(parseInt("1",0));//这个特殊因为0代表字符串为十进制形式
+console.log(parseInt("2",1));//这个就不存在呀
+console.log(parseInt("3",2));//NaN
+console.log(parseInt("16",8));//14
+console.log(parseInt("18",8));//NaN
+/***********************************************************************************/
+/*
+  parseInt函数如果参数string以"ox"或以"Ox"开头,将以默认16为基数。
+  parseInt函数如果参数string以"O"开头,将以默认8为基数。
+  parseInt函数的参数radix小于2或者大于36，则 parseInt() 将返回 NaN。
+*/
+ console.log(parseInt("0x16"));
+
+/**************************************************************************************/
+var a=["1", "2", "3", "4","5","6","7","8","9","10","11","12","13","14","15"];
+ console.log(a.map(parseInt));
+/**************************************************************************************/
+var a=["1", "2", "3", "4","5","6","7","8","9","10","11","12","13","14","15"];
+ function parseIn(str, radix) {
+     return str+'-'+radix;
+ };
+ console.log(a.map(parseIn));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</html>

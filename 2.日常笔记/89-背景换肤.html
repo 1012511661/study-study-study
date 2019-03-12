@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>换肤</title>
+
+</head>
+<style>
+    * {
+        padding: 0px;
+        margin: 0px;
+    }
+
+    #header {
+        width: 100%;
+        height: 30px;
+        background-color: #808080;
+    }
+
+    #dcbg a {
+        text-decoration: none;
+        /*去掉下划线*/
+        color: #fff;
+        /*字体变成白色*/
+    }
+
+    #header-icon {
+        width: 900px;
+        height: 30px;
+        margin: 0 auto;
+        /*居中*/
+        line-height: 30px;
+    }
+
+    .dpic img {
+        width: 100px;
+
+    }
+
+    .dpic {
+        float: left;
+        margin-left: 30px;
+    }
+
+    #pic-icon {
+        width: 900px;
+        margin: 10px auto;
+    }
+
+    #dup a {
+        text-decoration: none;
+        color: red;
+    }
+
+    #pictop {
+        width: 100%;
+        height: 20px;
+        border-bottom: solid 1px #4cff00;
+        /*页面中添加一条线*/
+    }
+
+    #dup {
+        margin-right: 80px;
+        float: right;
+    }
+
+    #dpics {
+        width: 100%;
+        height: 100px;
+        position: fixed;
+        /*固定定位*/
+        top: 0;
+        left: 0;
+        background-color: #e6e6e6;
+        display: none;
+    }
+</style>
+
+<body>
+    <div id="header">
+        <div id="header-icon">
+            <div id="dcbg"><a href="javascript:;">换肤</a></div>
+        </div>
+    </div>
+    <div id="dpics">
+        <div id="pictop">
+            <div id="dup"><a href="javascript:;">收起</a></div>
+        </div>
+        <div id="pic-icon">
+            <div class="dpic"><img src="img/1.jpg"></div>
+            <div class="dpic"><img src="img/2.jpg"></div>
+            <div class="dpic"><img src="img/3.jpg"></div>
+            <div class="dpic"><img src="img/4.jpg"></div>
+            <div class="dpic"><img src="img/8.jpg"></div>
+            <div class="dpic"><img src="img/6.jpg"></div>
+        </div>
+    </div>
+</body>
+<script src="js/jquery-1.10.2.min.js"></script>
+<script>
+    $(function () { //页面加载完成之后
+        $("#dcbg a").click(function () { //点击a弹出 隐藏掉的内容
+            $("#dpics").show(1000); //显示
+        });
+
+        $("#dup a").click(function () {
+            $("#dpics").hide(1000); //隐藏
+        });
+
+        $(".dpic img").click(function () {
+            let bgsrc = $(this).attr("src"); //获取到当前鼠标选中的图片路径地址
+            $("body").css("background-image", "url(" + bgsrc + ")"); //给窗体添加上背景图片
+        });
+
+    });
+</script>
+
+</html>

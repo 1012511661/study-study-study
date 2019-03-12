@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>对象合并</title>
+</head>
+
+<body>
+    const result = [{
+        "field": "storeId",
+        "text": "哈哈"
+    }, {
+        "field": "oper",
+        "text": "运营"
+    }, {
+        "field": "app",
+        "text": "应用"
+    }]; <br>
+    =>  [{storeId:'哈哈'},{oper:'运营'},{app:'应用'}]
+
+</body>
+<script>
+    const result = [{
+        "field": "storeId",
+        "text": "哈哈"
+    }, {
+        "field": "oper",
+        "text": "运营"
+    }, {
+        "field": "app",
+        "text": "应用"
+    }];
+    const dataAry = result.reduce((prev, current, ) => {
+        const obj = {
+            [(Object.values(current)[0])]: Object.values(current)[1]
+        };
+        prev.push(obj)
+        return prev
+    }, [])
+    console.log(dataAry);
+</script>
+
+</html>

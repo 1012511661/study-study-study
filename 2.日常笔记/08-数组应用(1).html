@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>数组和对象的原生方法</title>
+</head>
+<body>
+<h2>数组的原生方法</h2>
+
+//pop 和 push
+<hr/>
+Array.pop(); 删除数组最后一个元素，返回被删除的元素<br/>
+Array.push(element1, element2, element3, element4, element5); 在数组尾部插入元素，返回操作后数组length<br/>
+通过这 pop 和 push ，就能把数组模拟成 堆栈(stack) 来进行操作。<br/>
+堆栈这种数据结构的特点，就是“后进先出”（LIFO, Last In First Out）。<br/><br/><br/>
+
+// shift 和 unshift
+<hr/>
+Array.shift();  删除数组第一个元素，返回被删除的元素<br/>
+Array.unshift(element1,element2,element3, element4) ;  在数组头部插入元素，返回操作后数组的length<br/>
+利用 shift 和 unshift 则可以实现 队列(queue) 的操作。<br/>
+队列的操作方式和堆栈相反，采用“先进先出”（FIFO, First-In-First-Out）<br/><br/><br/>
+
+
+//splice
+<hr/>
+index：规定从何处添加/删除元素。<br/>
+howmany：规定应该删除多少元素。<br/>
+elements：规定要添加到数组的新元素，从 index 所指的下标处开始插入。<br/>
+splice方法是对 pop、push、shift、unshift 的一个补充。 <br/>
+返回值是被删除的元素。<br/>
+Array.splice(index , howMany[element1[elementN]]);<br/>
+Array.splice(index);<br/><br/><br/><br/>
+
+
+
+//reverse:
+Array.reverse(); // 颠倒数组中元素的顺序，并返回逆序后的数组<br/>
+<hr/>
+//sort:
+Array.sort([compareFunction]);
+<hr/>
+如果调用该方法时没有使用参数，将按字母顺序对数组中的元素进行排序。<br/>
+说得更精确点，是按照字符编码的顺序进行排序。<br/>
+如果想按照其他标准进行排序，就需要提供比较函数，该函数要比较两个值，然后返回一个用于说明这两个值的相对顺序的数字。比较函数应该具有两个参数 a 和 b，其返回值如下：<br/>
+•若 a 小于 b，在排序后的数组中 a 应该出现在 b 之前，则返回一个小于 0 的值。<br/>
+•若 a 等于 b，则返回 0。<br/>
+•若 a 大于 b，则返回一个大于 0 的值。<br/>
+
+</body>
+<script>
+
+    //访问方法（Accessor methods）
+    //这些方法只是返回相应的结果，而不会修改数组本身
+{
+    //concat
+    //Array.concat(value1, value2, ..., valueN); // 链接2个或多个数组，并返回合并后的数组
+    var arr = [1, 2, 3];
+    arr.concat(4, 5); // return [1, 2, 3, 4, 5]
+    arr.concat([4, 5]); // return [1, 2, 3, 4, 5]
+    arr.concat([4, 5], [6, 7]); // return [1, 2, 3, 4, 5, 6, 7]
+    arr.concat(4, [5, [6, 7]]); // return [1, 2, 3, 4, 5, [6, 7]]
+}
+
+   {
+        //join
+    //string = Array.join(separator);
+    //把数组中的所有元素放入一个字符串。其中，元素之间是通过指定的分隔符进行分隔的。
+    //默认的分隔符是逗号(,)，返回值是合并后字符串。
+    [1, 2, 3].join(); // return "1,2,3"Array.join()方法，实际上是String.splice()的逆向操作。
+
+  
+    //slice
+   // Array.slice(begin[end]); // 数组中返回选定的元素
+
+    //toString
+    Array.toString(); // 所有JavaScript都有toString这个方法
+
+    //indexOf 和 lastIndexOf *[ECMAScript 5]
+    //Array.indexOf(searchElement[, fromIndex]); // 从头开始搜索
+    //Array.lastIndexOf(searchElement[, fromIndex]); // 从尾开始搜索
+
+    //searchElement：需要搜索的值
+    //fromIndex：索引，指示搜索从哪里开始
+}
+ /*******3.splice(index,num,item1,item2......)*************/
+ {
+        console.log("3.splice(index,num,item1,item2......):")
+        let arr_S_o = [1, 2, 3, 4];
+        let arr_S_t = ["a", 66, true]
+        arr_S_o.splice(1, 2, 'aa', 'bb', 'cc') //[1, "aa", "bb", "cc", 4] "o"
+        console.log(arr_S_o, "o")
+        arr_S_o.splice(1, 2, arr_S_t)
+        // [1, Array(3), "cc", 4]
+        // Array(3) 0:"a" 1:66 2:true
+        console.log(arr_S_o, "t")
+    }
+    //迭代方法（Iteration methods）
+    //forEach *[ECMAScript 5]
+    //Array.forEach(callback[, thisArg]); // 从头到尾遍历一次数组，并为数组中的每个元素，调用指定的函数
+
+    /*参数：
+    callback：遍历数组时调用的函数
+    thisArg：指定 callback 的作用域
+    另外，callback会调用三个参数：
+    value：数组元素
+    index：数组索引
+    array：数组本身*/
+
+    // [1, 2].forEach(function(value, index, array) {
+    // console.log(value, index, array);
+    // });
+    // return
+    // 1 0 [1, 2]
+    // 2 1 [1, 2]
+
+    /*
+    Note：forEach是无法通过break来中断数组的遍历。
+    解决方法：利用try方法来抛出异常，终止遍历。
+    */
+
+    try {
+        [1,2,3].forEach(function(val) {
+            console.log(val);
+            throw(e)
+        });
+    } catch(e) {
+        console.log(e);
+    }
+
+    //map *[ECMAScript 5]
+    //Array.map(callback[, thisArg]); // 遍历数组元素，调用指定函数，并以数组返回所有结果
+    /*参数：
+    callback：遍历数组时调用的函数
+    thisObject ：指定 callback 的作用域*/
+
+    [1, 2, 3].map(function(num) { // return [2, 3, 4]
+        return num + 1;
+    });
+
+    //filter *[ECMAScript 5]
+
+    //Array.filter(callback[, thisObject]); // 遍历数组调用方法，满足条件(返回true)的元素，将被添加到返回值的数组中
+
+    /*参数：
+    callback：遍历数组时调用的函数
+    thisObject ：指定 callback 的作用域*/
+
+    [1, 2, 3].filter(function(num) { // return [1]
+        return num < 2;
+    });
+
+    //every 和 some *[ECMAScript 5]
+
+    //Array.every(callback[, thisObject]); // “与”
+    //Array.some(callback[, thisObject]); // “或”
+
+    /*参数：
+    callback：遍历数组时调用的函数
+    thisObject：指定 callback 的作用域
+    every：当所有元素调用函数都返回true，结果才返回true，不然均返回false。
+    some：当所有元素调用函数都返回false，结果才返回false，不然均返回true。
+    一旦every和some的返回值确定，就会立刻停止遍历。*/
+
+    [1, 2, 3]. every(function(num) { // return false
+        return num > 1;
+    });
+    [1, 2, 3]. some(function(num) { // return true
+        return num > 2;
+    });
+
+
+
+    //Object对象的原生方法
+    //当以非构造函数形式被调用时，Object 等同于 new Object()。
+    //Object的每个实例都具有共同的基本属性和方法
+
+    // //属性或者方法说明
+    // constructor属性	                //在JavaScript中，每个对象都有一个constructor属性，它引用了初始化这个对象的构造函数。指向创建当前对象的构造函数
+    // hasOwnProperty(name);	        //检测给定属性name在实例对象（不是原型对象）中是否存在。name以字符串形式指定，该方法返回true or false。
+    // isPropertyOf(object);	        //检测传入的对象object是否该方法调用者的原型对象。一般格式：Class.prototype.isPropertyOf(object)，该方法返回true or false。
+    // propertyIsEnumerable(pr);	    //检测属性pr能否用for-in循环枚举。属性pro用字符串形式指定
+    // toLocaleString();	            //返回对象的字符串表示。与地区和环境对应
+    // toString();	                    //返回对象的字符串表示
+    // valueOf()	                    //当JavaScript需要把一个对象转换为某种基本数据类型，也就是一个数字而不是一个字符串的时候，才调用的方法如果一个对象用在需要一个基本数值的环境中，JavaScript会自动调用这个方法。返回对象的字符串、数值或布尔值表示
+ 
+</script>
+</html>

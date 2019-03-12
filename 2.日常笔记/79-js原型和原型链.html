@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>js原型和原型链</title>
+</head>
+
+<body>
+    <p><strong>普通对象与函数对象</strong>:凡是通过 new Function() 创建的对象都是函数对象，其他的都是普通对象</p>
+    <p><strong>构造函数</strong>:实例的构造函数属性（constructor）指向构造函数</p>
+    <p>在原型模式中，this常用的有两种情况</p>
+    <span>1).在类中this.xx = xxx，this->当前类的实例</span>
+    <hr>
+    <span>2).某一个方法中的this->看执行时候“.”前面是谁</span><br>
+    <span>(1).需要先确定this的指向</span>
+    <span>(2).把this替换成对应的代码</span>
+    <span>(3).按照原型链查找的机制一步一步查找</span>
+</body>
+<script>
+    { //1.普通对象与函数对象
+        var o1 = {};
+        var o2 = new Object();
+        var o3 = new f1();
+
+        function f1() {};
+        var f2 = function () {};
+        var f3 = new Function('str', 'console.log(str)');
+
+        console.log(typeof Object, '<=typeof Object'); //function
+        console.log(typeof Function, '<=typeof Function'); //function
+
+        console.log(typeof f1, '<=typeof f1'); //function
+        console.log(typeof f2, '<=typeof f2'); //function
+        console.log(typeof f3, '<=typeof f3'); //function
+
+        console.log(typeof o1, '<=typeof o1'); //object
+        console.log(typeof o2, '<=typeof o2'); //object
+        console.log(typeof o3, '<=typeof o3'); //object
+        console.log(
+            "在上面的例子中 o1 o2 o3 为普通对象，f1 f2 f3 为函数对象。怎么区分，其实很简单，凡是通过 new Function() 创建的对象都是函数对象，其他的都是普通对象。f1,f2,归根结底都是通过 new Function()的方式进行创建的。Function Object 也都是通过 New Function()创建的"
+        )
+    } { //2.构造函数
+        function Person(name, age, job) {
+            this.name = name;
+            this.age = age;
+            this.job = job;
+            this.openName = function () {
+                alert(this.name)
+            }
+        }
+        var person1 = new Person('Zaxlct', 28, 'Software Engineer');
+        var person2 = new Person('Mick', 23, 'Doctor');
+        console.log(person1.constructor == Person); //true
+        console.log(person2.constructor == Person); //true
+        //上面的例子中 person1 和 person2 都是 Person 的实例。这两个实例都有一个 constructor （构造函数）属性，该属性（是一个指针）指向 Person。 即：
+        console.log("实例的构造函数属性（constructor）指向构造函数")
+    } { //3.this
+        function Fn() {
+            this.x = 100;
+            this.y = 200;
+            this.getY = function () {
+                console.log(this.x)
+            }
+        }
+        Fn.prototype = {
+            constructor: Fn,
+            y: 300,
+            getX: function () {
+                console.log(this.x)
+            },
+            getY: function () {
+                console.log(this.y)
+            }
+        }
+        var f = new Fn;
+        f.getx(); // 100 this->f  console.log(f.x) 
+        f.__proto__.getx(); //undefined this->Fn   console.log(f.__proto__.x)在共有上面找的，共有的没有往Object上找，也没有返回undefined
+        Fn.prototype.getX(); //undefined 
+        f.getY(); //200
+        f.__proto__.getY(); //300
+    }
+</script>
+
+</html>

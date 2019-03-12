@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>快速返回26个字母的数组</title>
+</head>
+
+<body>
+    <h2>fromCharCode(num,num,num......) 可接受一个指定的 Unicode 值，然后返回一个字符串。
+    </h2>
+    <h2>charCodeAt(index) 方法可返回指定位置的字符的 Unicode 编码。这个返回值是 0 - 65535 之间的整数。
+        <br>
+        注释：字符串中第一个字符的下标是 0。如果 index 是负数，或大于等于字符串的长度，则 charCodeAt() 返回 NaN
+    </h2>
+
+</body>
+<script>
+    {
+        Array.from(Array(26), (item, index) => String.fromCharCode(index + 65)); // 大写
+        Array.from(Array(26), (item, index) => String.fromCharCode(index + 97)) //小写
+        // for (let i = 65; i <= 90; i++) {
+        //     let k = String.fromCharCode(i)
+        //     console.log(k);
+        // }
+    }{
+        'hello'.charCodeAt(0); // 72
+        'hello'.charCodeAt(-1); // NaN
+        'hello'.charCodeAt(6); // NaN
+    }
+</script>
+
+</html>

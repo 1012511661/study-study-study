@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>私有/静态/实例,prototype的出现</title>
+</head>
+
+<body>
+    <h3>详情请看控制台=》F12</h3>
+    <hr />
+    <strong>
+        <p>私有属性和函数:<br />
+            function obj(){ let a = 0; let fn = function(){}}<br />
+            <span style="color: #FF0000">a,fn 是函数obj的私有属性,外部调用不到,使用new来实例化,也不能访问</span>
+        </p>
+        <hr />
+        <p>静态属性和函数:<br />
+            function obj(){};obj.a=0;<br />
+            <span style="color: #ff3d4e">当定义一个函数 后 通过'.'为其添加的属性和函数，对象本身仍然可以访问得到，使用new来实例化,也不能访问</span>
+        </p>
+        <hr />
+        <p>实例属性和函数:<br />
+            function obj(){this.a =0};<br />
+            <span style="color: #ff4d4d">a 是obj的实例的属性,obj本身没有这个属性,但使用new来实例化,可以访问</span>
+        </p>
+    </strong>
+    <hr />
+    <strong>
+        <h2>prototype:</h2>
+        无论什么时候，只要创建了一个新函数，就会根据一组特定的规则为该函数创建一个prototype属性，默认情况下prototype属性会默认获得一个constructor(构造函数)属性，这个属性是一个指向prototype属性所在函数的指针<br /><br />
+        function Person(){}<b /> 图可以看出Person对象会自动获得prototyp属性，而prototype也是一个对象，会自动获得一个constructor属性，该属性正是指向Person对象。<br>
+        <img src="img/prototype1.png" alt="" style="margin: 5px 20%;"><br>
+        <p><span style="color: red;font-size: 24px">注意:</span><br />1.当调用构造函数创建一个实例的时候，实例内部将包含一个内部指针（很多浏览器这个指针名字为__proto__）指向构造函数的prototype，这个连接存在于实例和构造函数的prototype之间，而不是实例与构造函数之间。<br /><br />
+            2.实例都有一个 constructor （构造函数）属性指向构造函数,叫 构造属性。<br /><br />
+            3.原型对象（A.prototype）是 构造函数（A）的一个实例。<br /><br />
+            4.将属性写在原型里与将属性写在构造函数里有什么不同<br />
+            1、把方法写在原型中比写在构造函数中消耗的内存更小，因为在内存中一个类的原型只有一个，写在原型中的行为可以被所有实例共享，实例化的时候并不会在实例的内存中再复制一份<br />
+            而写在类中的方法，实例化的时候会在每个实例中再复制一份，所以消耗的内存更高<br />
+            所以没有特殊原因，我们一般把属性写到类中，而行为写到原型中<br />
+            2、构造函数中定义的属性和方法要比原型中定义的属性和方法的优先级高，如果定义了同名称的属性和方法，构造函数中的将会覆盖原型中的</p>
+        参考地址: https://www.cnblogs.com/dolphinX/p/3286177.html
+    </strong>
+</body>
+<script>
+    {
+        //1.私有变量、函数
+        console.log('1.私有变量、函数');
+
+        function obj() {
+            let a = 0;
+            let fn = function () {}
+        }
+        let o = new obj();
+        console.log(obj.a); //undefined
+        console.log(obj.fn); //undefined
+        console.log(o.a); //undefined
+        console.log(o.fn); //undefined
+        console.log("a,fn 是函数obj的私有属性,外部调用不到,即使使用new来实例化,也不能访问")
+    } {
+        //2.静态变量、函数
+        console.log('2.静态变量、函数');
+
+        function obj() {}
+        obj.a = 0;
+        obj.fn = function () {};
+        console.log(obj.a); //0
+        console.log(typeof obj.fn); //'function'
+        let o = new obj();
+        console.log(o.a); //undefined
+        console.log(typeof o.fn); //undefined
+        console.log("当定义一个函数 后 通过 “.”为其添加的属性和函数，通过对象本身仍然可以访问得到，但是实例却访问不到，这样的变量和函数分别被称为静态变量和静态函数")
+    } {
+        //3.实例变量、函数
+        console.log('3.实例变量、函数');
+
+        function obj() {
+            this.a = 0;
+            let b = 1;
+            console.log(b, "我是私有属性");
+            console.log(typeof b, 'typeof 我是私有属性b'); //number
+            this.fn = function () {}
+        }
+        obj.c = 1;
+        /**
+         *  a 是obj的实例的属性 obj并没有这个属性
+         *  b 是obj的私有变量 私有属性外部访问不到,即使 new 实例化也不能访问
+         *  c 是obj的静态变量 是本身添加的属性,外部可以访问,但new 实例化也不能访问
+         *  fn是obj的实例的函数 obj并没有这个函数 同 a
+         * **/
+        console.log(obj.a, 'obj.a'); //undefined
+        console.log(typeof obj.a, 'typeof a'); //undefined
+        console.log(obj.b, "obj.b"); //undefined
+        console.log(typeof obj.b, 'typeof b'); //undefined
+        console.log(obj.c, "obj.c"); //1
+        console.log(typeof obj.c, 'typeof c'); //number
+        console.log(obj.fn, 'obj.fn'); //undefined
+        console.log(typeof obj.fn, 'typeof fn'); //undefined
+        //实例化 1
+        let o = new obj();
+        console.log(o.a, 'o.a'); //0
+        console.log(typeof o.a, 'typeof o.a'); //number
+        console.log(o.b, "o.b"); //undefined
+        console.log(typeof o.b, 'typeof o.b'); //undefined
+        console.log(o.c, "o.c"); //undefined
+        console.log(typeof o.c, 'typeof o.c'); //undefined
+        console.log(o.fn, "o.fn"); //function (){}
+        console.log(typeof o.fn, 'typeof o.fn'); //function
+
+        //实例化 2
+        function Obj() {
+            this.a = []; //实例变量
+            this.fn = function () { //实例方法
+            }
+        }
+        let o1 = new Obj();
+        o1.a.push(1);
+        console.log(typeof o1.fn, 'typeof o1.fn 改变前'); //function
+        o1.fn = {};
+        console.log(o1.a, 'o1.a'); //[1]
+        console.log(typeof o1.fn, 'typeof o1.fn 改变后'); //object
+        let o2 = new Obj();
+        console.log(o2.a, 'o2.a'); //[]
+        console.log(typeof o2.fn, 'typeof o2.fn'); //function
+    } {
+        //4.prototype 属性
+        console.log('4.prototype 属性');
+        //实例 1
+        function Person(name) {
+            this.name = name;
+            //alert(this.name)
+        };
+        Person.prototype.printName = function () {
+            alert(this.name);
+        };
+        /**
+         * 构造函数的级别高,会覆盖原型中的重复属性
+         * **/
+        // console.log(Person.prototype);
+        let person1 = new Person('Byron');
+        let person2 = new Person('Frank');
+        console.log("实例本身有就用本身的,没有就找prototype(原型),如果prototype没有,继续找prototype的prototype直到函数最高级 要是还没有找到就undefined");
+        console.log(person1.name);
+        console.log(person2.name);
+        //实例 2
+        function PersonO(name) {
+            this.name = name;
+        }
+        PersonO.prototype.share = [];
+        // PersonO.prototype.printName=function(){
+        //     alert(this.name);
+        // };
+        let PersonO1 = new PersonO('Byron');
+        let PersonO2 = new PersonO('Frank');
+
+        PersonO1.share.push(1);
+        PersonO2.share.push(2);
+        console.log(PersonO2.share); //[1,2]
+
+    } {
+        let Father = {
+            name: 'father',
+            friends: ['张三', '李四']
+        }
+        //只传入一个参数的情况下，这2种写法的行为一样的
+        /**
+         * Object.create()是让一个对象(A)的原型继承另外一个对象(B)
+         * A本身没有这些属性,但是A的原型(A._proto)会有这些属性
+         * **/
+
+        let son1 = Object(Father);
+        son1.name = '张三';
+        let son2 = Object.create(Father);
+        son2.friends.push('王五');
+
+        console.log(son1.name); // 张三
+        console.log(son2.name); // 张三
+        console.log(son1.friends); // ['张三','李四','王五']
+        console.log(son2.friends); // ['张三','李四','王五']
+
+        let son3 = Object.create(Father, {
+            name: {
+                value: '王五'
+            }
+        });
+        console.log(son3.name); // 王五
+        console.log(son3.friends) // ['张三','李四','王五']
+    }
+</script>
+
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>拷贝(1)</title>
+</head>
+<body>
+    <h2>一个对象拷贝另一个对象</h2>
+    concat，Array.from，slice，只是一维数组的深拷贝，Object.assgn，只是一维对象的深拷贝，深浅拷贝之存在引用数据类型中
+</body>
+<script>
+    {
+        let obj1 = {
+            name: "小明",
+            age: 1,
+            text: {
+                title: "标题",
+                content: {
+                    conTit: "内容标题"
+                }
+            }
+        }
+        console.log(obj1, "初始的 obj 1 ")
+    }
+    {
+        console.log('for in')
+        let obj1 = {
+            name: "小明",
+            age: 1,
+            text: {
+                title: "标题",
+                content: {
+                    conTit: "内容标题"
+                }
+            }
+        }
+        let obj2 = {};
+        for (let key in obj1) {
+            obj2[key] = obj1[key]
+        }
+        obj2.name = "小强";
+        console.log(obj1, "浅拷贝 obj1 没有变")
+        console.log(obj2, "浅拷贝 obj2  ")
+        obj1.name = "小小";
+        console.log(obj1, "浅拷贝 obj1 变了")
+        console.log(obj2, "浅拷贝 obj2  没有变")
+    }
+    {
+        console.log('Object.assign(obj2,obj1)')
+        let obj1 = {
+            name: "小明",
+            age: 1,
+            text: {
+                title: "标题",
+                content: {
+                    conTit: "内容标题"
+                }
+            }
+        }
+        let obj2 = {};
+        console.log(Object.assign(obj2,obj1))
+        obj2.name = "小强";
+        console.log(obj1, "浅拷贝 obj1 没有变")
+        console.log(obj2, "浅拷贝 obj2  ")
+        obj1.name = "小小";
+        console.log(obj1, "浅拷贝 obj1 变了")
+        console.log(obj2, "浅拷贝 obj2  没有变")
+    }
+    {
+        console.log('{...obj1}')
+        let obj1 = {
+            name: "小明",
+            age: 1,
+            text: {
+                title: "标题",
+                content: {
+                    conTit: "内容标题"
+                }
+            }
+        }
+        let obj2 = {...obj1};
+        obj2.name = "小强";
+        console.log(obj1, "浅拷贝 obj1 没有变")
+        console.log(obj2, "浅拷贝 obj2  ")
+        obj1.name = "小小";
+        console.log(obj1, "浅拷贝 obj1 变了")
+        console.log(obj2, "浅拷贝 obj2  没有变")
+    }
+    {
+        console.log('JSON.parse(JSON.stringify(obj1))')
+        let obj1 = {
+            name: "小明",
+            age: 1,
+            text: {
+                title: "标题",
+                content: {
+                    conTit: "内容标题"
+                }
+            }
+        }
+        let obj2 =JSON.parse(JSON.stringify(obj1))
+        obj2.name = "小强";
+        console.log(obj1, "浅拷贝 obj1 没有变")
+        console.log(obj2, "浅拷贝 obj2  ")
+        obj1.name = "小小";
+        console.log(obj1, "浅拷贝 obj1 变了")
+        console.log(obj2, "浅拷贝 obj2  没有变")
+    }
+    {
+        console.log('递归的 深拷贝')
+        let obj1 = {
+            name: "小明",
+            age: 1,
+            text: {
+                title: "标题",
+                content: {
+                    conTit: "内容标题"
+                }
+            }
+        };
+        clone = orgin=>{
+            let newObj = {};
+            for(let key in orgin){
+                if( typeof orgin[key] == 'object'){
+                    newObj[key] = clone(orgin[key])
+                }else{
+                    newObj[key] = orgin[key]
+                }
+            }
+            return newObj;
+        }
+        let obj2 = clone(obj1);
+        console.log(obj2)
+    }
+</script>
+
+</html>

@@ -1,0 +1,94 @@
+﻿
+ul,li,form{margin:0px; padding:0px;}
+.index-main {
+	z-index:55;
+	position:relative;
+	width:1536px;
+	margin:0 auto;
+	height:457px;
+}
+.index-main-box {
+	position:relative;
+	 
+	display:block;
+	height:457px; top:-20px;
+}
+#indexslider {
+	position:relative;
+	width:1536px;
+	height:457px;
+}
+.index-img {
+	display:block;
+	width:1536px;
+	height:457px;
+	overflow:hidden;
+}
+.slides_control{}
+.index-img img {
+	width:1536px;
+	height:457px;
+}
+.index-pagination {
+	position:absolute;
+	z-index:66;
+	top:390px;
+	left:50%;
+	height:30px;
+	width:210px;
+	margin-left:-100px;
+	text-align:center;
+}
+.index-pagination li {
+	display:inline-block;
+	width:30px;
+	position:relative;
+	float:left;
+	height:23px;
+	margin-right:4px;
+	overflow:hidden;
+}
+.index-pagination li a {
+	position:relative;
+	z-index:666;
+	display:block;
+	padding:16px 0px 5px 0px;
+	height:2px;
+	color:#5f6a72;
+	text-align:center;
+}
+.index-pagination li a div {
+	position:relative;
+	z-index:555;
+	display:block;
+	height:2px;
+	background:#07599d;
+}
+.index-pagination li a div span {
+	position:absolute;
+	top:0px;
+	left:0px;
+	height:2px;
+	width:0px;
+	background:#FFF;
+}
+.index-pagination li a div em {
+	position:absolute;
+	display:none;
+	width:27px;
+	height:10px;
+	background:url(../images/car-ico.png) no-repeat;
+	top:-5px;
+	left:1px;
+}
+.index-pagination li.current a {
+	color:#0b4da2;
+	_color:#c9242b;
+}
+.index-pagination li.back {background:url(../images/car-ico.png) no-repeat; display:block; position:absolute; width:27px; height:10px; left:0px; top:4px; z-index:444;}
+
+
+
+
+
+

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>轮子</title>
+</head>
+
+<body>
+    1.类素组转为数组 <br>
+    2. <span id="two">获取元素所有信息</span><br>
+</body>
+<script>
+    // 1. 类数组转为数组的轮子
+    argToArray = (listArr) => {
+        let arr = [];
+        try { //直接使用[]原型上的
+            arr = Array.prototype.slice.call(listArr);
+        } catch (e) { //不兼容,用循环转换
+            for (let i = 0; i < listArr.length; i++) {
+                arr[arr.length] = listArr[i]
+            }
+        }
+        return arr
+    };
+    //argToArray([1, 5, 4, 7, 9, 6, 5, 10, 11, 12])
+
+    // 2.获取元素所有信息
+    function getDocCss(curName, attr) {
+        if ("getComputedStyle" in window) {
+            //return window.getComputedStyle(curName,null) //所有属性
+            return window.getComputedStyle(curName, null)[attr]
+        } else {
+            // return curName.currentStyle //所有属性
+            return curName.currentStyle[attr] // IE6-8
+        }
+    }
+    console.log(getDocCss(document.getElementById("two"), "fontSize"))
+</script>
+
+</html>

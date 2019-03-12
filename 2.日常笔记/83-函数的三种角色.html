@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>函数的三种角色</title>
+</head>
+<body>
+    <h1>函数在整个JS中是最复杂也是最重要的</h1>
+    <h3>一个函数存在多面性：</h3>
+    1) ‘普通函数’：执行时候会形成私有作用域，形参赋值，预解析，执行代码，销毁/不销毁
+    2) ‘类’：它有自己的实例，也有一个叫prototyre的属性是自己的原型，它的实例只想自己的原型
+    3) ‘普通对象’：作为对象，也有一些自己的私有属性，也可以通过__proto__找到终极的Function.prototype
+</body>
+<script>
+{
+    function Fn(){
+        var num = 10;
+        this.x = 20;
+    }
+    Fn.prototype.getX = function(){
+        console.log(this.x)
+    }
+    Fn.aaa = 30;
+
+    var f = new Fn;// this->f
+    f.num; // f-> 类  undefined
+    f.aaa; // f-> 类  undefined
+
+    var res = Fn()//普通函数 this->window
+
+    Fn.aaa; //普通对象 30 
+    
+}
+</script>
+</html>

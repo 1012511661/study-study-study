@@ -1,0 +1,46 @@
+
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>js div自由拖动-jq22.com</title>
+<script src="js/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+<style>
+.mydiv {
+	position:fixed;
+	z-index:1000;
+	width:50px;
+	height:50px;
+	background-color:blue;
+	border-radius:50px;
+	filter:Alpha(opacity=50);
+	opacity:0.5;
+}
+</style>
+</head>
+<body>
+<div id="wuss" class="mydiv" style="left:0px;top: 20px;"></div>
+
+<script>
+var posX;
+var posY;
+
+fwuss = document.getElementById("wuss");
+fwuss.onmousedown = function(e) {
+    posX = event.x - fwuss.offsetLeft; //获得横坐标x
+    posY = event.y - fwuss.offsetTop; //获得纵坐标y
+    document.onmousemove = mousemove; //调用函数，只要一直按着按钮就能一直调用
+}
+document.onmouseup = function() {
+    document.onmousemove = null; //鼠标举起，停止
+}
+
+function mousemove(ev) {
+    if (ev == null) ev = window.event; //IE
+    fwuss.style.left = (ev.clientX - posX) + "px";
+    fwuss.style.top = (ev.clientY - posY) + "px";
+}
+</script>
+
+</body>
+</html>

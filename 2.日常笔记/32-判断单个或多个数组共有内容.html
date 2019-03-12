@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>判断单个或多个数组共有内容</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    //1.
+    {
+        let arr = [1, 2, 3, 4, 3, 2];
+        let arrNew = arr.filter((item, i) => arr.indexOf(item) === i);
+        console.log(arrNew)
+    }
+    //2.
+    {
+        var arr1 = ["a", "b"]; //数组A
+        var arr2 = ["a"]; //数组B
+
+        var temp = []; //临时数组1
+        var temparray = []; //临时数组2
+        for (var i = 0; i < arr2.length; i++) {
+            temp[arr2[i]] = true; //巧妙地方：把数组B的值当成临时数组1的键并赋值为真
+        }
+        for (var i = 0; i < arr1.length; i++) {
+            if (!temp[arr1[i]]) {
+                temparray.push(arr1[i]); //巧妙地方：同时把数组A的值当成临时数组1的键并判断是否为真，如果不为真说明没重复，就合并到一个新数组里，这样就可以得到一个全新并无重复的数组
+            }
+        }
+        //document.write(temparray.join(",") + "");
+        //console.log(temp,"temp")
+        //console.log(temparray,"temparray")
+        //console.log("</br>")
+    }
+    //3.
+    {
+        // var crr=[{"content":"55664","id":15,"voiceUrl":"123456"},{"content":"dfdf","id":16,"voiceUrl":"456789"}];
+        // var brr=[{"content":"55664","id":15,"voiceUrl":"123456"}];
+        var crr = ["1", "2", "4"];
+        var brr = ["1", "2", "3"];
+
+        for (var i = 0; i < brr.length; i++) {
+            for (var j = 0; j < crr.length; j++) {
+                if (crr[j] == brr[i]) {
+                    crr.splice(j, 1);
+                    //j++;//j--
+                }
+            }
+        }
+        console.log(crr, "c");
+        console.log(brr, "b")
+        console.log("</br>")
+    }
+    //4.
+    {
+        var newArr = [{
+            "content": "55664",
+            "id": 15,
+            "voiceUrl": "123456"
+        }, {
+            "content": "dfdf",
+            "id": 16,
+            "voiceUrl": "456789"
+        }];
+        var oldArr = [{
+            "content": "55664",
+            "id": 15,
+            "voiceUrl": "123456"
+        }];
+
+        for (var i = 0; i < newArr.length; i++) {
+            var flag = true;
+            for (var j = 0; j < oldArr.length; j++) {
+                if (newArr[i].id == oldArr[j].id) {
+                    flag = false;
+                };
+            };
+            if (flag) {
+                oldArr.splice(0, oldArr.length);
+                oldArr.push(newArr[i]);
+            };
+        };
+
+        console.log(newArr, "newArr")
+        console.log(oldArr, "oldArr 新数据")
+    } {
+        // 方法一：
+        var arr = [0, 2, 3, 4, 4, 0, 2];
+        var obj = {};
+        var tmp = [];
+        for (var i = 0; i < arr.length; i++) {
+            if (!obj[arr[i]]) {
+                obj[arr[i]] = 1;
+                tmp.push(arr[i]);
+            }
+        }
+        console.log(tmp);
+    } {
+        //  方法二：
+        var arr = [2, 3, 4, 4, 5, 2, 3, 6],
+            arr2 = [];
+        for (var i = 0; i < arr.length; i++) {
+            if (arr2.indexOf(arr[i]) < 0) {
+                arr2.push(arr[i]);
+            }
+        }
+        console.log(arr2);
+
+    } {
+        //  方法三：
+
+        var arr = [2, 3, 4, 4, 5, 2, 3, 6];
+        var arr2 = arr.filter(function (element, index, self) {
+            return self.indexOf(element) === index;
+        });
+        console.log(arr2);
+    } {
+        var arr = [1, 1, 2, 3, 4, 4, 5];
+        var newArr = new Set(arr);
+        console.log(newArr)
+    } 
+</script>
+
+</html>

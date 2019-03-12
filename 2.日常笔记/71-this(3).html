@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>this(3)</title>
+</head>
+
+<body>
+    <img src="img/this练习题.png" alt="">
+</body>
+<script>
+    {
+        var num = 20;
+        var obj = {
+            num: 30,
+            fn: (function (num) {
+                this.num *= 3;
+                num += 15;
+                var num = 45;
+                return function () {
+                    this.num *= 4;
+                    num += 20;
+                    console.log(num)
+                }
+            })(num) //把全局的num = 20赋值给了自执行函数，而不是obj.num，如果想要是obj.num,我们需要写成(obj.num)
+        };
+        var fn = obj.fn;
+        fn();
+        obj.fn();
+        console.log(window.num, obj.num)
+    } {
+        var num = 20;
+        var obj = {
+            num: 30,
+            fn: (function (num) {
+                this.num *= 3;
+                num += 15;
+                var num = 45;
+                return function () {
+                    this.num *= 4;
+                    num += 20;
+                    console.log(num)
+                }
+            })(obj.num)
+        };
+        var fn = obj.fn;
+        fn();
+        obj.fn();
+        console.log(window.num, obj.num)
+    }{
+        var num = 10;
+        console.log(this, '0')  // win
+        var myObject = {
+            num: 2,
+            add: function () {
+                this.num = 3;
+                (function () {
+                    console.log(this, '1') // win
+                    console.log(this.num, '1')
+                    this.num = 4
+                })()
+                console.log(this.num, '2')
+                console.log(this, '2') // obj
+            },
+            sub: function () {
+                console.log(this.num, '3')
+                console.log(this, '3') 
+            }
+        }
+
+        function Result() {
+            myObject.add();
+            console.log(myObject.num, '4')
+            console.log(this, '4') // win
+            console.log(num, '5')
+            console.log(this, '5')
+            var sub = myObject.sub; // win
+            sub()
+        }
+        Result()
+    }
+</script>
+
+</html>

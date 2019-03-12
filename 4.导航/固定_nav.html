@@ -1,0 +1,199 @@
+
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>jQuery滚动导航定位-jq22.com</title>
+<script src="js/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+<style>
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video {
+	margin:0;
+	padding:0;
+	border:0;
+	font-size:100%;
+	font:inherit;
+	vertical-align:baseline
+}
+article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section {
+	display:block
+}
+body {
+	line-height:1
+}
+ol,ul {
+	list-style:none
+}
+blockquote,q {
+	quotes:none
+}
+blockquote:before,blockquote:after,q:before,q:after {
+	content:'';
+	content:none
+}
+table {
+	border-collapse:collapse;
+	border-spacing:0
+}
+#wrapper {
+	width:100%;
+	position:relative;
+}
+#container {
+	width:100%;
+	position:relative;
+	background:#303030;
+	z-index:-5;
+}
+header.home {
+	max-width:760px;
+	position:relative;
+	margin:0 auto;
+	text-align:center;
+}
+header.home img {
+	max-width:300px;
+	margin:0 auto;
+	position:relative;
+	text-align:center;
+}
+.home-title {
+	font-family:"coquette";
+	font-size:3em;
+	color:white;
+	margin:10px 0px 20px 0px;
+}
+.home-desc {
+	font-family:"coquette";
+	font-size:1.8em;
+	color:white;
+	margin:0px 0px 20px 0px;
+	line-height:1.3em;
+}
+#top_intro {
+	width:100%;
+}
+.le-background {
+	position:fixed;
+	top:0px;
+	left:0;
+	bottom:0;
+	right:0;
+	width:100%;
+	z-index:-2;
+	opacity:0.6;
+	background:#303030;
+	background-size:cover !important;
+	background-position:center;
+	background-repeat:no-repeat no-repeat;
+}
+.blurred {
+	opacity:0;
+}
+#mainMenuBar {
+	width:100%;
+	background-color:white;
+	z-index:100;
+}
+#mainMenuBar ul {
+	margin:0 auto;
+	text-align:center;
+	position:relative;
+	padding:20px;
+	border:1px solid black;
+}
+#mainMenuBar li {
+	display:inline-block;
+	color:black;
+	margin-left:30px;
+	font-size:1.2em;
+	font-family:"proxima-nova";
+	font-weight:100;
+}
+#content {
+	width:100%;
+	position:relative;
+	background-color:white;
+	padding-top:20px;
+}
+#content p {
+	font-size:1.2em;
+	font-family:"proxima-nova";
+	font-weight:100;
+	max-width:640px;
+	margin:0 auto;
+	line-height:1.4em;
+	padding:10px 0px 10px 0px;
+}
+.stick {
+	position:fixed;
+	top:0;
+}
+.home {
+	background:#d7c4b4;
+}
+</style>
+</head>
+<body>
+<header class="home">
+    <h1 class="home-title">Waney Wood</h1>
+    <h2 class="home-desc">WaneyWood produces a range of distinctive home products all handcrafted with wood, from our workshop in Devon, England and all timber is purchased locally from sustainable sources</h2>
+</header>
+
+
+
+<div id="mainMenuBarAnchor"></div>
+<div id="mainMenuBar">
+    <ul>
+        <li>Home</li>
+        <li>Shop</li>
+        <li>Blog</li>
+        <li>About Us</li>
+        <li>Contact</li>
+    </ul>
+</div>
+<div id="content">
+    <p>2006年1月John Resig等人创建了jQuery；8月，jQuery的第一个稳定版本，并且已经支持CSS选择符、事件处理和AJAX交互。</p>
+<p><br>
+  2007年7月，jQuery 1.1.3版发布，这次小版本的变化包含了对jQuery选择符引擎执行速度的显著提升。从这个版本开始，jQuery的性能达到了Prototype、Mootools以及Dojo等同类JavaScript库的水平。同年9月，jQuery 1.2版发布，它去掉了对XPath选择符的支持，原因是相对于CSS语法它已经变得多余了。这一版能够对效果进行更为灵活的定制，而且借助新增的命名空间事件，也使插件开发变得更容易。同时，jQuery UI项目也开始启动，这个新的套件是作为曾经流行但已过时的Interface插件的替代项目而发布的。jQuery UI中包含大量预定义好的部件（widget），以及一组用于构建高级元素（例如可拖放、拖拽、排序）的工具。</p>
+<p><br>
+  2008年5月，jQuery 1.2.6版发布，这版主要是将Brandon Aaron开发的流行的Dimensions插件的功能移植到了核心库中，同时也修改了许多BUG，而且有不少的性能得到提高。因此，如果以前的jQuery版本升级到1.2.6，那么完全可以从代码中排除Dimensions插件（一个获得元素尺寸、定位的插件）。<br>
+  在jQuery迅速发展的同时，一些大的厂商也看中了商机。2009年9月，微软和诺基亚公司正式宣布支持开源的jQuery库，另外，微软公司还宣称他们将把jQuery作为Visual Studio工具集的一部分。他将提供包括jQuery的智能提示、代码片段、示例文档编制等内容在内的功能。微软和诺基亚公司将长期成为jQuery的用户成员，其他成员还有Google，Intel，IBM，Intuit等公司。</p>
+<p><br>
+  2009年1月，jQuery 1.3版发布，它使用了全新的选择符引擎Sizzle，在各个浏览器下全面超越其他同类型JavaScript框架的查询速度，程序库的性能也因此有了极大提升。这一版本的第2个变化就是提供live()方法，使用live()方法可以为当前及将来增加的元素绑定事件，在1.3版之前，如果要为将来增加的元素绑定事件，需要使用livequery插件，而在1.3版中，可以直接用live()方法。</p>
+<p><br>
+  2010年1月，也是jQuery的四周年生日，jQuery 1.4版发布，为了庆祝jQuery四周岁生日，jQuery团队特别创建了jquery14.com站点，带来了连续14天的新版本专题介绍。<br>
+  在1.3及更早版本中，jQuery通过JavaScript的eval方法来解析json对象。在1.4中，如果你用的浏览器支持，则会使用原生的JSON.parse解析json对象，这样对json对象的书写验证则更为严格。比如：{foo: "bar"}的写法将不会被验证为合法的json对象，必须写成{"foo":"bar"}。如果你的程序打算升级到1.4版本，那么这一点要尤其注意。</p>
+</div>
+
+<script>
+ $(document).ready(function() {
+     // Cache selectors for faster performance.
+     var $window = $(window),
+         $mainMenuBar = $('#mainMenuBar'),
+         $mainMenuBarAnchor = $('#mainMenuBarAnchor');
+     //alert($mainMenuBar.height());
+     // Run this on scroll events.
+     //scroll()
+     //当用户滚动指定的元素时，会发生scroll事件。
+     //scroll事件适用于所有可滚动的元素和window对象（浏览器窗口）
+     //scroll()方法触发scroll事件，或规定当发生scroll事件时运行的函数
+     $window.scroll(function() {
+         //scrollTop()方法返回或设置匹配元素的滚动条的垂直位置
+         var window_top = $window.scrollTop();
+         //javascript用offsetTop();jquery用offset().top;
+         var div_top = $mainMenuBarAnchor.offset().top;
+         if (window_top > div_top) {
+             // Make the div sticky.
+             $mainMenuBar.addClass('stick');
+             $mainMenuBarAnchor.height($mainMenuBar.height());
+         } else {
+             // Unstick the div.
+             $mainMenuBar.removeClass('stick');
+             $mainMenuBarAnchor.height(0);
+         }
+     });
+ });
+</script>
+
+</body>
+</html>

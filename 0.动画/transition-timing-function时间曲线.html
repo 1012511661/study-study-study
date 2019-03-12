@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8" />
+    <title>transition-timing-function_CSS参考手册_web前端开发参考手册系列</title>
+    <meta name="author" content="Joy Du(飘零雾雨), dooyoe@gmail.com, www.doyoe.com" />
+    <style>
+        h1{font-size:16px;}
+        .test{overflow:hidden;width:100%;margin:0;padding:0;list-style:none;}
+        .test li{position:relative;left:8px;width:220px;height:100px;margin:1px 5px;padding:10px;border:1px solid #ddd;background-color:#eee;color:#000;
+            -moz-transition-property:left;
+            -moz-transition-duration:.5s;
+            -webkit-transition-property:left;
+            -webkit-transition-duration:.5s;
+            -o-transition-property:left;
+            -o-transition-duration:.5s;
+            -ms-transition-property:left;
+            -ms-transition-duration:.5s;
+            transition-property:left;
+            transition-duration:.5s;
+        }
+        .test li:nth-child(1){-moz-transition-timing-function:linear;-webkit-transition-timing-function:linear;-o-transition-timing-function:linear;-ms-transition-timing-function:linear;transition-timing-function:linear;}
+        .test li:nth-child(2){-moz-transition-timing-function:ease;-webkit-transition-timing-function:ease;-o-transition-timing-function:ease;-ms-transition-timing-function:ease;transition-timing-function:ease;}
+        .test li:nth-child(3){-moz-transition-timing-function:ease-in;-webkit-transition-timing-function:ease-in;-o-transition-timing-function:ease-in;-ms-transition-timing-function:ease-in;transition-timing-function:ease-in;}
+        .test li:nth-child(4){-moz-transition-timing-function:ease-out;-webkit-transition-timing-function:ease-out;-o-transition-timing-function:ease-out;-ms-transition-timing-function:ease-out;transition-timing-function:ease-out;}
+        .test li:nth-child(5){-moz-transition-timing-function:ease-in-out;-webkit-transition-timing-function:ease-in-out;-o-transition-timing-function:ease-in-out;-ms-transition-timing-function:ease-in-out;transition-timing-function:ease-in-out;}
+        .test li:hover{left:100px;}
+    </style>
+</head>
+<body>
+<h1>请将鼠标移动到下面的矩形上：</h1>
+<ul class="test">
+    <li>linear: 线性过渡</li>
+    <li>ease: 平滑过渡</li>
+    <li>ease-in: 由慢到快</li>
+    <li>ease-out: 由快到慢</li>
+    <li>ease-in-out: 由慢到快再到慢</li>
+</ul>
+<img src="img/2guodu5.png">
+</body>
+</html>

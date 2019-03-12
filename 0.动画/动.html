@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        /*div {*/
+            /*background-color:red;*/
+            /*width: 100px;*/
+            /*height: 100px;*/
+            /*transform: translate(200px 100px);*/
+            /*-webkit-transform: translate(200px 100px);*/
+            /*-ms-transform: translate(200px 100px);*/
+            /*-o-transform: translate(200px 100px);*/
+            /*-moz-transform: translate(200px 100px);*/
+        /*}*/
+        div {
+            background-color:red;
+            width: 100px;
+            height: 100px;
+            /* transfom 用以设定转换的方式  transition  用于设置4个过渡属性*/
+            -webkit-transitiorm:width 2s,height 2s,-webkit-transitiorm 2s;
+            transition:width 2s,height 2s ,transform 2s;
+            -ms-transitiorm:width 2s,height 2s transform 2s;
+            -o-transitiorm:width 2s,height 2s transform 2s;
+            -moz-transitiorm:width 2s,height 2s transform 2s;
+
+        }
+        div:hover{
+            width: 200px;
+            height: 200px;
+            transform:rotate(360deg);
+            -webkit-transfom:rotate(360deg);
+        -ms-transitiorm:rotate(360deg);
+        -o-transitiorm:rotate(360deg);
+        -moz-transitiorm:rotate(360deg);
+        }
+
+    </style>
+</head>
+<body>
+   <div></div>
+   <h1>CSS动画-2D-3D转换</h1>
+   <p>
+       通过CSS转换我们能够对元素进行：移动、缩放、转动、拉长或拉伸。
+   </p>
+   <P>
+       转换是使元素改变形状、尺寸和位置的一种效果
+   </P>
+   <p>
+       可以使用2D 3D来转换元素
+   </p>
+   <h3>transfom 用以设定转换的方式</h3>
+   <ol>
+       <li>2D属性：</li>
+       <li>translate(200px,100px);移动效果，可设定X轴和Y轴进行位置移动</li>
+       <li>rotate(120 deg);旋转效果，可设定旋转角度</li>
+       <li>scale(1,2);缩放效果，可设定放大缩小倍数</li>
+       <li>skew(50deg 50deg);倾斜效果，可设定X轴和Y轴倾斜角度</li>
+       <li>matrix：矩阵效果</li>
+       <li>3D属性</li>
+       <li>rotateX：X轴挤压效果</li>
+       <li>rotateY：Y轴挤压效果</li>
+       <li>transition  用于设置4个过渡属性</li>
+       <li>transition-propety 过渡名称</li>
+       <li>transition-duration 过渡效果花费的时间</li>
+       <li>transition-timg-function 过渡效果的时间曲线</li>
+       <li>transition-delay 过渡效果开始时间（延迟时间设定）</li>
+       <li>肯定还有别的，但是我不知道 。大家一起去找茬哈！！！！</li>
+   </ol>
+</body>
+</html>

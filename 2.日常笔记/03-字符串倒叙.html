@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>字符串倒叙</title>
+</head>
+<body>
+<div>
+    <p>字符串本身的charAt()：
+        <strong>原字符串:javascript  =》</strong>
+        <strong id="str"></strong>
+    </p>
+    <p>利用数组方法,先将字符串变为数组在倒叙数组在转为字符串
+        <strong>原字符串:javascript  =》</strong>
+        <strong id="arr"></strong>
+    </p>
+</div>
+
+</body>
+<script src="js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript">
+var str = "javascript";
+var len = str.length;
+var strReverse = '';
+//利用charAt();
+for(var i=len-1;i>=0;i--){
+    strReverse += str.charAt(i);
+    console.log(strReverse,'倒叙')
+}
+$("#str").html(strReverse);
+//利用数组方法
+    var arr_str = str.split("").reverse().join("");
+    $("#arr").html(arr_str);
+
+</script>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>转换时间并比较</title>
+</head>
+
+<body>
+    <div id="time" style="width: 350px;top: 30%;left: 25%;padding: 20px;border: gray solid 3px;font-size: 29px;">
+        您的服务截止日期为<br /><span id="spanTime1" style="color:red;"></span><br /><span id="spanTime2" style="color: grey"></span><br />如有问题，请联系
+    </div>
+</body>
+<script src="js/jquery-1.11.3.min.js"></script>
+<script>
+    {
+        $(function () {
+            let startime = "2019-02-15";
+            let endtime = "2019-02-16";
+            //格式化时间
+            // 1
+            let subTime = endtime.substr(0, 10).replace(/(\d{4})-(\d{2})-(\d{2})/, '$1年$2月$3日');
+            document.getElementById("spanTime1").innerHTML = subTime;
+
+            // 2
+            let rep = ["年", "月", "日"];
+            let htmlTime = endtime.split("-").map(function (ele, index) {
+                return ele + rep[index];
+            }).join("");
+            document.getElementById("spanTime2").innerHTML = htmlTime;
+
+            if (endtime !== "" && endtime !== undefined) {
+                let stdt = new Date(startime.replace("-", "/"));
+                let etdt = new Date(endtime.replace("-", "/"));
+                let num = 86400000 * 7 //7天的差值
+                let time = etdt - stdt;
+                if (time <= num) {
+                    //小于等于 7天 提醒缴费在访问
+                    // document.getElementById("time").style.display = 'none';
+                    document.getElementById("time").style.display = 'block';
+                    console.log(' 提示缴费在访问')
+                } else {
+                    // 大于7天 直接访问
+                    console.log('直接访问')
+                }
+            } else {
+                // 无限期
+                console.log('永久会员')
+            }
+        });
+    } {
+        let objO = {
+            '2018-01-01': "a",
+            '2018-01-02': "a",
+            '2018-01-03': "a",
+            '2018-01-04': "a"
+        }
+        let objN = {};
+        for (let key in objO) {
+            objN[+key.replace(/-/g, '', '')] = objO[key];
+        }
+        console.log(objN)
+    } {
+        newDateTime = time => {
+            forNumber = n => {
+                n = n.toString();
+                return n[1] ? n : "0" + n;
+            };
+            let timeStart = new Date(time);
+            let year = new Date().getFullYear();
+            let month = new Date().getMonth() + 1;
+            let day = new Date().getDate();
+            let hour = new Date().getHours();
+            let minute = new Date().getMinutes();
+            let second = new Date().getSeconds();
+            [year, month, day].map(forNumber)
+            // return (
+            //   [year, month, day].map(forNumber).join("-") +
+            //   "" +
+            //   [hour, minute, second].map(forNumber).join("-")
+            // );
+            console.log([year, month, day].map(forNumber).join("-") +
+                " " + [hour, minute, second].map(forNumber).join("-"), '132456')
+        }
+        newDateTime(new Date())
+    }
+</script>
+
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>generator(生成器)/Iterator(迭代器)</title>
+</head>
+
+<body>
+    generator(生成器) <br>
+    Iterator(迭代器)
+</body>
+<script>
+    { // 1.Iterator(迭代器)
+        console.log('---  Iterator(迭代器)  ---')
+        //read 生成器，用来生产迭代器的
+        function read(books) {
+            let index = 0;
+            return {
+                next() {
+                    let done = index == books.length - 1;
+                    let value = books[index++]
+                    return {
+                        value,
+                        done
+                    }
+                }
+            }
+        }
+        //迭代器可以不停的调用 next() 得到一个固定队结果(value,done)
+        let it = read(['js', 'css', 'h5'])
+        //it有一个方法叫next()，每次调用 next 都会返回一个结果{value,done}
+        //value 返回的值 done 是否结束 
+        // let r1 = it.next();
+        // console.log(r1)
+        // let r2 = it.next();
+        // console.log(r2)
+        // 可用循环取值
+        do {
+            result = it.next();
+            console.log(result)
+        } while (!result.done)
+    } {
+        /**
+         * 生成器函数和普通函数不一样 多了个 * 号,会返回迭代器
+         * 执行的时候也不一样，
+         * s生成器函数其实内部生成了许多小函数
+         * **/
+        function* read(books) {
+            console.log('开始');
+            for (let i = 0; i < books.length; i++) {
+                yield books[i]; //yield 放弃 屈服 产出 的意思
+            }
+            console.log('结束');
+        }
+        let it = read(['js', 'css', 'h5']);
+        // let r1 = it.next();
+        // console.log(r1);
+        // let r2 = it.next();
+        // console.log(r2);
+        // let r3 = it.next();
+        // console.log(r3);
+        // let r4 = it.next();
+        // console.log(r4);
+        do {
+            result = it.next();
+            console.log(result)
+        } while (!result.done)
+    }
+</script>
+
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+</body>
+<script>
+    function dog(argsName,argsAge){
+        var name;
+        var age;
+        setName(argsName);
+        setAge(argsAge);
+        function setName(newName){
+           if(newName!=undefined){
+               if(newName.length>1 && newName!=null){
+                   console.log("进入了///");
+                   name = newName;
+               }
+           }
+        }
+        function getName(){
+            return name;
+        }
+        function setAge(newAge){
+            age = newAge;
+        }
+        function getAge(){
+            return age;
+        }
+        function showInfo(){
+            return name+"-"+age;
+        }
+        function equals(obj){
+            if(obj!=undefined&&obj!=null){
+                console.log(getName(),getAge());
+                    if(obj.name==getName()&&obj.age==getAge()){
+                            console.log("这是同一只狗")
+                    }else{
+                            console.log("这是假狗")
+                    }
+            }
+        }
+        return {"setName":setName,"getName":getName,"setAge":setAge,"getAge":getAge,"showInfo":showInfo,"equals":equals}
+    }
+    var wc = dog("旺财",15);
+    console.log(wc.showInfo());
+    wc.setAge(16);
+    wc.setName("啸天");
+    console.log(wc.showInfo());
+    console.log(wc.getName()+"-"+wc.getAge());
+    var newDog = {name:"张无极",age:11};
+    wc.equals(newDog);
+    var newDog = {name:"啸天",age:16};
+    wc.equals(newDog);
+</script>
+</html>

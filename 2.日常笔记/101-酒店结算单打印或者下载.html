@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>酒店结算单</title>
+    <script language="javascript">
+        function preview(oper)
+        {
+        if (oper < 10){
+        bdhtml=window.document.body.innerHTML;//获取当前页的html代码
+        sprnstr="<!--startprint"+oper+"-->";//设置打印开始区域
+        eprnstr="<!--endprint"+oper+"-->";//设置打印结束区域
+        prnhtml=bdhtml.substring(bdhtml.indexOf(sprnstr)+18); //从开始代码向后取html
+        prnhtml=prnhtml.substring(0,prnhtml.indexOf(eprnstr));//从结束代码向前取html
+        window.document.body.innerHTML=prnhtml;
+        window.print();
+        window.document.body.innerHTML=bdhtml;
+        } else {
+        window.print();
+        }
+        }
+        </script>
+</head>
+<script src="http://purl.eligrey.com/github/FileSaver.js/blob/master/FileSaver.js"></script>
+<!-- <script>
+/*! @source http://purl.eligrey.com/github/FileSaver.js/blob/master/FileSaver.js */
+var saveAs=saveAs||function(e){"use strict";if(typeof navigator!=="undefined"&&/MSIE [1-9]\./.test(navigator.userAgent)){return}var t=e.document,n=function(){return e.URL||e.webkitURL||e},r=t.createElementNS("http://www.w3.org/1999/xhtml","a"),i="download"in r,o=function(e){var t=new MouseEvent("click");e.dispatchEvent(t)},a=/Version\/[\d\.]+.*Safari/.test(navigator.userAgent),f=e.webkitRequestFileSystem,u=e.requestFileSystem||f||e.mozRequestFileSystem,s=function(t){(e.setImmediate||e.setTimeout)(function(){throw t},0)},c="application/octet-stream",d=0,l=500,w=function(t){var r=function(){if(typeof t==="string"){n().revokeObjectURL(t)}else{t.remove()}};if(e.chrome){r()}else{setTimeout(r,l)}},p=function(e,t,n){t=[].concat(t);var r=t.length;while(r--){var i=e["on"+t[r]];if(typeof i==="function"){try{i.call(e,n||e)}catch(o){s(o)}}}},v=function(e){if(/^\s*(?:text\/\S*|application\/xml|\S*\/\S*\+xml)\s*;.*charset\s*=\s*utf-8/i.test(e.type)){return new Blob(["\ufeff",e],{type:e.type})}return e},y=function(t,s,l){if(!l){t=v(t)}var y=this,m=t.type,S=false,h,R,O=function(){p(y,"writestart progress write writeend".split(" "))},g=function(){if(R&&a&&typeof FileReader!=="undefined"){var r=new FileReader;r.onloadend=function(){var e=r.result;R.location.href="data:attachment/file"+e.slice(e.search(/[,;]/));y.readyState=y.DONE;O()};r.readAsDataURL(t);y.readyState=y.INIT;return}if(S||!h){h=n().createObjectURL(t)}if(R){R.location.href=h}else{var i=e.open(h,"_blank");if(i==undefined&&a){e.location.href=h}}y.readyState=y.DONE;O();w(h)},b=function(e){return function(){if(y.readyState!==y.DONE){return e.apply(this,arguments)}}},E={create:true,exclusive:false},N;y.readyState=y.INIT;if(!s){s="download"}if(i){h=n().createObjectURL(t);r.href=h;r.download=s;setTimeout(function(){o(r);O();w(h);y.readyState=y.DONE});return}if(e.chrome&&m&&m!==c){N=t.slice||t.webkitSlice;t=N.call(t,0,t.size,c);S=true}if(f&&s!=="download"){s+=".download"}if(m===c||f){R=e}if(!u){g();return}d+=t.size;u(e.TEMPORARY,d,b(function(e){e.root.getDirectory("saved",E,b(function(e){var n=function(){e.getFile(s,E,b(function(e){e.createWriter(b(function(n){n.onwriteend=function(t){R.location.href=e.toURL();y.readyState=y.DONE;p(y,"writeend",t);w(e)};n.onerror=function(){var e=n.error;if(e.code!==e.ABORT_ERR){g()}};"writestart progress write abort".split(" ").forEach(function(e){n["on"+e]=y["on"+e]});n.write(t);y.abort=function(){n.abort();y.readyState=y.DONE};y.readyState=y.WRITING}),g)}),g)};e.getFile(s,{create:false},b(function(e){e.remove();n()}),b(function(e){if(e.code===e.NOT_FOUND_ERR){n()}else{g()}}))}),g)}),g)},m=y.prototype,S=function(e,t,n){return new y(e,t,n)};if(typeof navigator!=="undefined"&&navigator.msSaveOrOpenBlob){return function(e,t,n){if(!n){e=v(e)}return navigator.msSaveOrOpenBlob(e,t||"download")}}m.abort=function(){var e=this;e.readyState=e.DONE;p(e,"abort")};m.readyState=m.INIT=0;m.WRITING=1;m.DONE=2;m.error=m.onwritestart=m.onprogress=m.onwrite=m.onabort=m.onerror=m.onwriteend=null;return S}(typeof self!=="undefined"&&self||typeof window!=="undefined"&&window||this.content);if(typeof module!=="undefined"&&module.exports){module.exports.saveAs=saveAs}else if(typeof define!=="undefined"&&define!==null&&define.amd!=null){define([],function(){return saveAs})}
+
+</script> -->
+
+<body>
+
+    <style>
+        * {
+                    margin: 0;
+                    padding: 0;
+            
+                }
+            
+                #roomTxt {
+                    margin-left: 200px;
+                    width: 980px;
+                    border: 1px solid #000000;
+                    overflow: hidden;
+                }
+            
+                #roomTxt .roomTxt-title {
+                    font-size: 26px;
+                    margin: 0 auto;
+                    padding: 30px;
+                    width: 180px;
+                }
+            
+                #roomTxt .roomTxt-con {}
+            
+                #roomTxt .roomTxt-con ul {
+                    width: 96%;
+                    margin: 0 auto;
+                }
+            
+                #roomTxt .roomTxt-con ul li {
+                    padding: 2px 3% 2px 1%;
+                    display: inline-block;
+                }
+            
+                #roomTxt .roomTxt-con ul li:nth-child(3n) {
+                    width: 28%;
+                    padding-left: 7%;
+                }
+            
+                #roomTxt .roomTxt-con ul li:nth-child(3n-1) {
+                    width: 23%;
+                    padding-left: 5%;
+                }
+            
+                #roomTxt .roomTxt-con ul li:nth-child(3n-2) {
+                    width: 26%;
+                }
+            
+                #roomTxt .roomTxt-from {
+                    width: 100%;
+                    border-top: 1px solid;
+                    margin-top: 30px;
+                }
+            
+                #roomTxt .roomTxt-from table {
+                    width: 100%;
+                    margin: -20px auto 0;
+            
+                }
+            
+            
+                #roomTxt .roomTxt-from table caption {
+                    padding: 5px 0 3px 25px;
+                    font-size: 20px;
+                    border-bottom: 1px solid;
+                    text-align: left;
+                }
+            
+                #roomTxt .roomTxt-from table tbody {
+                    padding-top: 10px;
+                    display: block;
+                    width: 101%;
+                    display: inline-block;
+                    margin-left: -3px;
+                }
+            
+                #roomTxt .roomTxt-from table tbody tr {
+                    display: inline-block;
+                    border-bottom: 1px solid;
+                    width: 100%;
+                }
+                #roomTxt .roomTxt-from table tbody tr:last-child{
+                    margin-bottom: 50px;
+                }
+                #roomTxt .roomTxt-from table tbody tr th {
+                    width: 160px;
+                    display: inline-block;
+                    text-align: center;
+                }
+                #roomTxt .roomTxt-from table tbody tr th:nth-child(3) {
+                    text-align: right;
+                }
+                #roomTxt .roomTxt-from table tbody tr th:nth-child(4) {
+                    width: 80px;
+                margin-left: 64px;
+                }
+                #roomTxt .roomTxt-from table tbody tr th:nth-child(5) ,#roomTxt .roomTxt-from table tbody tr th:nth-child(6) {
+                    width: 80px;
+                margin-left: 80px;
+                }
+                #roomTxt .roomTxt-from table tbody tr td {
+                    width: 250px;
+                    text-align: center;
+                }
+            </style>
+
+    <!--startprint1-->
+    <div id="roomTxt">
+        <!-- title -->
+        <p class="roomTxt-title">XX酒店结算单</p>
+        <!-- 明细 -->
+        <div class="roomTxt-con">
+            <ul>
+                <li>结算账号：<span>111111111</span></li>
+                <li>结算周期：<span>1月</span></li>
+                <li>结算日期段：<span>20180101-20181212</span></li>
+                <li>分账比例：<span>6:4</span></li>
+                <li>点播金额：<span>11010.11</span>元</li>
+                <li>结算金额：<span>1132122.11</span>元</li>
+                <li>结算笔数：<span>115</span>笔</li>
+                <li></li> <!-- 空白间隙 -->
+                <li>结算单生成日期：<span>20180214</span>笔</li>
+            </ul>
+        </div>
+        <!-- 数据表格 -->
+        <div class="roomTxt-from">
+            <table>
+                　<caption><strong>结算明细如下</strong></caption>
+                <!---表头--->
+                <tbody>
+                    <tr>
+                        <th>点播编号</th>
+                        <th>点播时间</th>　
+                        <th>点播金额(元)</th>　
+                        <th>客房编号</th>　
+                        <th>客户姓名</th>　　
+                        <th>支付方式</th>　　
+                    </tr>
+                    <tr>
+                        <td>20180901D00001</td>　　
+                        <td>2018-12-12 00:00:00</td>　　
+                        <td>30</td>　　
+                        <td>111</td>　　
+                        <td>小小小</td>　　
+                        <td>微信</td>　　
+                    </tr>
+                    <tr>
+                        <td>20180901D00001</td>　　
+                        <td>2018-12-12 00:00:00</td>　　
+                        <td>30</td>　　
+                        <td>111</td>　　
+                        <td>小小小</td>　　
+                        <td>支付宝</td>　　
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!--endprint1-->
+    <input type=button name='button_export' title='打印1' onclick=preview(1) value=打印1>
+    <a href="#">保存文件</a>
+</body>
+<script src="./js/jquery-1.11.3.min.js"></script>
+<script>
+    function fake_click(obj) {
+        var ev = document.createEvent("MouseEvents");
+        ev.initMouseEvent(
+            "click", true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null
+        );
+        obj.dispatchEvent(ev);
+    }
+
+    function export_raw(name, data) {
+        var urlObject = window.URL || window.webkitURL || window;
+
+        var export_blob = new Blob([data]);
+
+        var save_link = document.createElementNS("http://www.w3.org/1999/xhtml", "a")
+        save_link.href = urlObject.createObjectURL(export_blob);
+        save_link.download = name;
+        fake_click(save_link);
+    }
+
+    $('a').click(function () {
+        console.log($('body').html(), '11')
+        let text = $('body').html();
+        export_raw('aaaaa.html', text);
+    });
+    let text = $('body').html();
+    var blob = new Blob([text], {
+        type: "text/plain;charset=utf-8"
+    });
+    saveAs(blob, "hello world.txt");
+</script>
+
+</html>

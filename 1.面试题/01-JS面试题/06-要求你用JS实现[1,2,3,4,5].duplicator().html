@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>要求你用JS实现[1,2,3,4,5].duplicator()</title>
+</head>
+
+<body>
+    <h2>要求你用JS实现[1,2,3,4,5].duplicator()。</h2>
+    [1,2,3,4,5]=>[1, 2, 3, 4, 5, 1, 2, 3, 4, 5]
+
+</body>
+<script type="text/javascript">
+    {
+        let arr = [1, 2, 3, 4, 5];
+        Array.prototype.duplicator = function () {
+            let length = arr.length;
+            for (let i = 0; i < length; i++) {
+                arr.splice(length + i, 0, arr[i]);
+            }
+            console.log(arr);
+        };
+        arr.duplicator();
+    } {
+        let arr = [1, 2, 3, 4, 5];
+        Array.prototype.duplicator = function () {
+            return [...arr, ...arr]
+        };
+        arr.duplicator();
+    }
+</script>
+
+</html>

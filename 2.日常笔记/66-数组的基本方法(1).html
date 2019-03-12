@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>66-数组的基本方法(1)</title>
+</head>
+
+<body>
+    <h1>https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/of</h1>
+    <hr>
+    <h5>Array.from(): <br> ES6为Array增加了from函数用来将其他对象转换成数组。当然，其他对象也是有要求，也不是所有的，可以将两种对象转换成数组。<br>
+        1.部署了Iterator接口的对象，比如：Set，Map，Array。<br>
+        2.类数组对象，什么叫类数组对象，就是一个对象必须有length属性，没有length，转出来的就是空数组。
+        <br>
+        Array.from(arrayLike[, mapFn[, thisArg]])<br>
+        arrayLike：被转换的的对象。<br>
+        mapFn：map函数。<br>
+        thisArg：map函数中this指向的对象。<br>
+        https://blog.csdn.net/hyupeng1006/article/details/79875634
+    </h5>
+    <hr>
+    <h5>
+        Array.isArray()判断某个值是否为数组，返回布尔类型
+    </h5>
+    <hr>
+    <h5>
+        Array.of()方法用于将一组值，转换为数组。
+    </h5>
+    <h5>
+        Array.prototype.copyWithin(target, start = 0, end = this.length) <br>
+        该函数有三个参数。 <br>
+        target：目的起始位置。 <br>
+        start：复制源的起始位置，可以省略，可以是负数。 <br>
+        end：复制源的结束位置，可以省略，可以是负数，实际结束位置是end-1。
+    </h5>
+    <h5>
+        ES6 提供三个新的方法 —— entries()，keys()和values() ——
+        用于遍历数组。它们都返回一个遍历器对象，可以用for...of循环进行遍历，唯一的区别是keys()是对键名的遍历、values()是对键值的遍历，entries()是对键值对的遍历
+    </h5>
+    <h5>
+        entries() 方法返回一个新的Array Iterator对象，该对象包含数组中每个索引的键/值对。
+    </h5>
+</body>
+<script>
+    {
+        //Array.from()
+        console.log("******Map对象转为数组*****")
+        const map1 = new Map();
+        map1.set('k1', 1);
+        map1.set('k2', 2);
+        map1.set('k3', 3);
+        console.log('%s', Array.from(map1))
+        console.log(Array.from(map1))
+        console.log("******Set对象转为数组*****")
+        const set1 = new Set();
+        set1.add(1).add(2).add(3)
+        console.log('%s', Array.from(set1))
+        console.log(Array.from(set1))
+        console.log("******对比 es5/es6 语法 把obj转为arr*****")
+        let arrayLike = {
+            '0': 'a',
+            '1': 'b',
+            '2': 'c',
+            length: 3
+        };
+        // ES5 的写法  
+        let arr1 = [].slice.call(arrayLike); // [‘a‘, ‘b‘, ‘c‘]  
+        console.log(arr1, "es5")
+        // ES6 的写法  
+        let arr2 = Array.from(arrayLike); // [‘a‘, ‘b‘, ‘c‘] 
+        console.log(arr2, "es6")
+    } {
+        console.log("*****Array.isArray()判断某个值是否为数组，返回布尔类型*****");
+        // 下面的函数调用都返回 true
+        console.log(Array.isArray([]));
+        console.log(Array.isArray([1]));
+        console.log(Array.isArray(new Array()));
+        // 下面的函数调用都返回 false
+        console.log(Array.isArray());
+        console.log(Array.isArray({}));
+        console.log(Array.isArray(null));
+        console.log(Array.isArray(undefined));
+        console.log(Array.isArray(17));
+        console.log(Array.isArray('Array'));
+        console.log(Array.isArray(true));
+        console.log(Array.isArray(false));
+    } {
+        console.log("*****Array.of()方法用于将一组值，转换为数组*****");
+        console.log(Array.of(3, 11, 8))
+        console.log(Array.of(3))
+        console.log(Array.of(3).length)
+    } {
+        console.log("*****copyWithin函数，用于操作当前数组自身，用来把某些个位置的元素复制并覆盖到其他位置上去。*****");
+        const arr1 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+        arr1.copyWithin(1, 3, 6)
+        console.log('%s', JSON.stringify(arr1), "把第3个元素（从0开始）到第5个元素，复制并覆盖到以第1个位置开始的地方");
+        const arr2 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+        arr2.copyWithin(3)
+        console.log('%s', JSON.stringify(arr2), "start省略表示从0开始，end省略表示数组的长度值,目标的位置不够的，能覆盖多少就覆盖多少");
+        const arr3 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+        arr3.copyWithin(3, -3, -2)
+        console.log('%s', JSON.stringify(arr3), "start和end都可以是负数，负数表示从右边数过来第几个。")
+    } {
+        console.log("*****entries()，keys()和values()*****")
+        for (let index of ['a', 'b'].keys()) {
+            console.log(index);
+        }
+        for (let elem of ['a', 'b'].values()) {
+            console.log(elem);
+        }
+        for (let [index, elem] of ['a', 'b'].entries()) {
+            console.log(index, elem);
+        }
+    } {
+        console.log("***** entries() 方法返回一个新的Array Iterator对象，该对象包含数组中每个索引的键/值对。*****")
+        var array1 = ['a', 'b', 'c'];
+        var iterator1 = array1.entries();
+        console.log(iterator1.next().value); //[0, "a"]
+        console.log(iterator1.next().value); //[1, "b"]
+        var arrChe = iterator1.next().value;
+        console.log(arrChe); //[2, "c"]
+        console.log(arrChe[0]); //2
+        console.log(arrChe[1]); //"c"
+        console.log(arrChe[1].toString()) //c
+        console.log("a.toString(),可把一个逻辑值转换为字符串") //c
+        console.log(typeof arrChe[1]) //string
+    }
+</script>
+
+</html>

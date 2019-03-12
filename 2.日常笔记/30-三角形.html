@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<style type="text/css">
+		*{
+			margin-top: 10px;
+			}
+		#d1 {
+			width: 100px;
+			height: 100px;
+			border-top: 30px solid #000;
+			border-right: 30px solid #ff0000;
+			border-left: 30px solid #00ff00;
+			border-bottom: 30px solid #0000ff;
+		}
+		#d2 {
+			width: 100px;
+			height: 100px;
+			border-top: 30px solid #000;
+			border-right: 30px solid #ff0000;
+			border-left: 30px solid #00ff00;
+			
+		}
+		#d3 {
+			width: 0;
+			height: 100px;
+			border-top: 30px solid #000;
+			border-right: 30px solid #ff0000;
+			border-left: 30px solid #00ff00;
+			
+		}
+		#d4 {
+			width: 0;
+			height: 0;
+			border-top: 30px solid #000;
+			border-right: 30px solid #ff0000;
+			border-left: 30px solid #00ff00;
+			
+		}
+		#d5 {
+			width: 0;
+			height: 0;
+			border-top: 30px solid #000;
+			border-right: 30px solid transparent;
+			border-left: 30px solid transparent;
+			
+		}
+		
+		#d6 {
+			width: 0;
+			height: 0;
+			border-top: 100px solid red;
+			border-right: 100px solid transparent;
+		}
+	</style>
+
+	<body>
+		<h1>画三角形,并解析原理</h1>
+	    <h3>1.会得到如下的一张图</h3>
+		<div id="d1"></div>
+		<h3>2.接着当不设置border-bottom，即默认其为0时，可以得到下面的图片</h3>
+		<div id="d2"></div>
+		<h3>3.然后当设置其width为0时，如下图</h3>
+		<div id="d3"></div>
+		<h3>4.继续设置其height为0</h3>
+		<div id="d4"></div>
+		<h3>5.最后假若你把border-left,border-right设置为透明之后，就可以看到如下的三角形了</h3>
+		<div id="d5"></div>
+		<h2>实现一个直角三角形，则最后你需要两个border边的配合使用，浏览器会自动进行一些“拉伸变换”后就可以得到一个直角三角形。</h2>
+		<div id="d6"></div>
+	</body>
+
+</html>

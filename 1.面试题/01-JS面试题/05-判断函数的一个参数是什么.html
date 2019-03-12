@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>05-判断函数的一个参数是什么</title>
+</head>
+
+<body>
+    <h2>判断函数的一个参数是什么</h2>
+</body>
+<script>
+    function isType(type) {
+        return function (param) {
+            return Object.prototype.toString.call(param) == `[object ${type}]`
+        }
+    }
+    let isString = isType('String')
+    let isArray = isType('Array')
+    console.log(isString('123'))
+    console.log(isArray([]))
+</script>
+
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>图片上传</title>
+</head>
+<style>
+.imgContainer{
+    width: 300px;
+    display: inline-block;
+    margin: 0 20px
+}
+img{
+    width: 100%;
+}
+</style>
+
+<body>
+    <div class="form">
+            <span>标题：</span>
+            <input class="title" type="text">
+            <hr>
+        <div>
+            <input type="file" id="zx_img" class="hidden" multiple accept="image/png,image/jpg,image/gif,image/JPEG"><span class="tips">一次最多可上传9张图片</span>
+            <!-- <span class="btn" onclick="$('#zx_img').click()">选择上传图片</span>  -->
+            <hr>
+            <button class="submit" id="submit">确定</button>
+            
+        </div>
+        <div id="imgs"></div>
+    </div>
+</body>
+<script src="./js/jquery-1.10.2.min.js"></script>
+<script>
+    // 图片上传
+    var imgSrc = [];  // 本地地址
+    var imgFile = []; // 上传的整体信息
+    var imgName = []; // 图片名字
+    // 图片回显
+    function addNewContent(obj) {
+        $(obj).html("");
+        for (var a = 0; a < imgSrc.length; a++) {
+            var oldBox = $(obj).html();
+            $(obj).html(
+                `${oldBox}<div class="imgContainer"><img title='${imgName[a]}' alt='${imgName[a]}' src='${imgSrc[a]}'><p onclick="removeImg(this,${a})" class="imgDelete">删除</p></div>`
+            )
+        }
+    }
+    // 上传
+    function imgUpload(obj) {
+        var oInput = `#${obj.inputId}`; 
+        var imgBox = `#${obj.imgBox}`; 
+        var btn = `#${obj.buttonId}`; 
+        $(oInput).on("change", function () {
+            var fileImg = $(oInput)[0];
+            var fileList = fileImg.files;
+            for (var i = 0; i < fileList.length; i++) {
+                var imgSrcI = getObjectURL(fileList[i]);
+                imgName.push(fileList[i].name);
+                imgSrc.push(imgSrcI);
+                imgFile.push(fileList[i]);
+            }
+            addNewContent(imgBox);
+        })
+    }
+    // 删除
+    function removeImg(obj, index) {
+        imgSrc.splice(index, 1);
+        imgFile.splice(index, 1);
+        imgName.splice(index, 1);
+        boxId = "#" + $(obj).parent('.imgContainer').parent().attr("id");
+        addNewContent(boxId);
+    }
+    // 个数
+    function limitNum(num) {
+        if (!num) {
+            return true;
+        } else if (imgFile.length > num) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    function getObjectURL(file) {
+        var url = null;
+        if (window.createObjectURL != undefined) {
+            url = window.createObjectURL(file);
+        } else if (window.URL != undefined) {
+            url = window.URL.createObjectURL(file);
+        } else if (window.webkitURL != undefined) {
+            url = window.webkitURL.createObjectURL(file);
+        }
+        return url;
+    }
+    //上传照片
+    imgUpload({
+        inputId: 'zx_img', //input框id
+        imgBox: 'imgs', //图片容器id
+        num: "9" //上传个数
+    });
+    $('#submit').on('click', function () {
+        var title = $('.title').val();
+        if (title.length == '0') {
+            alert('请输入标题!')
+            return false;
+        }
+        if (!limitNum(9)) {
+            alert('最多上传9张!')
+            return false;
+        }
+        if ($('#imgs>div').length == 0) {
+            alert('请上传图片!')
+            return false;
+        }
+        var formData = new FormData();
+        console.log(formData,'formData')
+        for (var i = 0, len = imgFile.length; i < len; i++) {
+            formData.append('fileNames', imgFile[i]);
+        }
+        formData.append('title', title);
+        // formData.append('appUserId', appUserId);
+        // formData.append('hotelId', itemId);
+        // formData.append('kindsCategroyId', kindsCategroyId);
+        //  $.ajax({
+        //     type:"post",
+        //     url:hisuSrc+'/SmartHotelInterface/api/community/addCommunityAgency?requestUser='+requestUser+'&requestPassword='+requestPassword,
+        //     dataType:'json',
+        //     data:formData,
+        //     processData: false,
+        //     contentType: false,
+        //     success:function(data){
+        //         mh_dialogShow('mh_success','提交成功!',2,true);
+        //     },
+        //     error:function (msg) {
+        //         mh_dialogShow('mh_error','提交失败，请重试!',2,true);
+        //     }
+        // });
+    })
+</script>
+
+</html>

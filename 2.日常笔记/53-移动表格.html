@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: "microsoft yahei";
+            background-color: #eee;
+            user-select: none;
+        }
+        #chenkbox {
+            margin: 100px auto;
+            width: 800px;
+            position: relative;
+
+
+        }
+        #tableSort{
+            border-right:#0066cc 1px solid;
+            border-bottom: #0066cc 1px solid;
+            height: 434px;
+        }
+
+        li{
+            list-style: none;
+        }
+        #box {
+            position: absolute;
+            display: none;
+            text-align: center;
+            top: 0;
+            background-color: #000;
+            background-color: rgba(0,0,0,0.8); 
+            height: 100%;
+            cursor: move;
+        }
+        #box p {
+            line-height: 2;
+        }
+        #chenkbox ol{
+            height: 30px;
+            line-height: 30px;
+        }
+        #chenkbox ul{
+            width: 100%;
+            height: 30px;
+            cursor: move;
+            line-height: 30px;
+
+        }
+        #chenkbox li{
+            width: 19.87%;
+            float: left;
+            border-top: #0066cc 1px solid;
+            border-left: #0066cc 1px solid;
+            text-align: center;
+
+        }
+    </style>
+</head>
+<body>
+<div id="chenkbox">
+    <div id="tableSort">
+        <ol>
+            <li> 序列 </li>
+            <li> 名称 </li>
+            <li> 数量 </li>
+            <li> 单价(Q点) </li>
+            <li> 总计(Q点) </li>
+        </ol>
+        <ul>
+            <li>1</li>
+            <li>农场话费A</li>
+            <li>2</li>
+            <li>50</li>
+            <li>100</li>
+        </ul>
+        <ul>
+            <li>2</li>
+            <li>飞车道具C</li>
+            <li>1</li>
+            <li>80</li>
+            <li>80</li>
+        </ul>
+        <ul>
+            <li>3</li>
+            <li>空间K</li>
+            <li>1</li>
+            <li>120</li>
+            <li>120</li>
+        </ul>
+        <ul>
+            <li>4</li>
+            <li>农场狗粮C</li>
+            <li>4</li>
+            <li>60</li>
+            <li>240</li>
+        </ul>
+        <ul>
+            <li>5</li>
+            <li>音速种子</li>
+            <li>2</li>
+            <li>110</li>
+            <li>220</li>
+        </ul>
+        <ul>
+            <li>6</li>
+            <li>农场化肥D</li>
+            <li>5</li>
+            <li>60</li>
+            <li>300</li>
+        </ul>
+        <ul>
+            <li>7</li>
+            <li>AVA装扮C</li>
+            <li>1</li>
+            <li>300</li>
+            <li>300</li>
+        </ul>
+        <ul>
+            <li>8</li>
+            <li>三国道具C</li>
+            <li>15</li>
+            <li>60</li>
+            <li>900</li>
+        </ul>
+        <ul>
+            <li>9</li>
+            <li>DNF道具B</li>
+            <li>4</li>
+            <li>300</li>
+            <li>1200</li>
+        </ul>
+        <ul>
+            <li>10</li>
+            <li>农场化肥H</li>
+            <li>6</li>
+            <li>80</li>
+            <li>120</li>
+        </ul>
+        <ul>
+            <li>11</li>
+            <li>农场化肥B</li>
+            <li>1</li>
+            <li>80</li>
+            <li>80</li>
+        </ul>
+        <ul>
+            <li>12</li>
+            <li>Q宠元宝</li>
+            <li>100</li>
+            <li>1</li>
+            <li>100</li>
+        </ul>
+        <ul>
+            <li>13</li>
+            <li>三国道具K</li>
+            <li>9</li>
+            <li>20</li>
+            <li>180</li>
+        </ul>
+
+
+        <div id="box"></div>
+    </div>
+</div>
+</body>
+<script>
+    var ochek=document.getElementById("chenkbox");
+    var ul=document.getElementsByTagName('ul');
+    var box=document.getElementById("box");
+    var arr=[];
+    for(var i=0;i<ul.length;i++){
+        ul[i].onmousedown=function(){
+            var e=e||window.event;
+            var w=this.offsetWidth;
+            var h=this.offsetHeight;
+            var t=ochek.offsetTop;
+            var st=this.offsetTop;
+            var ss=this.innerHTML;
+            _this = this;//鼠标按下时的ul
+            box.innerHTML=ss;
+            box.style.display="block";
+            box.style.width=w+"px";
+            box.style.height=h+"px";
+            box.style.top=st+"px";
+            for(var j=0;j<ul.length;j++){
+                arr.push(ul[j].offsetTop);//所有行的top值
+            }
+            document.onmousemove=function(e){
+                var e=e||window.event;
+                box.style.top=e.clientY-t+"px";  //移动时的top值
+            }
+            document.onmouseup=function(e){
+                var e=e||window.event;
+                var index='';
+                for(var j=0;j<arr.length;j++){
+                    if(arr[j]<e.clientY-t){//得到当移动的top值大于ul的top值时的i
+                        index=j;
+                    }
+                }
+                _this.innerHTML=ul[index].innerHTML;//鼠标按下时的ul的innerHTML等于移动到的ul的innerHTML
+                ul[index].innerHTML= box.innerHTML;//移动到的ul的innerHTML等于box中的innerHTML
+                arr.splice(0,arr.length);//清空数组
+                box.style.display="none";
+                box.innerHTML='';
+                ul[i].onmousedown=null;
+                document.onmousemove=null;
+
+            }
+        }
+    }
+</script>
+</html>

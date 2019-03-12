@@ -1,0 +1,122 @@
+
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>jQuery导航滑动跟随效果</title>
+<script src="js/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+<style>
+body {
+	font-family:"Microsoft Yahei",Arial,Helvetica,sans-serif;
+	margin:0px;
+	padding:0px;
+	font-size:12px;
+	min-width:1200px;
+}
+fieldset,img {
+	border:none;
+}
+input,select,textarea {
+	font-family:"Microsoft Yahei",Arial,Helvetica,sans-serif;
+	font-size:100%;
+	outline:none;
+}
+ul,li,dl,dt,dd,form,p,b,i,input,h1,h2,h3,h4,h5,td,th {
+	margin:0px;
+	padding:0px;
+	list-style:none;
+	font-style:normal;
+}
+table {
+	border-collapse:collapse;
+	border-spacing:0;
+}
+.nav {
+	height:60px;
+	background:#ccc;
+	position:relative;
+}
+.nav li {
+	float:left;
+	height:60px;
+}
+.nav li a {
+	display:block;
+	height:60px;
+	line-height:60px;
+	padding:0 20px;
+	min-width:100px;
+	text-align:center;
+	font-size:16px;
+	color:#fff;
+	position:relative;
+	z-index:10px;
+	text-decoration:none;
+}
+.nav li a:hover {
+	text-decoration:none;
+}
+.gl {
+	position:absolute;
+	top:0;
+	left:0;
+	height:60px;
+	background:#E63C39;
+	z-index:9px;
+	width:140px;
+}
+</style>
+</head>
+<body>
+<div class="w_1200" style="padding:0 0 100px 0;position:relative;">
+	<div class="nav">
+		<div class="gl"></div>
+		<ul>
+			<li><a href="###">首页</a></li>
+			<li><a href="###">公司介绍</a></li>
+			<li><a href="###">联我们</a></li>
+			<li><a href="###">联系我们</a></li>
+		</ul>
+	</div>	
+</div>
+
+<script>
+$(".nav ul a").each(function() {
+    var hover_a = $(this);
+    var hover_awidth = $(this).innerWidth();
+    var hover_aleft = hover_a.position().left;
+    $(this).mouseover(function() {
+        $(".gl").stop();
+        hover_awidth = $(this).innerWidth();
+        $(".gl").animate({
+            left: hover_aleft + "px",
+            width: hover_awidth + "px"
+        }, 250);
+    })
+    $(this).mouseout(function() {
+        $(".gl").stop();
+        if ($(this).parent().parent().find(".gl_hover").length > 0) {
+            var gl_hover_left = $(this).parent().parent().find(".gl_hover").position().left;
+            hover_awidth = $(this).parent().parent().find(".gl_hover").innerWidth();
+            $(".gl").animate({
+                left: gl_hover_left + "px",
+                width: hover_awidth + "px"
+            }, 250);
+        } else {
+            hover_awidth = $(".nav ul a:first").innerWidth();
+            $(".gl").animate({
+                left: "0px",
+                width: hover_awidth + "px"
+            }, 250);
+        }
+    })
+})
+
+$(".nav ul a").click(function() {
+    $(this).parent().siblings().removeClass("gl_hover");
+    $(this).parent().addClass("gl_hover");
+})
+</script>
+
+</body>
+</html>

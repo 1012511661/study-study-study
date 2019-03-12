@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>100内3,5,7问题</title>
+</head>
+
+<body>
+    你是一名体育老师，在某次课距离下课还有五分钟时，你决定搞一个游戏。此时有100名学生在上课。游戏的规则是：<br>
+    <br>
+    1. 你首先说出三个不同的特殊数，要求必须是个位数，比如3、5、7。<br>
+    2. 让所有学生拍成一队，然后按顺序报数。<br>
+    3. 学生报数时，如果所报数字是第一个特殊数（3）的倍数，那么不能说该数字，而要说Fizz；如果所报数字是第二个特殊数（5）的倍数，那么要说Buzz；如果所报数字是第三个特殊数（7）的倍数，那么要说Whizz。<br>
+    4. 学生报数时，如果所报数字同时是两个特殊数的倍数情况下，也要特殊处理，比如第一个特殊数和第二个特殊数的倍数，那么不能说该数字，而是要说FizzBuzz,
+    以此类推。如果同时是三个特殊数的倍数，那么要说FizzBuzzWhizz。<br>
+    5.
+    学生报数时，如果所报数字包含了第一个特殊数，那么也不能说该数字，而是要说相应的单词，比如本例中第一个特殊数是3，那么要报13的同学应该说Fizz。如果数字中包含了第一个特殊数，那么忽略规则3和规则4，比如要报35的同学只报Fizz，不报BuzzWhizz。
+    <br>
+    现在，我们需要你完成一个程序来模拟这个游戏，它首先接受3个特殊数，然后输出100名学生应该报数的数或单词。比如，
+    <br>
+    输入
+    3,5,7<br>
+    输出（片段）
+    1
+    2
+    Fizz
+    4
+    Buzz
+    Fizz
+    Whizz
+    8
+    Fizz
+    Buzz
+    11
+    Fizz
+    Fizz
+    Whizz
+    FizzBuzz
+    16
+    17
+    Fizz
+    19
+    Buzz
+    …
+    一直到100
+</body>
+<script>
+    {
+        var key = [3, 5, 7], // 特殊数字
+            keyStr = ["Fizz", "Buzz", "Whizz"], // 替换字符
+            arr = Array(101).join(",").split(","), // 初始化101个空字符串数组
+            i = 0, // 累加器
+            n = 1, // 倍数累加器
+            tmp; // 临时变量
+
+        for (; i < 3; i++, n = 1) { // 遍历 key 数组
+            while (101 > (tmp = key[i] * n++)) { // n倍结果
+                arr[tmp] += keyStr[i]; // 累加字符串
+            }
+        }
+
+        for (i = 1; i < 101; i++) {
+            arr[i] = (i + "").indexOf(key[0]) > -1 ? keyStr[0] : arr[i] === '' ? i : arr[i];
+        }
+        arr.shift(); // 去除下标0的元素
+        console.log(arr.join("\n"));
+    } {
+        function cd(x, y, s) {
+            return x % y === 0 ? s : '';
+        }
+        function bs(a, b, c) {
+            for (var i = 1; i <= 100; i++) {
+                var d = cd(i, a, 'Fizz') + cd(i, b, 'Buzz') + cd(i, c, "Whizz");
+                console.log((i + "").indexOf(a) !== -1 ? "Fizz" : d !== '' ? d : i);
+            }
+        }
+        bs(3, 5, 7);
+    }
+</script>
+
+</html>

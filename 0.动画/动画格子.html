@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>格子动画基础练习</title>
+    <style>
+
+        div:hover{
+            width: 900px;
+            height: 900px;
+            transform:rotate(72000deg);
+        -webkit-transfom:rotate(72000deg);
+            -ms-transitiorm:rotate(72000deg);
+        -o-transitiorm:rotate(72000deg);
+        -moz-transitiorm:rotate(72000deg);
+
+        }
+
+
+        div {/* transfom 用以设定转换的方式  transition  用于设置4个过渡属性*/
+            transition:width 15s,height 15s ,transform 15s;
+            background-color: red;
+            width: 100px;
+            height: 100px;
+            position: relative; /*相对定位 方便定位*/
+            animation: animat 5s; /*好像是动画时长，效果不确定？删掉后效果不变！*/
+            -webkit-animation: anim 5s infinite alternate;
+            /*执行1个循环所需的过渡时长，infinite alternate 为设置该动态效果还原，并重新开始。实现无限循环效果*/
+        }
+            /*动画样式代码*/
+        @keyframes {/* css3 动画循环必须遵从@keyframes规则 */
+            0%{background-color: #f61bff;left:0px;top: 0px;}
+            25%{background-color: #1616ff;left:500px;top: 0px;}
+            50%{background-color: #ff182a;left:500px;top: 500px;}
+            75%{background-color: #fffa20;left:0px;top:500px;}
+            100%{background-color: #00ff00;left:0px;top: 0px;}
+            /* 以上设置为动画执行期间的活动效果规律设定。**%时间点｛背景颜色；左方向位置便宜；上方向位置便宜｝ */
+        }
+        @-webkit-keyframes anim { /* 用 服务器(safari chroac) 执行 适配 （1套代码不使用于说有服务器 所以要进行适配，可以把所有常用服务器都加上去）*/
+            0%{background-color: #f61bff;left:0px;top: 0px;}
+            25%{background-color: #1616ff;left:500px;top: 0px;}
+            50%{background-color: #ff182a;left:500px;top: 500px;}
+            75%{background-color: #fffa20;left:0px;top:500px;}
+            100%{background-color: #00ff00;left:0px;top: 0px;}
+        }
+        @-ms-keyframes anim{
+            0%{background-color: #f61bff;left:0px;top: 0px;}
+            25%{background-color: #1616ff;left:500px;top: 0px;}
+            50%{background-color: #ff182a;left:500px;top: 500px;}
+            75%{background-color: #fffa20;left:0px;top:500px;}
+            100%{background-color: #00ff00;left:0px;top: 0px;}
+        }
+        @-o-keyframes anim{
+            0%{background-color: #f61bff;left:0px;top: 0px;}
+            25%{background-color: #1616ff;left:500px;top: 0px;}
+            50%{background-color: #ff182a;left:500px;top: 500px;}
+            75%{background-color: #fffa20;left:0px;top:500px;}
+            100%{background-color: #00ff00;left:0px;top: 0px;}
+        }
+        @-moz-keyframes anim{
+            0%{background-color: #f61bff;left:0px;top: 0px;}
+            25%{background-color: #1616ff;left:500px;top: 0px;}
+            50%{background-color: #ff182a;left:500px;top: 500px;}
+            75%{background-color: #fffa20;left:0px;top:500px;}
+            100%{background-color: #00ff00;left:0px;top: 0px;}
+        }
+        /*常用服务器适配  个人照超没有看清  代码可能有误 错了不怪我  （狼）在此声明*/
+        /*@-webkit-keyframes{}(SAFARI CHROAC)*/
+        /*@-ms-keyframes anim{} ( IE   360)*/
+        /*@-o-keyframes anim{}  ( OPERA)*/
+        /*@-moz-keyframes anim{} (FIREFOX)*/
+    </style>
+</head>
+<body style="text-indent: each-line">
+     <h1>CSS动画-2D-3D转换</h1>
+     <p>
+         通过CSS转换我们能够对元素进行：移动、缩放、转动、拉长或拉伸。<br>
+         css3 动画循环必须遵从@keyframes规则
+     </p>
+     <P>
+         转换是使元素改变形状、尺寸和位置的一种效果
+     </P>
+     <p>
+         可以使用2D 3D来转换元素
+     </p>
+     <h3>transfom 用以设定转换的方式</h3>
+     <ol>
+         <li>2D属性：</li>
+         <li>translate(200px,100px);移动效果，可设定X轴和Y轴进行位置移动</li>
+         <li>rotate(120 deg);旋转效果，可设定旋转角度</li>
+         <li>scale(1,2);缩放效果，可设定放大缩小倍数</li>
+         <li>skew(50deg 50deg);倾斜效果，可设定X轴和Y轴倾斜角度</li>
+         <li>matrix：矩阵效果</li>
+         <li>3D属性</li>
+         <li>rotateX：X轴挤压效果</li>
+         <li>rotateY：Y轴挤压效果</li>
+         <li>transition  用于设置4个过渡属性</li>
+         <li>transition-propety 过渡名称</li>
+         <li>transition-duration 过渡效果花费的时间</li>
+         <li>transition-timg-function 过渡效果的时间曲线</li>
+         <li>transition-delay 过渡效果开始时间（延迟时间设定）</li>
+         <li>肯定还有别的，但是我不知道 。大家一起去找茬哈！！！！</li>
+     </ol>
+  <div></div>
+
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>闭包2</title>
+</head>
+<body>
+
+</body>
+<script>
+    {
+        var func2 = function(){
+            var a = 1;
+            var func3 = function(){
+                console.log(a++);
+            }
+            return func3;
+        };
+
+        var f = func2();     //func2() 必须先调用一次，才能形成闭包
+        f(); //弹出1 第一次调用
+        f(); //弹出2其内部的a并没有清空。  第二次调用
+    }
+    console.log('-------------');
+    {
+        var func2 = function(){
+            var a = 1;
+            var func3 = function(){
+                console.log(++a);
+            }
+            return func3;
+        };
+
+        var f = func2();     //func2() 必须先调用一次，才能形成闭包
+        f(); //弹出1 第一次调用
+        f(); //弹出2其内部的a并没有清空。 第二次调用
+    }
+</script>
+</html>

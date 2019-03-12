@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>cookie</title>
+</head>
+<body>
+
+</body>
+<script>
+    //封装cookie方法的对象
+    var cookie = {
+        setCookie:function(key,value,time){
+            if(key == undefined){
+                return;
+            }
+            if(time!== undefined){
+                var d = new Date();
+                d.setTime(d.getTime()+time*1000*60*60*24);
+                document.cookie=key+"="+value+";expires="+ d.toGMTString();
+            }else{
+                document.cookie=key+"="+value;
+            }
+        },
+        getCookie:function(key){
+            var index = document.cookie.indexOf(key);
+            var returnValue;
+            if(index!==-1){
+                var tIndex = document.cookie.indexOf(";",index);
+                var target = document.cookie.substring(index,tIndex);
+                var returnValue = decodeURIComponent(target.replace(key+"=",""))
+            }
+            return returnValue;
+        },
+        delCookie:function(key){
+            var d = new Date();
+            document.cookie=key+"=;expires="+ d.toGMTString();
+        }
+    }
+
+
+    //测试
+    //cookie.setCookie("home")
+    cookie.setCookie("name","卫旗");
+    cookie.setCookie("age",22);
+    cookie.setCookie("sex","男")
+    //cookie.getCookie("sex")
+    //cookie.delCookie("age")
+    console.log(document.cookie)
+</script>
+</html>

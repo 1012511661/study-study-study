@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Symbol</title>
+</head>
+<h1>Symbol：独一的，不可重复的</h1>
+<hr>
+1.let a = symbol() 声明的变量，永远不相等 <br>
+2.let a = symbol.for('A') 当有A时，先看全局有没有A，如果有则使用，没有则声明一个A <br>
+3.对象中如果使用 Symbol 做为key值，for of 循环不能获取其的value <br>
+4.Object.getOwnPropertySymbols()可以获取，返回的是一个数组类型，但不能获取普通的 <br>
+5.Reflect.ownKeys()可以获取所有的，返回的是一个数组类型
+
+<body>
+
+</body>
+<script>
+    { // 1.
+        let a = Symbol();
+        let a2 = Symbol()
+        console.log(a === a2); //false
+        console.log('------------');
+    } { // 2.
+        let a = Symbol.for('123');
+        let a2 = Symbol.for('123');
+        console.log(a === a2); //true
+        console.log('------------');
+    } { // 3.对象中如果使用 Symbol 做为key值，for of 循环不能获取其的value
+        let a = Symbol('aaa');
+        let obj = {
+            [a]: '123',
+            'aaa': '456'
+        };
+        for (const [k, v] of Object.entries(obj)) {
+            console.log(`k=${k},v=${v}`,'只有普通的')
+        }
+        console.log('------------');
+    } { //  4.Object.getOwnPropertySymbols()可以获取，返回的是一个数组类型，但不能获取普通的
+        let a = Symbol('aaa');
+        let obj = {
+            [a]: '123',
+            'aaa': '456'
+        };
+        Object.getOwnPropertySymbols(obj).forEach(item => {
+            // console.log(`k=>${item},v=>${obj[item]}`,'只有 Symbol 为key值的')
+            console.log(`k=>`,item,`v=>`,obj[item],'只有 Symbol 为key值的')
+        })
+        console.log('------------');
+    } { //  5.Reflect.ownKeys()可以获取所有的，返回的是一个数组类型
+        let a = Symbol('aaa');
+        let obj = {
+            [a]: '123',
+            'aaa': '456'
+        };
+        Reflect.ownKeys(obj).forEach(item => {
+            console.log(`k=>`,item,`v=>`,obj[item],'所有的都有')
+        })
+    }
+</script>
+
+</html>

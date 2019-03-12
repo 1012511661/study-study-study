@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>h5-input</title>
+	</head>
+
+	<body>
+	type="color"
+		<input type="color" name="favcolor" /><br/>
+	type="date"
+		<input type="date" name="bday"><br/>
+	type="url"
+		<input type="url" name="bday"><br/>
+	type="email"
+		<input type="email" name="email"><br/>
+	type="number" name="quantity" min="1" max="5"
+		<input type="number" name="quantity" min="1" max="5"><br/>
+	type="range" min="0" max="10" step="2" value="6"
+        <input type="range" min="0" max="10" step="2" value="6"><br/>
+	type="search"
+		<input type="search" name=""><br/>
+	form onsubmit="return false" oninput="o.value = parseInt(a.value) + parseInt(b.value)"
+		<form onsubmit="return false" oninput="o.value = parseInt(a.value) + parseInt(b.value)">
+			<input name="a" type="number"> +
+			<input name="b" type="number"> =
+			<output name="o" />
+		</form>
+		<!--<canvas id="canvas" width="500px" height="500px" style="border: 1px solid red;"></canvas>-->
+	</body>
+  <script type="text/javascript">
+     var c = document.getElementById("canvas");
+     var ctx=c.getContext("2d");
+     ctx.beginPath();
+     ctx.moveTo(10,10);
+     ctx.lineTo(200,100);
+     ctx.stroke();
+     
+     ctx.beginPath();
+     ctx.rect(20,20,150,100);
+     ctx.stroke();
+     
+     ctx.beginPath();
+     ctx.arc(150,130,90,0,2*Math.PI,false);
+     ctx.stroke();
+  </script>
+</html>

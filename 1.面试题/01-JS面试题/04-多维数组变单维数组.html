@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>多维数组变单维数组</title>
+</head>
+
+<body>
+    <h2>数组扁平化处理：实现一个flatten方法，使得输入一个数组，该数组里面的元素也可以是数组，该方法会输出一个扁平化的数组。<br>
+        let givenArr = [[1, 2, 2], [3, 4, 5, 5], [6, 7, 8, 9, [11, 12, [12, 13, [14]]]], 10];<br>
+        let outputArr = [1,2,2,3,4,5,5,6,7,8,9,11,12,12,13,14,10]<br>
+        // 实现flatten方法使得<br>
+        flatten(givenArr)——>outputArr<br>
+    </h2>
+</body>
+<script>
+    { // 方法 1： 递归
+        function flatten(arr) {
+            let res = [];
+            for (let i = 0; i < arr.length; i++) {
+                if (Array.isArray(arr[i])) { // 如果是数组,递归
+                    res = res.concat(flatten(arr[i]));
+                } else {
+                    res.push(arr[i]);
+                }
+            }
+            return res;
+        }
+        let givenArr = [
+            [1, 2, 2],
+            [3, 4, 5, 5],
+            [6, 7, 8, 9, [11, 12, [12, 13, [14]]]], 10
+        ];
+        console.log(flatten(givenArr))
+    } { // 方法 2： 
+        function flatten(arr) {
+            return arr.reduce(function (prev, item) { // array.reduce()累加，可以用作数组扁平化处理
+                return prev.concat(Array.isArray(item) ? flatten(item) : item);
+            }, []);
+        }
+        let givenArr = [
+            [1, 2, 2],
+            [3, 4, 5, 5],
+            [6, 7, 8, 9, [11, 12, [12, 13, [14]]]], 10
+        ];
+        console.log(flatten(givenArr))
+    } { // 方法 3： 
+        function flatten(arr) {
+            while (arr.some(item => Array.isArray(item))) { // some()至少有一个元素通过由提供的函数实现的测试
+                arr = [].concat(...arr);
+            }
+            return arr;
+        }
+        let givenArr = [
+            [1, 2, 2],
+            [3, 4, 5, 5],
+            [6, 7, 8, 9, [11, 12, [12, 13, [14]]]], 10
+        ];
+        console.log(flatten(givenArr))
+    } { // 方法 4：
+        let givenArr = [
+            [1, 2, 2],
+            [3, 4, 5, 5],
+            [6, 7, 8, 9, [11, 12, [12, 13, [14]]]], 10
+        ];
+        let arr = givenArr.toString().split(",").sort((a, b) => {
+            return a - b
+        }).map(Number)
+        // let arr = new Set(givenArr.toString().split(",").sort((a, b) => {
+        //     return a - b
+        // }).map(Number)) // 去重
+        console.log(arr)
+
+    } { // 方法5：将数组扁平化并去除其中重复数据，最终得到一个升序且不重复的数组
+        // Array.prototype.flat() 方法可以将嵌套数组进行扁平化处理成一维数组,可以接受一个数字为展开的几层,默认为1层。如果不管嵌套多少层都展开可以传入一个Infinity。
+        let givenArr = [
+            [1, 2, 2],
+            [3, 4, 5, 5],
+            [6, 7, 8, 9, [11, 12, [12, 13, [14]]]], 10
+        ];
+        Array.from(new Set(givenArr.flat(Infinity))).sort((a, b) => {
+            return a - b
+        })
+    } { // Array.prototype.flat()  原理
+        if (!Array.prototype.flat) {
+            Array.prototype.flat = function (num = 1) {
+                if (!Number(num) || Number(num) < 0) {
+                    return this;
+                }
+                var arr = []
+                this.forEach((item) => {
+                    if (Array.isArray(item)) {
+                        arr = arr.concat(item.flat(--num))
+                    } else {
+                        arr.push(item)
+                    }
+                })
+                return arr
+            }
+        }
+    }
+</script>
+
+</html>

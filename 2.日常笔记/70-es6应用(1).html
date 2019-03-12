@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>常见js面试题用es6实现</title>
+</head>
+
+<body>
+    <div>
+        <span>1.js 统计一个字符串出现频率最高的字母/数字</span>
+        <hr />
+        <span>2.js 数组去重=> forEach /filter /set</span>
+    </div>
+</body>
+<script>
+    {
+        // 1.js 统计一个字符串出现频率最高的字母/数字
+        let str = "aq1211aa";
+        const strChar = (str) => {
+            let string = [...str],
+                maxvalue = '',
+                obj = {},
+                max = 0;
+            string.forEach(value => {
+                // 每一次获取一个数值,然后和之后的对比,如果没有出现就代表出现1次,出现累加1
+                // 先判obj[value] 时候为 undefined，如果为undefined 则表示它是第一次出现
+                //    如果不是,则给它累加 1
+                // obj[value] = （obj[value] == undefined） ? 1 : obj[value] + 1;
+                // 先进行三元判断 然后再和最左边的 = 值相比
+                // console.log(obj[value],'obj里面是否有该值');
+                obj[value] = obj[value] == undefined ? 1 : obj[value] + 1;
+                //console.log(obj[value],'出现的次数');
+                // 如果出现的次数大于0,更新出现的次数以及最大次数对应的值
+                if (obj[value] > max) {
+                    max = obj[value];
+                    maxvalue = value
+                }
+            })
+            return maxvalue
+        }
+        console.log(strChar(str), '出现最多次数');
+    } {
+        //2、数组去重
+        //2.1 forEach
+        let arrOn = [1, 2, 3, 4, 5, 8, 5, 5];
+        const arrNew = (arrOn) => {
+            let obj = {};
+            arrOn.forEach(value => {
+                //  console.log(obj,'0')
+                obj[value] = 0
+            });
+            // console.log(obj,'1');
+            return Object.keys(obj)
+        };
+        console.log(arrNew(arrOn));
+        //2.2、filter
+        let arrTw = ['1', '2', '3', '1', 'a', 'b', 'b'];
+        const uniqueTw = arrTw => {
+            return arrTw.filter((ele, index, array) => {
+                return index === array.indexOf(ele)
+            })
+        };
+        console.log(uniqueTw(arrTw)); // ['1','2','3','a','b']
+        //2.3、set
+        let arrTh = ['1', '2', '3', '1', 'a', 'b', 'b'];
+        const uniqueTh = arrTh => {
+            return [...new Set(arrTh)]
+        };
+        console.log(uniqueTh(arrTh))
+
+    }
+</script>
+
+</html>

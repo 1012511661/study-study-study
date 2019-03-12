@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>作用域练习题</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    {console.log('------------')
+        function fn() {
+            var num = 10;
+            return function(n){
+               console.log(n+(++num),'++num')
+               console.log(n+(num++),'num++')
+            }
+        }
+        var f = fn();
+        f(10);//不销毁
+        f(20);//不销毁
+        fn()(10);//销毁
+        fn()(20);//销毁
+    }
+    {
+        console.log('-------------')
+        function fn(i) {
+            return function(n){
+              // console.log(n+(++i),'++i')
+               console.log(n+(i++),'i++')
+            }
+        }
+        var f = fn(5);
+        f(10);
+        f(20);
+        fn(10)(10);
+        fn(20)(20);
+    }
+</script>
+
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>或和非运算符</title>
+</head>
+
+<body>
+    <h2>||：</h2>
+    只要 || 前面为 false,不管 || 后面是 true 还是 false，都返回 || 后面的值。<br>
+    只要 || 前面为 true,不管 || 后面是 true 还是 false，都返回 || 前面的值。<br>
+    <h2>&&：</h2>
+    只要 && 前面是 false，无论 && 后面是 true 还是 false，结果都将返 && 前面的值;<br>
+    只要 && 前面是 true，无论 && 后面是 true 还是 false，结果都将返 && 后面的值;
+</body>
+<script>
+    {
+        console.log(0 || 1); //显然，我们知道，前面 0 意味着 false,而后面 1 意味着 true,那么上面的结果应该是 true,而事实返回的结果是 1。
+        console.log(2 || 1); //前面 2 是 true,后面 1 也是 true,那返回结果又是什么呢？测试结果是 2,继续看：
+        console.log('a' || 1); //同样，前面 'a' 是 true，后面 1 也是 true;测试结果是 'a',下面
+        console.log('' || 1); //由上，我们知道前面 '' 是 false,后面 1 是 true,而返回结果是 1。再看下面
+        console.log('a' || 0); //前面 'a' 是 true，而后面 0 是 false,返回结果是 'a'，继续下面
+        console.log('a' || 'b'); //前面 'a' 是 true,后面 'b'是 false,返回结果是 'a'，我们继续下面
+        console.log('' || 0); //前面 '' 是 false,后面 0 同样是 false,返回结果是0
+        console.log(0 || ''); //前面0是false，后面''是false，返回结果是''
+    } {
+        console.log('' && 1); //结是返回 '', && 前面 '' 是 false,后面是 1是 true。
+        console.log('' && 0); //结是返回 '', && 前面 '' 是 false,后面是 0 也是 false。
+        console.log('a' && 1); //结是返回 1, && 前面 'a' 是 true,后面是 1 也是 true。
+        console.log('a' && 0); //结是返回 0, && 前面 'a' 是 true,后面是 0 是 false。
+        console.log('a' && ''); //结是返回 '', && 前面 'a' 是 true,后面是 '' 是 false。
+        console.log(0 && 'a'); //结是返回 0, && 前面 0 是 false,后面是 'a' 是true。
+        console.log(0 && ''); //结是返回 0, && 前面 0 是 false,后面是 '' 也是false。
+    }
+</script>
+
+</html>

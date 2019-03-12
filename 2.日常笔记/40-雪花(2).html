@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>无标题文档</title>
+	<style>
+		*{margin:0;padding:0;}
+body{background:#000;}
+canvas{display:block;}
+</style>
+</head>
+
+<body>
+	<canvas id="canvas"></canvas>
+	<script type="text/javascript">
+		window.onload = function () {
+			//canvas init
+			var canvas = document.getElementById("canvas");
+			var ctx = canvas.getContext("2d");
+			//设置canvas 范围
+			var W = window.innerWidth;
+			var H = window.innerHeight;
+			//把值付给canvas本身
+			canvas.width = W;
+			canvas.height = H;
+			//雪花
+			var mp = 100; // 雪花个数
+			var particles = [];
+			for (var i = 0; i < mp; i++) {
+				//push向
+				particles.push({
+					x: Math.random() * W, //雪花的X轴
+					y: Math.random() * H, //雪花的Y轴
+					r: Math.random() * 3 + 1, //雪花半径
+					d: Math.random() * mp //雪花密度
+				})
+			}
+			//canvas画笔函数
+			function draw() {
+				//清空画布
+				ctx.clearRect(0, 0, W, H);
+				//设置笔触颜色
+				ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
+				//开始路径
+				ctx.beginPath();
+				for (var i = 0; i < mp; i++) {
+					//把i放到数组里
+					var p = particles[i];
+					ctx.moveTo(p.x, p.y);
+					//画圆前两个是圆的位置，第三是半径画圆的开始位置，第四个是结束位置，第五个在顺时针画圆。
+					ctx.arc(p.x, p.y, p.r, 0, 1 * Math.PI * 180, true);
+				}
+				//填充路径
+				ctx.fill();
+				ctx.closePath()
+				//更新
+				update();
+			}
+			function update() {
+				for (var i = 0; i < mp; i++) {
+					var p = particles[i];
+					p.y += Math.cos(p.d) + 1 + p.r / 2;
+					if (p.x > W || p.y > H) {
+						particles[i] = {
+							x: Math.random() * W, //雪花的X轴
+							y: -10, //雪花的Y轴
+							r: Math.random() * 2 + 1, //雪花半径
+							d: Math.random() * mp
+						};
+					}
+				}
+			}
+			//animation loop
+			setInterval(draw, 15);
+		}
+	</script>
+</body>
+
+</html>

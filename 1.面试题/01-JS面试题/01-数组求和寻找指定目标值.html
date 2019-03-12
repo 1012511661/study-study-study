@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>数组求和后寻找指定的目标值</title>
+</head>
+
+<body>
+    <img src="../img/lk01.png" alt="">
+</body>
+<script>
+    {
+        let nums = [2, 7, 11, 16],
+            tager = 9;
+
+        function f(arr, tar) {
+            const temp = arr.filter(val => val <= tar);
+            const n1 = arr.filter(val => val <= tar).findIndex((value, index, array) => array.includes(tar - value))
+            if (n1 === -1) return '未查到'
+            const n2 = temp.findIndex(val => val === tar - arr[n1])
+            return [n1, n2]
+        }
+        console.log(f(nums, tager))
+    } {
+        let nums = [2, 7, 11, 15],
+            target = 9
+
+        function f(arr, tar) {
+            const temp = arr.filter(val => val <= tar)
+            const n1 = temp.findIndex((value, index, array) => array.includes(tar - value))
+            if (n1 === -1) return '未查找到'
+            const n2 = temp.findIndex(val => val === tar - arr[n1])
+            return [n1, n2]
+        }
+        console.log(f(nums, target))
+    } {
+        function f(nums, target) {
+            let tempArr = [];
+            for (let i = 0; i < nums.length; i++) {
+                let temp = target - nums[i];
+                let index = tempArr.lastIndexOf(temp);
+                if (index != -1) {
+                    return [index, i]
+                }
+                tempArr.push(nums[i])
+            }
+            return null
+        }
+        let nums = [2, 7, 11, 16],
+            target = 9;
+        console.log(f(nums, target))
+    } {
+        function lengthOfLongestSubstring(s) {
+            let arr = [];
+            let num = 0;
+            for (let j = 0; j < s.length; j++) {
+                for (let i = j; i < s.length; i++) {
+                    if (arr.indexOf(s[i]) == -1) {
+                        arr.push(s[i])
+                    } else {
+                        if (arr.length > num) {
+                            num = arr.length
+                        }
+                        arr = []; // 清空数组用于下轮循环
+                    }
+                }
+            };
+            return num
+        };
+        console.log(lengthOfLongestSubstring('qwqwerr'))
+    }
+</script>
+
+</html>

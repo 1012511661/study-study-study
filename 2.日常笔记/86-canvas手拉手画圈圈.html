@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        *{margin:0;padding:0;height:100%;overflow: hidden;}
+    </style>
+</head>
+<body>
+
+    <canvas id="canvas"></canvas>
+
+    <script type="text/javascript">
+        (function (w, d) {
+            var canvas_en = d.getElementById('canvas');
+            var canvas = canvas_en.getContext('2d');
+
+            canvas_en.width = d.body.clientWidth;
+            canvas_en.height = d.body.clientHeight;
+
+            var b = 3;
+            var x = b;
+            var y = b;
+            var num = 0;
+            var ppList = [];
+            var i = 0;
+            var sb = {
+                x: null,
+                y: null,
+                distance: 20000
+            };
+
+            w.onmousemove = function (e) {
+                var e = w.event || e;
+                sb.x = e.clientX;
+                sb.y = e.clientY;
+            }
+
+            w.onmouseout = function (e) {
+                sb.x = null;
+                sb.y = null;
+            }
+
+            function color() {
+                return '#' + (~~(Math.random() * (1 << 24))).toString(16);
+            }
+
+            var RAF = (function () {
+                return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame ||
+                    window.oRequestAnimationFrame || window.msRequestAnimationFrame || function (callback) {
+                        window.setTimeout(callback, 1000 / 60);
+                    };
+            })();
+
+            function draw() {
+                var n = 0;
+                var newpp = [sb].concat(ppList); //追加鼠标事件的坐标			
+                while (n < ppList.length) {
+                    ppList[n].speedX *= (ppList[n].x >= canvas_en.width - b || ppList[n].x <= b) ? -1 : 1;
+                    ppList[n].speedY *= (ppList[n].y >= canvas_en.height - b || ppList[n].y <= b) ? -1 : 1;
+                    ppList[n].x += ppList[n].speedX;
+                    ppList[n].y += ppList[n].speedY;
+
+                    newpp.forEach(function (v, i) {
+                        if (n != i || v.x != null || v.y != null) {
+                            //三角形勾股定理
+                            var starx = ppList[n].x - v.x; //边长a
+                            var stary = ppList[n].y - v.y; //边长b
+                            var end = starx * starx + stary * stary; //边长c
+
+                            if (end < v.distance) {
+                                //当点为鼠标时，边长C大于 鼠标的距离设定在的0.5倍
+                                //周边的点的坐标逐步减少
+                                if (v === sb && end > (v.distance / 2)) {
+                                    ppList[n].x -= starx * 0.03;
+                                    ppList[n].y -= stary * 0.03;
+                                }
+
+                                var wd = (v.distance - end) / v.distance;
+
+                                canvas.beginPath();
+                                canvas.lineWidth = wd / 2;
+                                canvas.strokeStyle = 'rgba(0,0,0,' + (wd + 0.2) + ')';
+                                canvas.moveTo(ppList[n].x, ppList[n].y);
+                                canvas.lineTo(v.x, v.y);
+                                canvas.stroke();
+                            }
+                        }
+                    });
+
+                    canvas.beginPath();
+                    canvas.arc(ppList[n].x, ppList[n].y, b, 0, 2 * Math.PI);
+                    canvas.fillStyle = ppList[n].color;
+                    canvas.fill();
+                    newpp.splice(newpp.indexOf(ppList[n]), 1);
+
+                    n++;
+                }
+            }
+
+            function init() {
+                var n = 0;
+                while (n < 300) {
+                    ppList.push({
+                        x: Math.random() * (canvas_en.width - b * 2) + b,
+                        y: Math.random() * (canvas_en.height - b * 2) + b,
+                        speedX: Math.random() * 2 - 1,
+                        speedY: Math.random() * 2 - 1,
+                        color: color(),
+                        distance: 8000
+                    });
+                    n++;
+                }
+            }
+
+            function sx() {
+                canvas.clearRect(0, 0, canvas_en.width, canvas_en.height);
+                draw();
+                RAF(sx);
+            }
+            init();
+            RAF(sx);
+            //setTimeout(sx,500)
+        })(window, document);
+    </script>
+</body>
+
+</html>

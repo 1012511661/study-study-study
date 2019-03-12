@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+    <h2>　在JavaScript中，参数列表分为形参和实参。形参即为定义函数时指定的参数，实参为调用函数时指定的参数
+        <hr />
+        1.每个函数都有一个arguments属性，表示函数的实参集合，这里的实参是重点，就是执行函数时实际传入的参数的集合。<br>
+        2.arguments不是数组而是一个对象，但它和数组很相似，所以通常称为类数组对象，以后看到类数组其实就表示arguments。<br>
+        3.arguments有length属性，可以用arguments[length]显示调用
+        <hr />
+        arguments.length：获取实参个数<br>
+        arguments.callee.length:获取形参个数<br>
+        arguments.callee:指带函数本身</h2>
+</body>
+<script>
+    { // 1.
+        // console.log('有点懵逼');
+        // var length = 10;
+        // function fn() {
+        //     console.log(this.length, 'fn() length');
+        //     console.log(this, 0)
+        // };
+        // var obj = {
+        //     length: 5,
+        //     method: function (fn) {
+        //         console.log(this,'obj本身');
+        //         console.log(arguments, 'arguments');
+        //         console.log(arguments[0], 'fn()');
+        //         arguments[0]();//执行fn()
+        //         console.log(arguments.length, 'arguments.length');
+        //         console.log(this, 'obj本身');
+        //     }
+        // };
+        // obj.method(fn)
+    } { // 2.
+        console.log('实参长度VS形参长度')
+        // console.log('arguments.length 实参长度')
+        // console.log('arguments.callee.length 形参长度')
+        function add(a, b) {
+            if (arguments.length == arguments.callee.length) {
+                console.log('实参长度 = 形参长度');
+            } else if (arguments.length > arguments.callee.length) {
+                console.log('实参长度 < 形参长度');
+            } else {
+                console.log('实参长度 > 形参长度');
+            }
+        };
+        add(10);
+        add(10, 20, );
+        add(10, 20, 30);
+    } { // 3. arguments递归求和
+        function fn(n) {
+            if (n == 1) {
+                return 1;
+            } else {
+                return n + arguments.callee(n - 1);
+            }
+        }
+        console.log(fn(100),'arguments递归求和')
+    } { // 4. arguments变真正的数组
+        function fn() {
+            return [].slice.call(arguments)
+        }
+        console.log(fn([1, 5, 4, 7, 9, 6, 5]),'----- arguments变真正的数组 ----')
+    } { // 5. 类素组转为数组的轮子
+        console.log('----- 类素组转为数组的轮子  有问题 ？？？----')
+        listToArray = (listArr) => {
+            let arr = [];
+            try {
+                // arr = Array.prototype.slice.call(listArr);
+                arr = [].slice.call(listArr);
+            } catch (e) {
+                for (let i = 0; i < listArr.length; i++) {
+                    arr[arr.length] = listArr[i]
+                }
+            }
+            return arr
+        }
+        console.log(listToArray([1, 5, 4, 7, 9, 6, 5, 10, 11, 12]))
+    } { // 6. 类数组转为数组并遍历
+        console.log('---- 类数组转为数组并遍历------')
+        function print() {
+            // 1.
+            console.log('---- Array.prototype.slice.call().forEach  ------')
+            Array.prototype.slice.call(arguments).forEach(function (item) {
+                console.log(item)
+            });
+            // 2.
+            console.log('---- Array.prototype.forEach ------')
+            Array.prototype.forEach.call(arguments, function (item) {
+                console.log(item, )
+            });
+            // 3.
+            console.log('---- Array.from().forEach 优先考虑------')
+            Array.from(arguments).forEach(function (item) {
+                console.log(item)
+            })
+        }
+        print('a', 'b', 'c')
+    }
+</script>
+
+</html>

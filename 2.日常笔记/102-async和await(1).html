@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>async和await</title>
+</head>
+
+<body>
+    一句话，async 函数就是 Generator 函数的语法糖。
+    <hr>
+    async-await是promise和generator的语法糖
+    <hr>
+    async 函数就是将 Generator 函数的星号（*）替换成 async，将 yield 替换成 await，仅此而已。
+    <hr>
+    同 Generator 函数一样，async 函数返回一个 Promise 对象，可以使用 then 方法添加回调函数。当函数执行的时候，一旦遇到 await 就会先返回，等到触发的异步操作完成，再接着执行函数体内后面的语句。
+    <hr>
+    await 可以理解为是 async wait 的简写。await 必须出现在 async 函数内部，不能单独使用。
+    <hr>
+    await 后面可以跟任何的JS 表达式。虽然说 await 可以等很多类型的东西，但是它最主要的意图是用来等待 Promise 对象的状态被 resolved。如果await的是 promise对象会造成异步函数停止执行并且等待
+    promise 的解决,如果等的是正常的表达式则立即执行。
+    <hr>
+</body>
+<script>
+    {
+        var gen = function* () {
+            var f1 = yield XXXXXX;
+            var f2 = yield XXXXXX;
+        };
+        var asyncReadFile = async function () {
+            var f1 = await XXXXXX;
+            var f2 = await XXXXXX;
+        };
+    } {
+        function awaitSleep(second) {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve(' enough awaitSleep~');
+                }, second);
+            })
+        }
+
+        function awaitFn() {
+            console.log('awaitFn');
+        }
+        async function asyncFn() {
+            await awaitFn();
+            console.log('something, ~~');
+            let result = await awaitSleep(2000);
+            console.log(result); // 两秒之后会被打印出来
+        }
+        asyncFn();
+    }
+    {
+        function timeout(ms) {
+            let p = new Promise((resolve, reject) => {
+                let num = Math.random() * 10;
+                console.log(num)
+                if (num > 5) {
+                    setTimeout(resolve, ms);
+                } else {
+                    return reject('失败了');
+                }
+            });
+            return p;
+        }
+        async function asyncPrint(value, ms) {
+            await timeout(ms)
+        }
+        asyncPrint('hello world', 50);
+    }
+    {
+        console.log('----------')
+        function timeout() {
+            new Promise((resolve, reject) => {
+                    let num = Math.random() * 10;
+                    console.log(num)
+                    if (num > 5) {
+                        resolve()
+                    } else {
+                        // return reject('失败了');
+                        reject()
+                    }
+                })
+                .then(() => {
+                    console.log('成功了')
+                })
+                .catch(err => {
+                    console.log('失败了')
+                })
+        }
+        async function asyncPrint(value) {
+            await timeout()
+            console.log('await 后面的语句')
+        }
+        asyncPrint('hello world');
+    } {
+        setTimeout(() => {
+            function timeout() {
+                new Promise((resolve, reject) => {
+                        let num = Math.random() * 10;
+                        console.log(num)
+                        if (num > 5) {
+                            resolve()
+                        } else {
+                            // return reject('失败了');
+                            reject()
+                        }
+                    })
+                    .then(() => {
+                        console.log('成功了 1')
+                    })
+                    .catch(err => {
+                        console.log('失败了 1')
+                    })
+            }
+            async function asyncPrint(value) {
+                timeout()
+                console.log('没有 await 后面的语句')
+            }
+            asyncPrint('hello world');
+        }, 3000)
+    }
+</script>
+
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="demo">
+        <input type="checkbox" v-for="todo in todos" v-model="todo.value" @click="console.log(todo)" />
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script>
+        new Vue({
+            el: '#demo',
+            data: {
+                todos: []
+            },
+            created() {
+                fetch('http://rap2api.taobao.org/app/mock/86117/datas')
+                    .then(res => res.json())
+                    .then(data => {
+                        const { result } = data;
+                        this.todos = result;
+                    });
+            }
+        })
+    </script>
+</body>
+
+</html>

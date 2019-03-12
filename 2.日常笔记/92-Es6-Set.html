@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>set</title>
+</head>
+
+<body>
+    <h1>set</h1>
+    1. new Set() 添加元素使用 new Set().add(),长度要用 new Set().size <br>
+    2. new Set(arr) arr可以直接是一个提前定义好的数组 <br>
+    3. new Set() 里面定义的值不能重复，可用作数组去重，但是不能做数据类型的转换
+</body>
+<script>
+    { //1.
+        let list = new Set();
+        list.add(5);
+        list.add(7);
+        console.log('set的长度', list.size)
+        console.log('-------------------')
+    } { //2.
+        let arr = [1, 2, 3, 4, 5, 6]
+        let setList = new Set(arr)
+        console.log('set的长度', setList.size)
+        console.log('-------------------')
+    } { //3.
+        let list = new Set();
+        list.add(5);
+        list.add(7);
+        list.add(5);
+        console.log('set的值不能重复', list)
+        let arr = [1, 2, 3, 2, 5, 3]
+        let setList = new Set(arr)
+        console.log('set 数组去重', setList)
+        let arr1 = [1, 2, 3, '2', 5, 3]
+        let setList1 = new Set(arr1)
+        console.log('set 数组去重,不能做数据类型的转换', setList1)
+        console.log('-------------------')
+    } { //4.
+        let arr = ['add', 'delete', 'clear', 'has']
+        let setList = new Set(arr);
+        console.log('原数组', setList)
+        setList.add('add111')
+        console.log('add 添加', setList)
+        console.log('delete 删除', setList.delete('delete'),setList)
+        console.log('has 是否存在', setList.has('has'),setList)
+        setList.clear()
+        console.log('clear 清空',setList)
+    }
+</script>
+
+</html>

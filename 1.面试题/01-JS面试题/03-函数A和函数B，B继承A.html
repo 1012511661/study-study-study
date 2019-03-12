@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>函数A和函数B，B继承A</title>
+</head>
+
+<body>
+    <h2>3.现在有一个函数A和函数B，请你实现B继承A</h2>
+</body>
+<script>
+    // 方法 1
+    function A() {}
+
+    function B() {}
+    B.prototype = new A();
+    // 方法 2
+    function A() {}
+
+    function B() {
+        A.call(this)
+    }
+    // 方法 3
+    function A() {}
+
+    function B() {}
+    B.prototype = new A();
+
+    function B() {
+        A.call(this)
+    }
+    // 方法4：
+    class A {
+        constructor() {}
+    }
+    class B extends A {}
+    /**
+    方式1：简单易懂，但是无法实现多继承，父类新增原型方法/原型属性，子类都能访问到
+    方式2：可以实现多继承，但是只能继承父类的实例属性和方法，不能继承原型属性/方法
+    方式3：可以继承实例属性/方法，也可以继承原型属性/方法，但是示例了两个A的构造函数
+    **/
+    /**
+    在“类”的内部可以使用get和set关键字，对某个属性设置存值函数和取值函数，拦截该属性的存取行为。
+        链接：https://www.imooc.com/article/20596?block_id=tuijian_wz
+    */
+    class MyClass {
+        constructor() {
+            // ...
+        }
+        get prop() {
+            return 'getter';
+        }
+        set prop(value) {
+            console.log('setter: ' + value);
+        }
+    }
+    let inst = new MyClass();
+    inst.prop = 123; // setter: 123
+    inst.prop // 'getter'
+</script>
+
+</html>

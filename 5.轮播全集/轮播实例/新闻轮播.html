@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>新闻滚动</title>
+</head>
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    .news_box{
+        margin: 0 auto;
+        margin-top:10%;
+        width: 300px;;
+        height: 160px;
+        border: 1px solid darkgrey;
+        border-radius: 3px;
+
+    }
+    .news_box h2{
+        font-size: 18px;
+        line-height: 30px;
+        border-bottom: 2px solid gray;
+    }
+    .news_content{
+        height: 128px;
+        width: 300px;
+        font-size: 12px;
+        overflow: hidden;
+    }
+    .news_content li{
+        line-height: 21px;
+        padding-left: 10px;
+    }
+    .news_content>ul>li>a{
+        float: right;
+        margin-right: 20px;
+    }
+</style>
+<body>
+    <div class="news_box">
+        <h2>新闻列表</h2>
+        <div class="news_content">
+            <ul>
+                <li>今日头条:白百合出游泰国<a href="#">进入</a></li>
+                <li>uc新闻:震惊!韩国竟然如此..<a href="#">进入</a></li>
+                <li>丁义珍失联,各国。。。。<a href="#">进入</a></li>
+                <li>陈海局长被。。。。。。。<a href="#">进入</a></li>
+                <li>侯亮平局长被。。。。。。。<a href="#">进入</a></li>
+                <li>高育良老师被。。。。。。。<a href="#">进入</a></li>
+
+            </ul>
+        </div>
+    </div>
+</body>
+<script src="js/jquery-1.8.3.min.js"></script>
+<script>
+    $(function(){
+        var time ;//定时函数
+        var start = true;
+        //新闻有缝滚动
+        function slideUp() {
+            if (start) {
+                //复制第六条
+                var cloneLi = $("li:lt(6)").clone(true);
+                //将第六条加到最后面
+                $("ul").append(cloneLi);
+                //ul向上滑动一行
+                $("ul").animate({
+                    marginTop: "-=21px"
+                }, "1000");
+            }
+            time = setTimeout(slideUp, "1000");
+        }
+        slideUp();//调用slideUp;
+        $("ul").hover(function(){
+            start = false;
+        },function(){
+            start = true;
+        })
+    })
+</script>
+</html>

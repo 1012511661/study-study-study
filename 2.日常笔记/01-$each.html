@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>$each,call,apple,splice</title>
+</head>
+
+<body>
+    <h3>
+        each如果有第三个参数遍历的是第三个参数(必须是数组),function()里面的参数和each里面的个数关系，遍历的是第三个参数(数组)，而不是第一个参数(数组)，但遍历的次数是each第一个参数(数组)的个数
+    </h3>
+</body>
+<script src="js/jquery-1.11.3.min.js"></script>
+<script>
+    /*******$.each(obj,cb,agrs) 3个参数**************/
+    {
+        console.log('1.$.each(obj,cb,agrs)');
+        {
+            let arr = [100, 200, 300];
+            $.each(arr, (k, v) => {
+                console.log(k, v);
+            })
+        }
+        {
+            console.log('****** arr.length = 3,fn()形参 =3，agrs.length = 3 =>遍历三遍，遍历的是agrs的全部*******');
+            var arr = [100, 200,300];
+            var agrs = [10, 11, 12];
+            $.each(arr, (a, b, c) => {
+                console.log(a);
+                console.log(b);
+                console.log(c);
+                console.log(this)
+            }, agrs)
+            console.log('****** arr.length = 2,fn()形参 =3，agrs.length = 3 =>遍历两遍，遍历的是agrs的全部*******');
+            var arr = [100, 200];
+            var agrs = [10, 11, 12];
+            $.each(arr, (a, b, c) => {
+                console.log(a);
+                console.log(b);
+                console.log(c);
+                console.log(agrs);
+                console.log(this)
+            }, agrs)
+            console.log('****** arr.length = 2,fn()形参 =2，agrs.length = 3 =>遍历两遍，遍历的是agrs的前两位,第三位不遍历  *******');
+            var arr = [100, 200];
+            var agrs = [10, 11, 12];
+            $.each(arr, (a, b) => {
+                console.log(a);
+                console.log(b);
+                console.log(agrs);
+                console.log(this)
+            }, agrs)
+            console.log('****** arr.length = 3,fn()形参 = 3，agrs.length = 2 =>遍历三遍，遍历的是agrs的全部，但是fn()的形参有三个,agrs只有两位，形参第三个为undefined *******');
+            var arr = [100, 200, 300];
+            var agrs = [10, 11];
+            $.each(arr, (a, b, c) => {
+                console.log(a);
+                console.log(b);
+                console.log(c);
+                console.log(agrs);
+                console.log(this)
+            }, agrs)
+        }
+        {
+            console.log('*************');
+            var arr = [1, 2, 3, 4];
+            var agrs = [10, 11, 12]
+            $.each(arr, function (index, item) {
+                console.log(index, item)
+            }, agrs);
+
+            // 首先each我传入了三个参数
+            // 通过这种方式，我取到了a，b，c 的三个值分别为'wo', 'ai', 'ni'
+            // 多次尝试，我发现args传过来的三个参数是按照顺序排列好的，
+            // 如果只有一个参数那么，我们就只能取到'wo',
+            // 当
+            var arr = [5, 7, 5];
+            $.each(
+                arr,
+                function (a, b, c) {
+                    console.log(a, "a"); // 'wo'
+                    console.log(b, "b"); // 'ai'
+                    console.log(c, "c"); // 'ni'
+                    console.log(arguments); //["wo", "ai", "ni", callee: function, Symbol(Symbol.iterator): function]
+                    console.log(this) // 回调中的所有参数会根据each第一个参数的长度进行多次打印，所以每次打印的this都指向每一次的arr的值
+                },
+                ['wo', 'ai', 'ni']
+            )
+        }
+    }
+</script>
+
+</html>

@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>随机一个数字出现对应相同位数的字符串</title>
+</head>
+<body>
+<strong>随机一个数字出现对应相同位数的字符串:<br/>
+      利用charAt() 方法可返回指定位置的字符<br/>
+    $str.charAt(Math.floor(Math.random()*len)):随机数字*原数组的长度通过原数组charAt()得到该位置的字符
+</strong>
+<br><br>
+
+ <p>不删除出现的字符:<span id="str1"></span></p><hr/>
+ <p>删除出现的字符:<span id="str2"></span></p>
+
+</body>
+<script src="js/jquery-1.11.3.min.js"></script>
+<script>
+    {  //不删除出现的字符:
+         randomStr=(num)=>{
+            num = num || 3;//num有初始值就用初始值,没有就用默认值
+            let $chars = "qwertyuiop";
+            let len =$chars.length;
+            let str = "";
+            for(let i =1;i<= num;i++){
+                let randomNum = Math.random();//随机
+                let randomLen = randomNum*len;//随机数对应在字符串的位置
+                let floor = Math.floor(randomLen);//向下取整
+                let newStr = $chars.charAt(floor);//随机数字对应的字符
+                str += newStr;
+            }
+            return str
+        }
+        $("#str1").html(randomStr(5));
+    }
+    {
+        {  //删除出现的字符:
+            randomStrDel=(num)=>{
+                num = num || 3;//num有初始值就用初始值,没有就用默认值
+                let $chars = "qwertyuiop";
+                let len =$chars.length;
+                let str = "";
+                for(let i =1;i<= num;i++){
+                    let randomNum = Math.random();//随机
+                    let randomLen = randomNum*len;//随机数对应在字符串的位置
+                    let floor = Math.floor(randomLen);//向下取整
+                    let newStr = $chars.charAt(floor);//随机数字对应的字符
+                    str += newStr;
+                    $chars = $chars.replace(newStr,'');//删除出现的字符
+                    len =$chars.length;//获取行的长度
+                }
+                return str
+            }
+            $("#str2").html(randomStrDel(5));
+        }
+    }
+</script>
+</html>

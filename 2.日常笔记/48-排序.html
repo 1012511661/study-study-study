@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>排序</title>
+	</head>
+	<body>
+		<button onclick="chang_a()">随机排序</button>
+		<button onclick="chang_b()">升序1</button>
+		<button onclick="chang_bb()">升序2</button>
+		<button onclick="chang_c()">降序</button>
+	</body>
+	<script src="js/jquery-1.11.3.min.js"></script>
+	<script type="text/javascript">
+		/*随机排序*/
+	function chang_a(){
+		var  a = [1,2,3,4,5,6,7,8,9];
+	a.sort(function(){
+		return Math.random()-0.5
+	})
+	/*console.log(a)*/
+	document.write(a)
+	}
+	/*function randomsort(a, b) {  
+        return Math.random()>0..5 ? -1 : 1;  
+//用Math.random()函数生成0~1之间的随机数与0.5比较，返回-1或1  
+}*/ 
+
+/* 升序*/
+function chang_b(){
+	function sortNumber(a,b) 
+{ 
+return a - b 
+} 
+var arr = [1,56,5,4];  
+var arr2 = arr.sort() 
+/*console.log(arr2);*/
+document.write(arr2)
+}
+
+
+function chang_bb(){
+	var a=[9,2,33,66,55,56,34,1,91,88];
+for(var i=0;i<a.length;i++){
+    for(var j = i + 1;j<a.length;j++){
+        if(a[i]>a[j]){
+            var tmp = a[i];
+            a[i] = a[j];
+            a[j] = tmp;
+        }
+    }
+} 
+/*console.log(a)*/
+document.write(a)
+}
+/*降序*/
+function chang_c(){
+	var b=[9,2,33,66,55,56,34,1,91,88];
+for(var i=0;i<b.length;i++){
+    for(var j = i + 1;j<b.length;j++){
+        if(b[i]<b[j]){
+            var bb = b[i];
+            b[i] = b[j];
+            b[j] = bb;
+        }
+    }
+} 
+/*console.log(b)*/
+document.write(b)
+}
+</script>
+</html>

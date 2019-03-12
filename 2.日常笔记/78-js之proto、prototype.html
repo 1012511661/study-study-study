@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>proto、prototype和原型链之间的联系</title>
+</head>
+<body>
+<strong>
+    <h2>proto和prototype</h2><hr/>
+    prototype是函数的一个属性，在定义构造函数的时候自动创建，它指向函数的原型，被 __proto__指向。<br/><br/>
+    __proto__是对象的内部属性，它指向构造器的prototype，对象依赖它来进行原型链的查询，instanceof方法也是依赖它来判断是否存在继承关系。<br/><br/>
+    prototype只能作为构造函数的属性，而__proto__可以作为任意对象的属性。<br/><br/>
+    实例都有一个 constructor （构造函数）属性指向构造函数,叫 构造属性。<br/><br/>
+    原型对象（A.prototype）是 构造函数（A）的一个实例。<br/><br/>
+    参考地址:https://blog.csdn.net/spicyboiledfish/article/details/71123162
+</strong><hr/>
+<img src="img/proto和prototype.png" alt="">
+</body>
+<script>
+    {
+        function Father(name){
+            this.name =name;
+        }
+        let son = new Father('名字');
+        console.log(Father.prototype,'Fa的prototype');//1
+        console.log(Father.prototype.constructor,'Fa的prototype.constructor');//2
+        console.log(son.prototype,'son的prototype');//实例的prototype 是undefined
+        console.log(son.__proto__,'son的__proto__');//1
+        console.log(son.constructor,'son的constructor');//2
+
+        console.log(Father==son.constructor);//true
+        console.log(Father==son.__proto__.constructor);//true
+        console.log(Father.prototype==son.__proto__);//true
+        console.log(Father.prototype==son.constructor);//false
+        console.log(Father.prototype.constructor==Father);//true
+    }
+</script>
+</html>

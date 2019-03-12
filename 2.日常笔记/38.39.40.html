@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+</body>
+<script>
+    //call()/apply()
+     /*call(thisObj,a,b,c,......) 可以有无限个参数
+          第一个参数为可选项。将被用作当前对象的对象
+          可选项。将被传递方法参数序列*/
+    //.apply(thisObj,array) 两个参数，第二个参数是数组
+           /*obj：这个对象将代替Function类里this对象
+           array:可选项。将被传递方法参数序列*/
+    var demoFun = function(param1,param2){
+        console.log(this);
+        console.log(param1);
+        console.log(param2)
+    };
+    demoFun.call(window,1,2);
+    demoFun.apply(window,[1,2]);
+    //call()
+   function Animal(name){
+       this.name = name;
+       this.showName = function(){
+           console.log(this.name);
+       }
+   }
+
+   function Cat(name){
+       Animal.call(this, name);
+   }
+
+   var cat = new Cat("Black Cat");
+   cat.showName();
+ //Animal.call(this) 的意思就是使用 Animal对象代替this对象
+ // 那么 Cat中就有Animal的所有属性和方法了
+ // Cat对象就能够直接调用Animal的方法以及属性了.
+    //apply()
+    //Array.prototype.push.apply(a,b);  在a后面加b返回一个新的a
+var arr1=new Array("1","2","3");
+var arr2=new Array("4","5","6");
+Array.prototype.push.apply(arr1,arr2);
+console.log(arr1,"1");
+console.log(arr2,"2");
+    var a=[1,2,3];
+    var b=[4,5,6];
+ Array.prototype.push.apply(a,b);
+    console.log(a,"a的新值")
+    console.log(b,"b的新值=b的初始值")
+    console.log("//////")
+    console.log(a.concat(a),"合并后复制新发a");
+    console.log(a.concat(b),"合并后复制原来的b");
+ console.log("******")
+var max=Math.max.apply(null,["1","2","3"])
+    console.log(max,"大")
+var min=Math.min.apply(null,["1","2","3"])
+console.log(min,"小")
+    //第一个参数给了一个null,这个是因为没有对象去调用这个方法
+    // 我只需要用这个方法帮我运算，得到返回的结果就行
+    // 所以直接传递了一个null过去（利用Math方法但是不改变this的指向）
+    function Sister()
+    {
+        this.age=18;
+        this.sayAge= function()
+        {
+            document.write("Age:1--"+this.age);
+        }
+        this.yaya=function()
+        {
+            document.write("yaya.....");
+        }
+    }
+    function Brother()
+    {
+        this.age=25;
+        this.sayAge=function(){
+            document.write("Age:"+this.age);
+        }
+        this.hoho=function()
+        {
+            document.write("hoho.....")
+        }
+    }
+    var sis=new Sister();
+    var bro=new Brother();
+    sis.sayAge.call(bro);
+    // sis.sayAge，函数代替了bro.sayAge的函数
+
+
+   // JavaScript原生对象常用方法总结: http://www.jb51.net/article/84164.htm
+    console.log("JavaScript原生对象常用方法总结")
+    //concat(arr1,arr2,arr3......arrx):js数组合并,返回合并后的新数组,至少需要传递一个数组，也可以传递多个数组:
+    var a=[1,2,3];
+    var b=[4,5,6];
+    console.log(a.concat(a),"concat(arr1,arr2,arr3......arrx):js数组合并,返回合并后的新数组,至少需要传递一个数组，也可以传递多个数组");
+    // join(): 将数组元素按指定的分隔符拼接成一字符串返回，默认分隔符为英文逗号:
+    var arr = new Array() ;arr[0] = "1"; arr[1] = "2"; arr[2] = "3"; arr[3] = "4";
+    arr.join("*****");
+    console.log(arr,"join(): 将数组元素按指定的分隔符拼接成一字符串返回，默认分隔符为英文逗号:")
+   /* sort(fn): 数组排序,默认是按英文字母的ASC码升序排列，比如apple排在orange前面，其实
+    sort还可以接收一个参数，该参数function类型，有点类似于java里的比较器的意思，
+    就是说如果不想按默认的比较规则来排序，就必须提供一比较函数，该函数有两个参数a、b,
+            如果返回值小于0，则a排在b前面
+            如果返回值大于0，则b排在a前面
+            如果返回值等于0，则a、b位置不变*/
+    var arr = new Array(6);
+    arr[0] = 5;
+    arr[1] = 23;
+    arr[2] = 4;
+    arr[3] = 18;
+    arr[4] = 88;
+    arr[5] = 10;
+    arr.sort(sortNumber);
+    function sortNumber(a, b)
+    {
+        return a - b;
+    }
+    console.log(arr,"sort(fn),按照制定函数排序")
+    var arr = new Array(6);
+    arr[0] = 5;
+    arr[1] = 23;
+    arr[2] = 4;
+    arr[3] = 18;
+    arr[4] = 88;
+    arr[5] = 10;
+    var len = arr.push(11,22,33);//在加3个
+    console.log(len,"计算长度");
+    var arr = [3,5,11,6,90,0];  var a = arr.slice(2,4);
+    console.log(arr,"截取/不能实现")
+    var num = new Number(13.3714);
+    var n=num.toPrecision(2,"数字格式化为指定的长度");
+    console.log(n,"")
+    var a = 12.5563;
+    console.log(a.toFixed(),"四舍五入");
+</script>
+</html>

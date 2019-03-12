@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<style type="text/css">
+		/**长条**/
+		
+		#progress {
+			width: 50%;
+			height: 30px;
+			border: 1px solid #ccc;
+			border-radius: 15px;
+			margin: 50px 0 0 100px;
+			overflow: hidden;
+			box-shadow: 0 0 5px 0px #ddd inset;
+		}
+		
+		#progress span {
+			display: inline-block;
+			width: 100%;
+			height: 100%;
+			background: #2989d8;
+			/* Old browsers */
+			background: -moz-linear-gradient(45deg, #2989d8 33%, #7db9e8 34%, #7db9e8 59%, #2989d8 60%);
+			/* FF3.6+ */
+			background: -webkit-gradient(linear, left bottom, right top, color-stop(33%, #2989d8), color-stop(34%, #7db9e8), color-stop(59%, #7db9e8), color-stop(60%, #2989d8));
+			/* Chrome,Safari4+ */
+			background: -webkit-linear-gradient(45deg, #2989d8 33%, #7db9e8 34%, #7db9e8 59%, #2989d8 60%);
+			/* Chrome10+,Safari5.1+ */
+			background: -o-linear-gradient(45deg, #2989d8 33%, #7db9e8 34%, #7db9e8 59%, #2989d8 60%);
+			/* Opera 11.10+ */
+			background: -ms-linear-gradient(45deg, #2989d8 33%, #7db9e8 34%, #7db9e8 59%, #2989d8 60%);
+			/* IE10+ */
+			background: linear-gradient(45deg, #2989d8 33%, #7db9e8 34%, #7db9e8 59%, #2989d8 60%);
+			/* W3C */
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2989d8', endColorstr='#2989d8', GradientType=1);
+			/* IE6-9 fallback on horizontal gradient */
+			background-size: 60px 30px;
+			text-align: center;
+			color: #fff;
+			-webkit-animation: load 3s ease-in;
+		}
+		
+		@-webkit-keyframes load {
+			0% {
+				width: 0%;
+			}
+			100% {
+				width: 100%;
+			}
+		}
+		/*圆形+长条*/
+		
+		#progressBar {
+			width: 80%;
+			height: 50px;
+			position: relative;
+			margin: 50px 0 0 100px;
+		}
+		
+		#progressBar div {
+			width: 100%;
+			height: 10px;
+			position: absolute;
+			top: 50%;
+			left: 0;
+			margin-top: -20px;
+			background: #ccc;
+		}
+		
+		#progressBar div span {
+			position: absolute;
+			display: inline-block;
+			background: green;
+			height: 10px;
+			width: 100%;
+			-webkit-animation: bgLoad 5.5s linear;
+		}
+		
+		@-webkit-keyframes bgLoad {
+			0% {
+				width: 0%;
+			}
+			18.18%,
+			27.27% {
+				width: 25%;
+			}
+			45.45%,
+			54.54% {
+				width: 50%;
+			}
+			72.72%,
+			81.81% {
+				width: 75%;
+			}
+			100% {
+				width: 100%;
+			}
+		}
+		
+		#progressBar>span {
+			position: absolute;
+			top: 0;
+			margin-top: -10px;
+			width: 40px;
+			height: 40px;
+			border-radius: 50%;
+			background: #ccc;
+			margin-left: -20px;
+			color: #fff;
+		}
+		
+		@-webkit-keyframes circleLoad_1 {
+			0%,
+			66.66% {
+				background: #ccc;
+			}
+			100% {
+				background: green;
+			}
+		}
+		
+		@-webkit-keyframes circleLoad_2 {
+			0%,
+			83.34% {
+				background: #ccc;
+			}
+			100% {
+				background: green;
+			}
+		}
+		
+		@-webkit-keyframes circleLoad_3 {
+			0%,
+			88.88% {
+				background: #ccc;
+			}
+			100% {
+				background: green;
+			}
+		}
+		
+		@-webkit-keyframes circleLoad_4 {
+			0%,
+			91.67% {
+				background: #ccc;
+			}
+			100% {
+				background: green;
+			}
+		}
+		
+		#progressBar span:nth-child(2) {
+			left: 0%;
+			background: green;
+		}
+		
+		#progressBar span:nth-child(3) {
+			left: 25%;
+			background: green;
+			-webkit-animation: circleLoad_1 1.5s ease-in;
+		}
+		
+		#progressBar span:nth-child(4) {
+			left: 50%;
+			background: green;
+			-webkit-animation: circleLoad_2 3s ease-in;
+		}
+		
+		#progressBar span:nth-child(5) {
+			left: 75%;
+			background: green;
+			-webkit-animation: circleLoad_3 4.5s ease-in;
+		}
+		
+		#progressBar span:nth-child(6) {
+			left: 100%;
+			background: green;
+			-webkit-animation: circleLoad_4 6s ease-in;
+		}
+		/*纯圆形*/
+		.circleProgress_wrapper{
+            width: 200px;
+            height: 200px;
+            margin: 50px auto;
+            position: relative;
+            border:1px solid #ddd;
+        }
+
+        .wrapper{
+            width: 100px;
+            height: 200px;
+            position: absolute;
+            top:0;
+            overflow: hidden;
+        }
+        .right{
+            right:0;
+        }
+        .left{
+            left:0;
+        }
+        .circleProgress{
+            width: 160px;
+            height: 160px;
+            border:20px solid rgb(232, 232, 12);
+            border-radius: 50%;
+            position: absolute;
+            top:0;
+            -webkit-transform: rotate(45deg);
+        }
+        .rightcircle{
+            border-top:20px solid green;
+            border-right:20px solid green;
+            right:0;
+            -webkit-animation: circleProgressLoad_right 5s linear infinite;
+        }
+        .leftcircle{
+            border-bottom:20px solid green;
+            border-left:20px solid green;
+            left:0;
+            -webkit-animation: circleProgressLoad_left 5s linear infinite;
+        }
+        @-webkit-keyframes circleProgressLoad_right{
+            0%{
+                border-top:20px solid #ED1A1A;
+                border-right:20px solid #ED1A1A;
+                -webkit-transform: rotate(45deg);
+            }
+            50%{
+                border-top:20px solid rgb(232, 232, 12);
+                border-right:20px solid rgb(232, 232, 12);
+                border-left:20px solid rgb(81, 197, 81);
+                border-bottom:20px solid rgb(81, 197, 81);
+                -webkit-transform: rotate(225deg);
+            }
+            100%{
+                border-left:20px solid green;
+                border-bottom:20px solid green;
+                -webkit-transform: rotate(225deg);
+            }
+        }
+        @-webkit-keyframes circleProgressLoad_left{
+            0%{
+                border-bottom:20px solid #ED1A1A;
+                border-left:20px solid #ED1A1A;
+                -webkit-transform: rotate(45deg);
+            }
+            50%{
+                border-bottom:20px solid rgb(232, 232, 12);
+                border-left:20px solid rgb(232, 232, 12);
+                border-top:20px solid rgb(81, 197, 81);
+                border-right:20px solid rgb(81, 197, 81);
+                -webkit-transform: rotate(45deg);
+            }
+            100%{
+                border-top:20px solid green;
+                border-right:20px solid green;
+                border-bottom:20px solid green;
+                border-left:20px solid green;
+                -webkit-transform: rotate(225deg);
+            }
+        }
+	</style>
+
+	<body>
+		<h1>长条进度条：</h1>
+		<div id="progress">
+			<span></span>
+		</div>
+		<h1>圆形+长条进度条：</h1>
+		<div id="progressBar">
+			<!-- 进度条 -->
+			<div>
+				<span></span>
+			</div>
+			<!-- 五个圆 -->
+			<span></span>
+			<span></span>
+			<span></span>
+			<span></span>
+			<span></span>
+		</div>
+		<h1>圆形进度条：</h1>
+		<div class="circleProgress_wrapper">
+			<div class="wrapper right">
+				<div class="circleProgress rightcircle"></div>
+			</div>
+			<div class="wrapper left">
+				<div class="circleProgress leftcircle"></div>
+			</div>
+		</div>
+	</body>
+
+</html>

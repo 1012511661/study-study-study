@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>防抖</title>
+</head>
+<body>
+    <input type="text" id="s" list="suggestion" name="">
+    <datalist id="suggestion"></datalist>
+
+</body>
+<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript">
+   (function($) {
+    var $s = $('#s');
+    var $suggestion = $('#suggestion');
+    var timer = null;
+    $s.on('keyup', function() {
+      timer && clearTimeout(timer);
+      timer = setTimeout(handleChange, 500);
+    });
+    function handleChange() {
+      var s = $s.val();
+      $suggestion.empty();
+      fetchBaiduSuggest(s, function(word, result) {
+        result.map(function(w) {
+          $('<option />').val(w).text(w).appendTo($suggestion);
+        });
+      });
+    }
+    function fetchBaiduSuggest(word, cb){
+      $.getJSON("http://suggestion.baidu.com/su?wd="+encodeURIComponent(word)+"&cb=?",function(data){
+        if($.isArray(data.s)){
+          cb(word,data.s);
+        }
+      });
+    }
+  })(jQuery);
+</script>
+</html>

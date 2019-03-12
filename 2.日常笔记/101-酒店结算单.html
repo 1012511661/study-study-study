@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>酒店结算单</title>
+    <script language="javascript">
+        function preview(oper)
+        {
+        if (oper < 10){
+        bdhtml=window.document.body.innerHTML;//获取当前页的html代码
+        sprnstr="<!--startprint"+oper+"-->";//设置打印开始区域
+        eprnstr="<!--endprint"+oper+"-->";//设置打印结束区域
+        prnhtml=bdhtml.substring(bdhtml.indexOf(sprnstr)+18); //从开始代码向后取html
+        prnhtml=prnhtml.substring(0,prnhtml.indexOf(eprnstr));//从结束代码向前取html
+        window.document.body.innerHTML=prnhtml;
+        window.print();
+        window.document.body.innerHTML=bdhtml;
+        } else {
+        window.print();
+        }
+        }
+        </script>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+
+    }
+
+    #roomTxt {
+        margin-left: 200px;
+        width: 980px;
+        border: 1px solid #000000;
+        overflow: hidden;
+    }
+
+    #roomTxt .roomTxt-title {
+        font-size: 26px;
+        margin: 0 auto;
+        padding: 30px;
+        width: 180px;
+    }
+
+    #roomTxt .roomTxt-con {}
+
+    #roomTxt .roomTxt-con ul {
+        width: 96%;
+        margin: 0 auto;
+    }
+
+    #roomTxt .roomTxt-con ul li {
+        padding: 2px 3% 2px 1%;
+        display: inline-block;
+    }
+
+    #roomTxt .roomTxt-con ul li:nth-child(3n) {
+        width: 28%;
+        padding-left: 7%;
+    }
+
+    #roomTxt .roomTxt-con ul li:nth-child(3n-1) {
+        width: 23%;
+        padding-left: 5%;
+    }
+
+    #roomTxt .roomTxt-con ul li:nth-child(3n-2) {
+        width: 26%;
+    }
+
+    #roomTxt .roomTxt-from {
+        width: 100%;
+        border-top: 1px solid;
+        margin-top: 30px;
+    }
+
+    #roomTxt .roomTxt-from table {
+        width: 100%;
+        margin: -20px auto 0;
+
+    }
+
+
+    #roomTxt .roomTxt-from table caption {
+        padding: 5px 0 3px 25px;
+        font-size: 20px;
+        border-bottom: 1px solid;
+        text-align: left;
+    }
+
+    #roomTxt .roomTxt-from table tbody {
+        padding-top: 10px;
+        display: block;
+        width: 101%;
+        display: inline-block;
+        margin-left: -3px;
+    }
+
+    #roomTxt .roomTxt-from table tbody tr {
+        display: inline-block;
+        border-bottom: 1px solid;
+        width: 100%;
+    }
+    #roomTxt .roomTxt-from table tbody tr:last-child{
+        margin-bottom: 50px;
+    }
+    #roomTxt .roomTxt-from table tbody tr th {
+        width: 160px;
+        display: inline-block;
+        text-align: center;
+    }
+    #roomTxt .roomTxt-from table tbody tr th:nth-child(3) {
+        text-align: right;
+    }
+    #roomTxt .roomTxt-from table tbody tr th:nth-child(4) {
+        width: 80px;
+    margin-left: 64px;
+    }
+    #roomTxt .roomTxt-from table tbody tr th:nth-child(5) ,#roomTxt .roomTxt-from table tbody tr th:nth-child(6) {
+        width: 80px;
+    margin-left: 80px;
+    }
+    #roomTxt .roomTxt-from table tbody tr td {
+        width: 250px;
+        text-align: center;
+    }
+</style>
+
+<body>
+    <!--startprint1-->
+    <div id="roomTxt">
+        <!-- title -->
+        <p class="roomTxt-title">XX酒店结算单</p>
+        <!-- 明细 -->
+        <div class="roomTxt-con">
+            <ul>
+                <li>结算账号：<span>111111111</span></li>
+                <li>结算周期：<span>1月</span></li>
+                <li>结算日期段：<span>20180101-20181212</span></li>
+                <li>分账比例：<span>6:4</span></li>
+                <li>点播金额：<span>11010.11</span>元</li>
+                <li>结算金额：<span>1132122.11</span>元</li>
+                <li>结算笔数：<span>115</span>笔</li>
+                <li></li> <!-- 空白间隙 -->
+                <li>结算单生成日期：<span>20180214</span>笔</li>
+            </ul>
+        </div>
+        <!-- 数据表格 -->
+        <div class="roomTxt-from">
+            <table>
+                　<caption><strong>结算明细如下</strong></caption>
+                <!---表头--->
+                <tbody>
+                    <tr>
+                        <th>点播编号</th>
+                        <th>点播时间</th>　
+                        <th>点播金额(元)</th>　
+                        <th>客房编号</th>　
+                        <th>客户姓名</th>　　
+                        <th>支付方式</th>　　
+                    </tr>
+                    <tr>
+                        <td>20180901D00001</td>　　
+                        <td>2018-12-12 00:00:00</td>　　
+                        <td>30</td>　　
+                        <td>111</td>　　
+                        <td>小小小</td>　　
+                        <td>微信</td>　　
+                    </tr>
+                    <tr>
+                        <td>20180901D00001</td>　　
+                        <td>2018-12-12 00:00:00</td>　　
+                        <td>30</td>　　
+                        <td>111</td>　　
+                        <td>小小小</td>　　
+                        <td>支付宝</td>　　
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!--endprint1-->
+    <input type=button name='button_export' title='打印1' onclick=preview(1) value=打印1>
+</body>
+
+</html>

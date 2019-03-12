@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="js/jquery-1.11.3.min.js"></script>
+</head>
+<body>
+	<h1>注意:每一次操作有都要点击一次刷新</h1>
+<label>名字: <input type="text" id="name"/></label><br/>
+<label>简介: <input type="text" id="detail"/></label>
+<button>添加</button>
+<button>刷新</button>
+<button onclick="javascript:localStorage.clear();alert('清空成功!');">全部清空</button>
+<button onclick="all(key)">全部清空</button>
+    <table>
+        <tr>
+            <td>名字</td>
+            <td>简介</td>
+            <td>
+                操作
+            </td>
+        </tr>
+    </table>
+</body>
+<script>
+    $(function(){
+        $("button:eq(0)").click(function(){
+            var name = $("#name").val();
+            var detail = $("#detail").val();
+            /**
+             * 将值存储在localStorage
+             */
+            localStorage.setItem(name,detail);
+        });
+        $("button:eq(1)").click(function(){
+            clearTable();//清空
+            var tbody = $("tbody");
+           for(var key in localStorage){
+               /**
+                * 获取值.根据key
+                */
+               var value = localStorage.getItem(key);
+               console.log("key-",key,"value-",value)
+               //创建tr
+               var tr = $("<tr></tr>");
+               tr.append($("<td></td>").text(key));
+               tr.append($("<td></td>").text(value));
+               tr.append($('<td><button onclick="del('+key+')">删除</button></td>'))
+                console.log(tr);
+               tbody.append(tr);
+           }
+
+        });
+    })
+    function del(key){
+            localStorage.removeItem(key);
+        alert('删除成功');
+    }
+    function clearTable(){
+        var t = $("table");
+        t.html("<tbody> <tr><td>名字</td> <td>简介</td> </tr></tbody>");
+    }
+</script>
+</html>

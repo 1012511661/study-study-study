@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>拷贝(2)</title>
+</head>
+
+<body>
+    <h2>
+        一个对象拷贝两个对象
+    </h2>
+</body>
+<script>
+    {
+        let obj1 = {
+            name: "小明",
+            age: 10
+        };
+        let obj2 = {
+            text: {
+                title: "标题",
+                content: {
+                    conTit: "内容标题"
+                }
+            }
+        }
+        console.log(obj1, "初始的 obj 1 ")
+        console.log(obj2, "初始的 obj 2 ")
+    } {
+        console.log('for in')
+        let obj1 = {
+            name: "小明",
+            age: 10
+        };
+        let obj2 = {
+            text: {
+                title: "标题",
+                content: {
+                    conTit: "内容标题"
+                }
+            }
+        }
+        let obj3 = {};
+        for (let key in obj1) {
+            obj3[key] = obj1[key]
+        }
+        for (let key in obj2) {
+            obj3[key] = obj2[key]
+        }
+        obj1.name = "小强";
+        console.log(obj1,' obj1 改变')
+        console.log(obj3,' obj3 不变')
+        obj3.name = "小小";
+        console.log(obj1,' obj1 不变')
+        console.log(obj3,' obj3 改变')
+    }{
+        console.log('Object.assign(obj3,obj1,obj2)')
+        let obj1 = {
+            name: "小明",
+            age: 10
+        };
+        let obj2 = {
+            text: {
+                title: "标题",
+                content: {
+                    conTit: "内容标题"
+                }
+            }
+        }
+        let obj3 = {};
+        obj3 = Object.assign(obj3,obj1,obj2)
+        obj1.name = "小强";
+        console.log(obj1,' obj1 改变')
+        console.log(obj3,' obj3 不变')
+        obj3.name = "小小";
+        console.log(obj1,' obj1 不变')
+        console.log(obj3,' obj3 改变')
+    }{
+        console.log('{...obj1,...obj2}')
+        let obj1 = {
+            name: "小明",
+            age: 10
+        };
+        let obj2 = {
+            text: {
+                title: "标题",
+                content: {
+                    conTit: "内容标题"
+                }
+            }
+        }
+        let obj3 = {};
+        obj3 = {...obj1,...obj2};
+        obj1.name = "小强";
+        console.log(obj1,' obj1 改变')
+        console.log(obj3,' obj3 不变')
+        obj3.name = "小小";
+        console.log(obj1,' obj1 不变')
+        console.log(obj3,' obj3 改变')
+    }
+    {
+        console.log('JSON.parse(JSON.stringify(obj1))')
+        let obj1 = {
+            name: "小明",
+            age: 10
+        };
+        let obj2 = {
+            text: {
+                title: "标题",
+                content: {
+                    conTit: "内容标题"
+                }
+            }
+        }
+        let obj3 = {};
+        obj3 =JSON.parse(JSON.stringify(obj1))
+        // obj3 =JSON.parse(JSON.stringify(obj2))
+        obj1.name = "小强";
+        console.log(obj1,' obj1 改变')
+        console.log(obj3,' obj3 不变')
+        // obj3.name = "小小";
+        // console.log(obj1,' obj1 不变')
+        // console.log(obj3,' obj3 改变')
+    }
+</script>
+
+</html>

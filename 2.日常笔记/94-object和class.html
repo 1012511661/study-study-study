@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> object和class</title>
+</head>
+
+<body>
+    object和class
+</body>
+<script>
+    { //1.
+        console.log('--- Object ---')
+        let name = "aaa";
+        let age = 10;
+        let obj = {
+            name,
+            age
+        }
+        console.log(obj, '对象赋值')
+    } {
+        console.log('--- Object.setPrototypeOf() //  __proto__ ---')
+        let obj1 = {
+            age: 1
+        };
+        let obj2 = {
+            age: 2
+        };
+        let obj3 = {};
+        //1.
+        //设置obj3的原型为obj1 是设置__proto__
+        Object.setPrototypeOf(obj3, obj1) // obj3.__proto__ = obj1;
+        console.log(obj3, 'obj3')
+        console.log(obj3.age, 'obj3.age')
+        //2.
+        let obj4 = {
+            __proto__:obj1
+        };
+        console.log(obj4.age, 'obj4.age')
+    }{
+        console.log('--- super ---')
+        let obj1 = {
+            age: 1,
+            getName(){
+                return '小明=>obj1'
+            },
+            getAge(){
+                return '10=>obj1 '
+            }
+        };
+        let obj3 = {
+            __proto__:obj1,
+            getName(){
+                return '小强=>obj3'
+            },
+            getAge(){
+                //通过 super 调用父级的方法
+                return '12=>obj3 '+super.getAge();
+            }
+        };
+        console.log(obj3.getName(), '调用自己的')
+        console.log(obj3.getAge(), '调用自己+父级的')
+    } { //2. es6
+        console.log('--- class es6  ---')
+        class Parent {
+            //实例属性
+            constructor(name) {
+                this.name = name;//实例的私有属性
+            }
+            //实例的公有属性，也就相当于原型上的属性
+            getName() {
+                console.log(this.name)
+            }
+        }
+        let child1 = new Parent('小明');
+        child1.getName();
+    } {// 2.es5 实现
+        console.log('--- class es5实现  ---')
+        var _createClass = function () {//自执行函数
+            //target目标  props属性对象的数组
+            function defineProperties(target, props) {
+                //循环每个元素
+                for (var i = 0; i < props.length; i++) {
+                    //去除每个属性描述器
+                    var descriptor = props[i];
+                    //可枚举(for in) 能循环出来
+                    descriptor.enumerable = descriptor.enumerable || false;
+                    //可配置(delete) 能删除此属性
+                    descriptor.configurable = true;
+                    //可修改值
+                    if ("value" in descriptor) descriptor.writable = true;
+                    //真正的向 Parent 类的原型对象上增加属性
+                    Object.defineProperty(target, descriptor.key, descriptor);
+                }
+            }
+            //1参数:构造函数 2参数:原型上的属性 3参数:静态属性(类上的属性)
+            return function (Constructor, protoProps, staticProps) {
+                //如果有原型属性的话
+                if (protoProps) defineProperties(Constructor.prototype, protoProps);
+                if (staticProps) defineProperties(Constructor, staticProps);
+                return Constructor;
+            };
+        }();
+        //类的调用检查 1参类的实例 2参数构造函数
+        function _classCallCheck(instance, Constructor) {
+            //如果这个实例不是这个构造函数的实例的话，就报错了
+            //Cannot call a class as a function 不能把一个类当初普通函数调用
+            if (!(instance instanceof Constructor)) {
+                throw new TypeError("Cannot call a class as a function");
+            }
+        }
+        var Parent = function () {//自执行函数
+            //实例属性
+            function Parent(name) {
+                _classCallCheck(this, Parent);//类的调用检查
+                this.name = name;//实例的私有属性
+            }
+            //实例的公有属性，也就相当于原型上的属性
+            _createClass(Parent, [{
+                key: 'getName',
+                value: function getName() {
+                    console.log(this.name);
+                }
+            }]);
+            return Parent;
+        }();
+        var child1 = new Parent('小明');
+        child1.getName();
+    } {
+        class Parent {
+            //实例属性
+            constructor(name) {
+                this.name = name;
+            }
+            //静态属性
+            static hello() {
+                console.log('静态属性')
+            }
+            //实例的公有属性，也就相当于原型上的属性
+            getName() {
+                console.log(this.name, 'name')
+            }
+        }
+        class Child extends Parent {
+            constructor(name, age) {
+                super(name); //super 指的是父类的构造函数
+                this.age = age;
+            }
+            getAge() {
+                console.log(this.age, 'age')
+            }
+        }
+        let child1 = new Parent('小明');
+        child1.getName();
+    }
+</script>
+
+</html>

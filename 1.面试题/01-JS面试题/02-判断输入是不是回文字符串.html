@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>判断输入是不是回文字符串</title>
+</head>
+
+<body>
+    <h2>2.实现一个函数，判断输入是不是回文字符串</h2>
+    <h4>上海自来水来自海上 => true </h4>
+</body>
+<script>
+    isString = (msg) => {
+        if (typeof msg !== 'string') return false;
+        return msg.split('').reverse().join('') === msg;
+    }
+    console.log(isString('上海自来水来自海上'))
+</script>
+
+</html>

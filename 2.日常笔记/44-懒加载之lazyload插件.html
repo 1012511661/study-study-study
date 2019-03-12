@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>利用插件懒加载</title>
+
+    <script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/jquery.lazyload.min.js" type="text/javascript" charset="utf-8"></script>
+
+    <script type="text/javascript" charset="utf-8">
+        $(function() {
+            $("img").lazyload({
+                placeholder : "img/loading.gif",
+                effect: "fadeIn"
+            });
+        });
+        //详细：http://www.cnblogs.com/tinyphp/archive/2013/04/09/3009385.html
+    </script>
+
+    <style>
+        img a,img{border:0px;}
+        div{ margin-bottom:10px;}
+    </style>
+
+</head>
+
+<body>
+<img src="images/0.jpg" /><br />
+<div><a href="#"><img src="img/loading.gif" data-original="images/1.jpg"></a></div>
+<div><a href="#"><img src="img/loading.gif" data-original="images/2.jpg"></a></div>
+<div><a href="#"><img src="img/loading.gif" data-original="images/3.jpg"></a></div>
+<div><a href="#"><img src="img/loading.gif" data-original="images/4.jpg"></a></div>
+<div><a href="#"><img src="img/loading.gif" data-original="images/5.jpg"></a></div>
+<div><a href="#"><img src="img/loading.gif" data-original="images/6.jpg"></a></div>
+<div><a href="#"><img src="img/loading.gif" data-original="images/7.jpg"></a></div>
+<div><a href="#"><img src="img/loading.gif" data-original="images/8.jpg"></a></div>
+<div><a href="#"><img src="img/loading.gif" data-original="images/9.jpg"></a></div>
+<div><a href="#"><img src="img/loading.gif" data-original="images/10.jpg"></a></div>
+</body>
+</html>

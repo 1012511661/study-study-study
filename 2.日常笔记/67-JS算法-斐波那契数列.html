@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>斐波那契数列</title>
+</head>
+
+<body>
+    <h3> 斐波那契数列：1、1、2、3、5、8、13、21、34、……</h3>
+    函数：<br>
+    使用公式f[n]=f[n-1]+f[n-2]，依次递归计算，递归结束条件是f[1]=1，f[2]=1。<br>
+    for循环：<br>
+    从底层向上运算， <br>
+    a(0)+a(1)->a(1) //第0个数字+第1个数字=第2个数字<br>
+    a(1)+a(1)->a(2) //第1个数字+第2个数字=第3个数字<br>
+    a(2)+a(3)->a(5) //第2个数字+第3个数字=第4个数字<br>
+    ······<br>
+    a(n-1)+a(n-2)->a(n)<br>
+    因此，在循环中只要定义三个变量，便能将最后的f(n)求出来<br>
+</body>
+<script>
+    { // 递归
+        console.time('时间复杂度为O(2^n)，空间复杂度为O(n)');
+        function fn(n) {
+            if (n === 1) return 1;
+            if (n === 2) return 2;
+            return fn(n - 1) + fn(n - 2);
+        }
+        console.log(fn(9))
+        console.timeEnd('时间复杂度为O(2^n)，空间复杂度为O(n)');
+    } { //非递归
+        function fb(n) {
+            var res = [1, 1];
+            if (n == 1 || n == 2) {
+                return 1;
+            }
+            for (var i = 2; i < n; i++) {
+                res[i] = res[i - 1] + res[i - 2];
+            }
+            return res[n - 1];
+        }
+        console.log(fb(10), "123");
+    } {
+        // 1 1 2 3 5 7 兔子数列// 判断一个数组是不是兔子数组或数组里面是否有项满足兔子数组
+        const inputArr = [13, 9, 3, 89, 8, 5, 25, 31, 11, 21];
+        const maxNumber = Math.max(...inputArr);
+        const fibonacci = [1]
+        console.log(fibonacci)
+        while (fibonacci[fibonacci.length - 1] < maxNumber) {
+            const tempNumber =
+                fibonacci.length === 1 ? 1 : fibonacci[fibonacci.length - 1] + fibonacci[fibonacci.length - 2];
+            fibonacci.push(tempNumber)
+        }
+        const targetArr =
+            fibonacci.filter((value, index, array) => inputArr.includes(array[index + 2] - array[index + 1]));
+        console.log(targetArr)
+    }
+</script>
+
+</html>

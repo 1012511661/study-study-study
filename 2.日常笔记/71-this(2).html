@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>this(2)</title>
+</head>
+
+<body>
+
+</body>
+<script type="text/javascript">
+	/*	1.
+	 * function change(color){
+			document.bgColor=color;
+		}
+			change("red");*/
+	/*  2.
+	 * (function(x){
+			delete x;
+			return x;
+	})(1)*/
+	{
+		// 3.
+		var a = 4399 < 0 || typeof (4399 + '');
+		console.log(a) /*string*/
+		//a||b 如果a的结果是ture直接返回ture不看后面,如果不是则要看走面返回的类型因为第一个4399<0 返回的false 第二个是4399+'' 返回string
+	} {
+		// 4.
+		function a() {
+			console.log(this);
+		}
+		a.call(null);
+		a.call(undefined);
+		/*这里的this指的是window 因为a.call(null/undefined)相当于传一个空值和没有穿一样,所以this还是指向全局*/
+	}
+
+
+	{
+		//5.
+		function test() {
+			var n = 4399;
+
+			function add() {
+				n++;
+				console.log(n + 'a');
+			}
+			return {
+				n: n,
+				add: add
+			}
+		}
+		var result = test();
+		var result2 = test();
+		result.add(); //4400a
+		console.log("n", this.result.n) //4399
+		console.log(this) //window
+
+		result.add(); //4401a
+		console.log("n", this.result.n) //4399
+		console.log(this) //window
+
+		console.log(result.n + "b"); //4399b
+		console.log("n", this.result.n) //4399
+		console.log(this) //window
+
+		result2.add(); //4400a
+		console.log("n", this.result.n) //4399
+		console.log(this) //window
+		/*4400a 4401a 4399b 4400a */
+	}
+
+	{
+		//  6.
+		var a = parseInt([0, 0, 1, 0, 0].join('') + 1, 10);
+		console.log(a) //1001
+		//parseInt之前结果是001001，之后是按照10进制转换001001,省略掉了前面的00,join('')用''连接前后
+		var color = 'green';
+		var test4399 = {
+			color: 'blue',
+			getColor: function () {
+				var color = "red";
+				console.log(this.color);
+				console.log(this)
+			}
+		}
+		var getColor = test4399.getColor;
+		getColor();
+		getColor() = window.getColor(); //执行该函数this指向的是window=>color=green
+		test4399.getColor();
+		//执行该函数this指向的是test4399=>color = blue
+		}
+</script>
+
+</html>

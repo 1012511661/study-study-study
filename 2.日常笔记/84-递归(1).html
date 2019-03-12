@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>递归</title>
+</head>
+
+<body>
+    <h3>所谓的递归函数就是在函数体内调用本函数。使用递归函数一定要注意，处理不当就会进入死循环。递归函数只有在特定的情况下使用 </h3>
+</body>
+<script>
+    {
+        function fact(num) {
+            if (num <= 1) {
+                return 1;
+            } else {
+                // console.log(num, fact(num - 1))
+                // console.log(num, '----')
+                // console.log(fact(num - 1), '++++++')
+                return num * fact(num - 1);
+            }
+        }
+        fact(3)
+    } 
+    // {
+    //     (l =>
+    //         (f => f(f))
+    //         (f => l(v => f(f)(v)))
+    //     )(g => n => n === 0 ? 1 : n * g(n - 1))
+    // }
+</script>
+
+</html>
